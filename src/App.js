@@ -1,5 +1,5 @@
 import "./App.css"
-import { Avatar } from "./3d/Avatar"
+import { World } from "./3d/World"
 import { Suspense } from "react"
 import { Canvas } from "@react-three/fiber"
 
@@ -8,7 +8,7 @@ function App() {
     <>
       <Canvas>
         <Suspense fallback={null}>
-          <Avatar />
+          <World />
         </Suspense>
       </Canvas>
     </>

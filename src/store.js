@@ -1,8 +1,13 @@
+import { io } from "socket.io-client"
 import create from "zustand"
-
-import { getData } from "./fakeServer"
 
 export const useStore = create((set) => ({
   players: [],
-  updatePlayers: () => set((state) => ({ players: JSON.parse(getData()) })),
+  updatePlayers: (players) => set((state) => ({ players })),
 }))
+
+const socket = io("http://localhost:3030")
+
+socket.on("data", (data) => {
+  useStore.getState().updatePlayers(data.players)
+})

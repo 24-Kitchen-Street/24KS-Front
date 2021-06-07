@@ -1,15 +1,9 @@
 import { Avatar } from "./Avatar"
 import { Arena } from "./Arena"
 import { useStore } from "../store"
-import { useFrame } from "@react-three/fiber"
 
 export function World() {
   const players = useStore((state) => state.players)
-  const updatePlayers = useStore((state) => state.updatePlayers)
-
-  useFrame(() => {
-    updatePlayers()
-  })
 
   return (
     <>

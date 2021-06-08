@@ -6,7 +6,7 @@ export const useStore = create((set) => ({
   updatePlayers: (players) => set((state) => ({ players })),
 }))
 
-const socket = io("http://localhost:3030")
+const socket = io("https://back-24ks.herokuapp.com/")
 
 socket.on("data", (data) => {
   useStore.getState().updatePlayers(data.players)

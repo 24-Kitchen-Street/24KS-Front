@@ -10,7 +10,7 @@ export function World() {
     <>
       {players.map(
         // show all players except ourselves, based on ID
-        (props, i) => props.id !== me.id && <Avatar key={props.id} {...props} />
+        (props) => props.id !== me.id && <Avatar key={props.id} {...props} />
       )}
 
       <Arena />

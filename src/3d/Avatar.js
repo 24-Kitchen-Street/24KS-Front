@@ -1,9 +1,10 @@
 import React, { useRef } from "react"
 import { useGLTF } from "@react-three/drei"
-import { MeshNormalMaterial } from "three"
+import { MeshNormalMaterial, MeshBasicMaterial } from "three"
 import { useFrame } from "@react-three/fiber"
 
-const mat = new MeshNormalMaterial()
+const dummyMat = new MeshNormalMaterial()
+const mat = new MeshBasicMaterial({ wireframe: true, color: 0xffffff })
 
 export function Avatar(props) {
   const group = useRef()
@@ -15,7 +16,11 @@ export function Avatar(props) {
   })
 
   return (
-    <mesh ref={group} geometry={nodes.tentaghost.geometry} material={mat} />
+    <mesh
+      ref={group}
+      geometry={nodes.tentaghost.geometry}
+      material={props.isDummy ? dummyMat : mat}
+    />
   )
 }
 

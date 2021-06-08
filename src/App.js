@@ -2,7 +2,8 @@ import "./App.css"
 import { World } from "./3d/World"
 import { Suspense } from "react"
 import { Canvas } from "@react-three/fiber"
-import { OrbitControls } from "@react-three/drei"
+import { PointerLockControls } from "@react-three/drei"
+import { Player } from "./3d/Player"
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
         <Suspense fallback={null}>
           <World />
         </Suspense>
-        <OrbitControls />
+        <Player />
+        <PointerLockControls />
       </Canvas>
     </>
   )

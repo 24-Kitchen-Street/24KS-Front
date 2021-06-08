@@ -4,12 +4,14 @@ import { useStore } from "../store"
 
 export function World() {
   const players = useStore((state) => state.players)
+  const me = useStore((state) => state.me)
 
   return (
     <>
-      {players.map((p, i) => (
-        <Avatar key={p.id} position={p.position} rotation={p.rotation} />
-      ))}
+      {players.map(
+        // show all players except ourselves, based on ID
+        (props) => props.id !== me.id && <Avatar key={props.id} {...props} />
+      )}
 
       <Arena />
     </>

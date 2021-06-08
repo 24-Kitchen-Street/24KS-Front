@@ -1,3 +1,4 @@
 # 24KS Front End
 
-Use `yarn start` to run a local version of this app. However to see players, you also need to start the server on the other repo!
+- `yarn start` - starts local app, connects to heroku server
+- `yarn dev` - starts local app, connects to local server (you must start this locally, on the other repo)

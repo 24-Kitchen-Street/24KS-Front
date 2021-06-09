@@ -17,18 +17,25 @@ const Overlay = styled.div`
   color: white;
 `
 
+const ErrorMessage = styled.div`
+  margin-top: 1rem;
+  color: red;
+`
+
 export function Intro() {
   const [name, setName] = useState("")
   const [isVisible, setIsVisible] = useState(true)
   const me = useStore((state) => state.me)
+  const error = useStore((state) => state.registerError)
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(e)
 
-    registerPlayer({
-      name,
-    })
+    if (name !== "") {
+      registerPlayer({
+        name,
+      })
+    }
   }
 
   const handleClick = () => {
@@ -52,6 +59,7 @@ export function Intro() {
                 <input type="text" onChange={handleOnChange} />
                 <button>Go</button>
               </form>
+              {error && <ErrorMessage>{error}</ErrorMessage>}
             </>
           )}
 

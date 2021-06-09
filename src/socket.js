@@ -10,6 +10,11 @@ socket.on("register-complete", (data) => {
   useStore.getState().updateMe(data)
 })
 
+// show error if something bad happens on register
+socket.on("register-error", (data) => {
+  useStore.getState().updateRegisterError(data.message)
+})
+
 // get data of all players and update state
 socket.on("data", (data) => {
   useStore.getState().updatePlayers(data.players)

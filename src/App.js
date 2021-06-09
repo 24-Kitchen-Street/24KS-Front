@@ -37,6 +37,8 @@ function App() {
         {me.isValid && <PointerLockControls />}
       </Canvas>
       {
+        // Only one of these popups can display at a time
+        // This is essentially a switch statement, its just neater as an object!
         {
           register: <Register />,
           intro: <Intro />,

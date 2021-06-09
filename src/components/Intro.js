@@ -8,6 +8,7 @@ const Overlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 3rem;
   flex-direction: column;
   left: 0;
   top: 0;
@@ -63,7 +64,16 @@ export function Intro() {
             </>
           )}
 
-          {me.name && <p>Hey {me.name}, click anywhere to start! :)</p>}
+          {me.name && (
+            <>
+              <p>Hey {me.name}!</p>
+              <ul>
+                <li>Use WASD and mouse to move and look around.</li>
+                <li>Press ESC when you want to stop.</li>
+                <li>Click anywhere to begin!</li>
+              </ul>
+            </>
+          )}
         </Overlay>
       )}
     </>

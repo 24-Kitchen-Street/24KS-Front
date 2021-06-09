@@ -7,6 +7,7 @@ import { Object3D, Vector3 } from "three"
 import { TICK_INTERVAL } from "../config"
 import { sendPlayerData } from "../socket"
 import { useInterval } from "../utils/useInterval"
+import { useStore } from "../store"
 
 const SPEED = 2
 const keys = { KeyW: "forward", KeyS: "backward", KeyA: "left", KeyD: "right" }
@@ -42,8 +43,12 @@ export const Player = (props) => {
   const { camera } = useThree()
   const ref = useRef(new Object3D())
   const velocity = useRef(new Vector3(0, 0, 0))
+  const { currentPopup } = useStore((state) => state)
 
   useFrame(() => {
+    // dont update player position if there's a popup
+    if (currentPopup !== null) return
+
     camera.position.copy(ref.current.position)
     frontVector.set(0, 0, Number(backward) - Number(forward))
     sideVector.set(Number(left) - Number(right), 0, 0)

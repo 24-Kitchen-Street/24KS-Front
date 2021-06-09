@@ -2,13 +2,14 @@ import "./App.css"
 import { World } from "./3d/World"
 import { Suspense } from "react"
 import { Canvas } from "@react-three/fiber"
-import { PointerLockControls, Stats } from "@react-three/drei"
+import { PointerLockControls } from "@react-three/drei"
 import { Player } from "./3d/Player"
+import { DebugInfo } from "./components/DebugInfo"
+import { Intro } from "./components/Intro"
 import { useStore } from "./store"
 
 function App() {
-
-  const latency = useStore((state) => state.latency)
+  const me = useStore((state) => state.me)
 
   return (
     <>
@@ -17,13 +18,10 @@ function App() {
           <World />
         </Suspense>
         <Player />
-        <PointerLockControls />
+        {me.isValid && <PointerLockControls />}
       </Canvas>
-      <Stats showPanel={0} />
-      <div className="extra-stats">
-        Latency: {latency}
-      </div>
-      
+      <DebugInfo showPanel={0} />
+      <Intro />
     </>
   )
 }

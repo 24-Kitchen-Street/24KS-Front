@@ -7,7 +7,6 @@ const socket = io(SOCKET_URI)
 
 // get ID of our player from server (happens once)
 socket.on("register-complete", (data) => {
-  console.log(data)
   useStore.getState().updateMe(data)
 })
 

@@ -20,6 +20,11 @@ socket.on("data", (data) => {
   useStore.getState().updatePlayers(data.players)
 })
 
+// add feed messages
+socket.on("feed-message", (message) => {
+  useStore.getState().addFeedMessage(message)
+})
+
 export const registerPlayer = (data) => {
   socket.emit("register", data)
 }

@@ -16,6 +16,7 @@ const Overlay = styled.div`
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   color: white;
+  z-index: 9999999999;
 `
 
 const ErrorMessage = styled.div`
@@ -70,6 +71,7 @@ export function Intro() {
               <ul>
                 <li>Use WASD and mouse to move and look around.</li>
                 <li>Press ESC when you want to stop.</li>
+                <li>Press ENTER to chat</li>
                 <li>Click anywhere to begin!</li>
               </ul>
             </>

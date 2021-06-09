@@ -20,3 +20,13 @@ socket.on("data", (data) => {
 export const sendPlayerData = (data) => {
   socket.emit("player-data", data)
 }
+
+// Check ping every so often
+setInterval(() => {
+  const start = Date.now();
+
+  socket.emit("ping", () => {
+    const latency = Date.now() - start;
+    console.log(`Latency: ${latency}`)
+  });
+}, 5000);

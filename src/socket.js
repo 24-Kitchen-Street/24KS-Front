@@ -27,6 +27,6 @@ setInterval(() => {
 
   socket.emit("ping", () => {
     const latency = Date.now() - start;
-    console.log(`Latency: ${latency}`)
+    useStore.getState().updateLatency(latency)
   });
 }, 5000);

@@ -6,6 +6,7 @@ import { useThree, useFrame } from "@react-three/fiber"
 import { Object3D, Vector3 } from "three"
 import { TICK_INTERVAL } from "../config"
 import { sendPlayerData } from "../socket"
+import { useInterval } from "../utils/useInterval"
 
 const SPEED = 2
 const keys = { KeyW: "forward", KeyS: "backward", KeyA: "left", KeyD: "right" }
@@ -13,12 +14,6 @@ const moveFieldByKey = (key) => keys[key]
 const direction = new THREE.Vector3()
 const frontVector = new THREE.Vector3()
 const sideVector = new THREE.Vector3()
-
-const useTick = (f) => {
-  useEffect(() => {
-    setInterval(f, TICK_INTERVAL)
-  }, [f])
-}
 
 const usePlayerControls = () => {
   const [movement, setMovement] = useState({
@@ -61,12 +56,12 @@ export const Player = (props) => {
     ref.current.position.add(velocity.current)
   })
 
-  useTick(() => {
+  useInterval(() => {
     sendPlayerData({
       position: ref.current.position.toArray(),
       rotation: camera.rotation.toArray(),
     })
-  })
+  }, TICK_INTERVAL)
 
   return <mesh ref={ref} />
 }

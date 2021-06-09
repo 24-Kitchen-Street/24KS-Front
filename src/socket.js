@@ -34,6 +34,10 @@ export const sendPlayerData = (data) => {
   socket.emit("player-data", data)
 }
 
+export const sendChatMessage = (data) => {
+  socket.emit("chat-message", data)
+}
+
 // Check ping every so often
 setInterval(() => {
   const start = Date.now()

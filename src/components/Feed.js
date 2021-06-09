@@ -29,8 +29,8 @@ const Item = ({ title, message }) => (
 export function Feed({ items }) {
   return (
     <Container>
-      {items.map((item) => (
-        <Item {...item} />
+      {items.map((item, i) => (
+        <Item key={i} {...item} />
       ))}
     </Container>
   )

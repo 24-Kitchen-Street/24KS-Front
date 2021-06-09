@@ -1,9 +1,9 @@
 .extra-stats {
-    position: absolute;
-    top: 0;
-    left: 80px;
-    padding: 3px;
-    color: white;
-    font-size: 12px;
-    background: rgba(0, 0, 0, 0.5)
+  position: absolute;
+  top: 0;
+  left: 80px;
+  padding: 3px;
+  color: white;
+  font-size: 12px;
+  background: rgba(0, 0, 0, 0.5);
 }

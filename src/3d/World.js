@@ -4,7 +4,8 @@ import { useStore } from "../store"
 import { useEffect, useRef, useState } from "react"
 import { useFrame } from "@react-three/fiber"
 import { WobblyMaterial } from "./WobblyMaterial"
-import { Color, MeshNormalMaterial } from "three"
+import { Color } from "three"
+import { Environment } from "@react-three/drei"
 
 export function World() {
   const players = useStore((state) => state.players)
@@ -30,19 +31,29 @@ export function World() {
   useEffect(() => {
     if (matA) {
       matA.speed = 2
+      matA.color = new Color(0x1bfc8f)
+      matA.roughness = 0
+      matA.metalness = 1
+      matA.opacity = 0.8
+      matA.transparent = true
+      matA.wireframe = true
     }
 
     if (matB) {
       matB.speed = 5
-      matB.wireframe = true
-      matB.emissive = new Color(0xffffff)
+      matB.color = new Color(0xed4fff)
+      matB.roughness = 0
+      matB.metalness = 1
+      matB.opacity = 0.8
+      matB.transparent = true
     }
   }, [matA, matB])
 
   return (
     <>
+      <Environment preset="sunset" />
       {/* Defining two different materials here, in the tree but not attached to any mesh yet */}
-      <WobblyMaterial ref={matARef} from={MeshNormalMaterial} />
+      <WobblyMaterial ref={matARef} />
       <WobblyMaterial ref={matBRef} />
       {players.map(
         // show all players except ourselves, based on ID
@@ -56,7 +67,6 @@ export function World() {
             />
           )
       )}
-
       <Arena />
     </>
   )

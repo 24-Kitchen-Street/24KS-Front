@@ -6,6 +6,7 @@ import { useFrame } from "@react-three/fiber"
 import { WobblyMaterial } from "./WobblyMaterial"
 import { Color } from "three"
 import { Environment } from "@react-three/drei"
+import { ShaderSphere } from "../3d/ShaderSphere"
 
 export function World() {
   const players = useStore((state) => state.players)
@@ -67,6 +68,7 @@ export function World() {
             />
           )
       )}
+      <ShaderSphere />
       <Arena />
     </>
   )

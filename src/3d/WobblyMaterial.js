@@ -3,8 +3,8 @@
 import React from "react"
 import { ShaderChunk } from "three"
 import ComponentMaterial from "component-material"
-import verttop from "../glsl/verttop.glsl.js"
-import displacebody from "../glsl/displacebody.glsl.js"
+import { verttop } from "../glsl/verttop.glsl.js"
+import { displaceBody } from "../glsl/displacebody.glsl.js"
 
 export const WobblyMaterial = React.forwardRef((props, ref) => (
   <ComponentMaterial
@@ -32,7 +32,7 @@ export const WobblyMaterial = React.forwardRef((props, ref) => (
     }
       `
     }</ComponentMaterial.Vert.Head>
-    <ComponentMaterial.Vert.uv_vertex children={displacebody} />
+    <ComponentMaterial.Vert.uv_vertex children={displaceBody} />
     <ComponentMaterial.Vert.defaultnormal_vertex
       replaceChunk
       children={ShaderChunk.defaultnormal_vertex.replace(

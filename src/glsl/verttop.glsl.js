@@ -1,6 +1,6 @@
 import glsl from "babel-plugin-glsl/macro"
 
-const verttop = glsl`
+export const verttop = glsl`
 #pragma glslify: snoise = require(glsl-noise-simplex/3d.glsl)
 
 vec3 orthogonal(vec3 v) {
@@ -9,4 +9,4 @@ vec3 orthogonal(vec3 v) {
 }
 `
 
-export default verttop
+

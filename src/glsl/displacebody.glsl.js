@@ -1,6 +1,7 @@
 import glsl from "babel-plugin-glsl/macro"
 
-const displaceBody = glsl`
+
+export const displaceBody = glsl`
 vec3 displacedPosition = displace(position);
     float offset = 0.1;
     vec3 tangent = orthogonal(normal);
@@ -18,4 +19,3 @@ vec3 displacedPosition = displace(position);
     vec3 displacedNormal = normalize(cross(displacedTangent, displacedBitangent));
 `
 
-export default displaceBody

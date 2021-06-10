@@ -1,4 +1,5 @@
-import React, { useRef, useFrame, useMemo } from "react";
+import React, { useRef, useMemo } from "react"
+import { useFrame } from "@react-three/fiber"
 import * as THREE from "three";
 
 export const vertexShader = `
@@ -22,7 +23,7 @@ export const fragmentShader = `
     `
 
   
- export function ShaderShape (props) {
+ export function ShaderSphere (props) {
     const sphereRef = useRef();
   
 
@@ -33,14 +34,10 @@ export const fragmentShader = `
         []
       )
     
-    // why is useFrame not working??
-    //   useFrame(state => {
-    //     uniforms.time.value = state.clock.elapsedTime
-    //   })
 
-        // useFrame(({ clock }) => {
-    //   sphereRef.current.material.uniforms.u_time.value = clock.oldTime * 0.00005;
-    // });
+    useFrame(({ clock }) => {
+      sphereRef.current.material.uniforms.u_time.value = clock.oldTime * 0.00005;
+    });
   
     return (
       <mesh ref={sphereRef} {...props}>

@@ -1,11 +1,7 @@
 import React, { useRef, useState } from "react"
 import { Html, useGLTF } from "@react-three/drei"
-import { MeshNormalMaterial, MeshBasicMaterial } from "three"
 import { useFrame, useThree } from "@react-three/fiber"
 import styled from "styled-components"
-
-const dummyMat = new MeshNormalMaterial()
-const mat = new MeshBasicMaterial({ wireframe: true, color: 0xffffff })
 
 const NameTag = styled.div`
   background: rgba(0, 0, 0, 0.3);
@@ -32,7 +28,7 @@ export function Avatar(props) {
   const [isNameVisible, setIsNameVisible] = useState(false)
   const { camera } = useThree()
 
-  useFrame(() => {
+  useFrame(({ clock }) => {
     group.current.position.set(...props.position)
     group.current.rotation.set(...props.rotation)
 
@@ -51,10 +47,8 @@ export function Avatar(props) {
           </Html>
         </>
       )}
-      <mesh
-        geometry={nodes.tentaghost.geometry}
-        material={props.isDummy ? dummyMat : mat}
-      />
+
+      <mesh geometry={nodes.tentaghost.geometry} material={props.material} />
     </group>
   )
 }

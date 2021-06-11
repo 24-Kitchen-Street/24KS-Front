@@ -25,6 +25,12 @@ socket.on("feed-message", (message) => {
   useStore.getState().addFeedMessage(message)
 })
 
+// handle general server error
+socket.on("server-error", ({ message }) => {
+  useStore.getState().updateGeneralError(`Server error: ${message}`)
+  useStore.getState().setCurrentPopup("error")
+})
+
 export const registerPlayer = (data) => {
   socket.emit("register", data)
 }

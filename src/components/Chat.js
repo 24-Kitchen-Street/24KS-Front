@@ -1,7 +1,8 @@
 import styled from "styled-components"
 import { sendChatMessage } from "../socket"
-import { useRef, useState, useEffect } from "react"
 import { useStore } from "../store"
+import { Form, Formik } from "formik"
+import { TextField } from "./form/TextField"
 
 const Overlay = styled.div`
   position: absolute;
@@ -20,17 +21,9 @@ const Overlay = styled.div`
 `
 
 export function Chat() {
-  const [message, setMessage] = useState("")
-  const textbox = useRef(null)
-  const { setCurrentPopup } = useStore((state) => state)
+  const setCurrentPopup = useStore((state) => state.setCurrentPopup)
 
-  useEffect(() => {
-    textbox.current.focus()
-  }, [])
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
+  const handleSubmit = ({ message }) => {
     if (message !== "") {
       sendChatMessage({
         message: message,
@@ -40,16 +33,14 @@ export function Chat() {
     }
   }
 
-  const handleOnChange = (e) => {
-    setMessage(e.target.value)
-  }
-
   return (
     <Overlay>
-      <form onSubmit={handleSubmit}>
-        <h3>Message:</h3>
-        <input type="text" onChange={handleOnChange} ref={textbox} />
-      </form>
+      <Formik onSubmit={handleSubmit} initialValues={{ message: "" }}>
+        <Form>
+          <TextField name="message" autoFocus />
+          <button>Go</button>
+        </Form>
+      </Formik>
     </Overlay>
   )
 }

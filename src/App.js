@@ -11,6 +11,7 @@ import { Intro } from "./components/Intro"
 import { useStore } from "./store"
 import { Feed } from "./components/Feed"
 import { Chat } from "./components/Chat"
+import { ErrorScreen } from "./components/ErrorScreen"
 
 function App() {
   const { me, feed, currentPopup, setCurrentPopup } = useStore((state) => state)
@@ -43,6 +44,7 @@ function App() {
           register: <Register />,
           intro: <Intro />,
           chat: <Chat />,
+          error: <ErrorScreen />,
         }[currentPopup]
       }
       <Feed items={feed} />

@@ -1,7 +1,9 @@
 import { useStore } from "../store"
 import styled from "styled-components"
 import { registerPlayer } from "../socket"
-import { useEffect, useRef, useState } from "react"
+import { useEffect } from "react"
+import { Formik, Form } from "formik"
+import { TextField } from "./form/TextField"
 
 const Overlay = styled.div`
   position: absolute;
@@ -25,14 +27,9 @@ const ErrorMessage = styled.div`
 `
 
 export function Register() {
-  const [name, setName] = useState("")
-  const { me, registerError, setCurrentPopup } = useStore((state) => state)
-
-  const textbox = useRef(null)
-
-  useEffect(() => {
-    textbox.current.focus()
-  }, [])
+  const me = useStore((state) => state.me)
+  const setCurrentPopup = useStore((state) => state.setCurrentPopup)
+  const registerError = useStore((state) => state.registerError)
 
   useEffect(() => {
     if (me.isValid) {
@@ -40,9 +37,7 @@ export function Register() {
     }
   }, [me, setCurrentPopup])
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
+  const handleSubmit = ({ name }) => {
     if (name !== "") {
       registerPlayer({
         name,
@@ -50,18 +45,16 @@ export function Register() {
     }
   }
 
-  const handleOnChange = (e) => {
-    setName(e.target.value)
-  }
-
   return (
     <Overlay>
       <h2>Welcome!</h2>
       <p>Please enter your nickname</p>
-      <form onSubmit={handleSubmit}>
-        <input type="text" onChange={handleOnChange} ref={textbox} />
-        <button>Go</button>
-      </form>
+      <Formik onSubmit={handleSubmit} initialValues={{ name: "" }}>
+        <Form>
+          <TextField name="name" autoFocus />
+          <button>Go</button>
+        </Form>
+      </Formik>
       {registerError && <ErrorMessage>{registerError}</ErrorMessage>}
     </Overlay>
   )

@@ -2,7 +2,8 @@ import { useStore } from "../store"
 import { Overlay } from "./Overlay"
 
 export function Intro() {
-  const { me, setCurrentPopup } = useStore((state) => state)
+  const me = useStore((state) => state.me)
+  const setCurrentPopup = useStore((state) => state.setCurrentPopup)
 
   const handleClick = () => {
     setCurrentPopup(null)

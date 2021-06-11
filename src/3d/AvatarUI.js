@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react"
-import { Html, useGLTF } from "@react-three/drei"
+import { Html } from "@react-three/drei"
 import { useFrame, useThree } from "@react-three/fiber"
 import styled from "styled-components"
-import { BoxBufferGeometry } from "three"
+import { Vector3 } from "three"
 
 const NameTag = styled.div`
   background: rgba(0, 0, 0, 0.3);
@@ -23,22 +23,26 @@ const Message = styled.p`
   width: 10rem;
 `
 
-export function Avatar(props) {
+const tempPos = new Vector3()
+
+export function AvatarUI(props) {
   const group = useRef()
-  const { nodes } = useGLTF("/avatar.glb")
-  const [isNameVisible, setIsNameVisible] = useState(false)
+  const [isVisible, setIsNameVisible] = useState(false)
   const { camera } = useThree()
 
-  useFrame(({ clock }) => {
-    group.current.position.set(...props.position)
-    group.current.rotation.set(...props.rotation)
+  useFrame(() => {
+    tempPos.set(...props.position)
+    setIsNameVisible(tempPos.distanceTo(camera.position) < 20)
 
-    setIsNameVisible(group.current.position.distanceTo(camera.position) < 20)
+    if (isVisible) {
+      group.current.position.copy(tempPos)
+      group.current.rotation.set(...props.rotation)
+    }
   })
 
   return (
     <group ref={group}>
-      {isNameVisible && (
+      {isVisible && (
         <>
           <Html distanceFactor={100} center position={[0, 5, 0]}>
             <NameTag>{props.name}</NameTag>
@@ -48,10 +52,6 @@ export function Avatar(props) {
           </Html>
         </>
       )}
-
-      <mesh geometry={nodes.tentaghost.geometry} material={props.material} />
     </group>
   )
 }
-
-useGLTF.preload("/avatar.glb")

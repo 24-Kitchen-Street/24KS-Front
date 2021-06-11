@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react"
 import { Html, useGLTF } from "@react-three/drei"
 import { useFrame, useThree } from "@react-three/fiber"
 import styled from "styled-components"
+import { BoxBufferGeometry } from "three"
 
 const NameTag = styled.div`
   background: rgba(0, 0, 0, 0.3);
@@ -32,7 +33,7 @@ export function Avatar(props) {
     group.current.position.set(...props.position)
     group.current.rotation.set(...props.rotation)
 
-    setIsNameVisible(group.current.position.distanceTo(camera.position) < 50)
+    setIsNameVisible(group.current.position.distanceTo(camera.position) < 20)
   })
 
   return (

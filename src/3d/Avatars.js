@@ -1,5 +1,6 @@
+import { useThree } from "@react-three/fiber"
 import { useEffect, useState } from "react"
-import { Color } from "three"
+import { Color, Vector3 } from "three"
 import { useStore } from "../store"
 import { AvatarUI } from "./AvatarUI"
 import { InstancedAvatars } from "./InstancedAvatars"
@@ -30,25 +31,35 @@ const matB = {
   amplitude: 0.5,
 }
 
+const tempPos = new Vector3()
+
 export function Avatars() {
   const players = useStore((state) => state.players)
   const me = useStore((state) => state.me)
 
   const [humans, setHumans] = useState([])
   const [bots, setBots] = useState([])
+  const [nearByPlayers, setNearby] = useState([])
+
+  const { camera } = useThree()
 
   useEffect(() => {
+    // TODO: could probably do this with one big loop rather than 3 filters
     setHumans(players.filter(({ id, isDummy }) => id !== me.id && !isDummy))
     setBots(players.filter(({ isDummy }) => isDummy))
-  }, [players, me.id])
+    setNearby(
+      players.filter(({ position, id }) => {
+        tempPos.set(...position)
+        return id !== me.id && tempPos.distanceTo(camera.position) < 20
+      })
+    )
+  }, [players, me.id, camera.position])
 
   return (
     <>
       <InstancedAvatars materialConfig={matA} players={humans} />
       <InstancedAvatars materialConfig={matB} players={bots} />
-      {players.map((player) => (
-        // TODO: Filter out ME
-        // perf problems
+      {nearByPlayers.map((player) => (
         <AvatarUI key={player.id} {...player} />
       ))}
     </>

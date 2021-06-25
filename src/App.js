@@ -14,7 +14,9 @@ import { Chat } from "./components/Chat"
 import { ErrorScreen } from "./components/ErrorScreen"
 
 function App() {
-  const { me, feed, currentPopup, setCurrentPopup } = useStore((state) => state)
+  const me = useStore((state) => state.me)
+  const setCurrentPopup = useStore((state) => state.setCurrentPopup)
+  const currentPopup = useStore((state) => state.currentPopup)
 
   useKeypress("Enter", () => {
     if (me.isValid && currentPopup !== "chat") {
@@ -47,8 +49,8 @@ function App() {
           error: <ErrorScreen />,
         }[currentPopup]
       }
-      <Feed items={feed} />
-      <DebugInfo showPanel={0} />
+      <Feed />
+      <DebugInfo />
     </>
   )
 }

@@ -7,6 +7,8 @@ import { WobblyMaterial } from "./WobblyMaterial"
 import { Color } from "three"
 import { Environment } from "@react-three/drei"
 import { ShaderSphere } from "../3d/ShaderSphere"
+import { Screen } from "./Screen";
+import { Lines } from "./Lines"
 
 export function World() {
   const players = useStore((state) => state.players)
@@ -68,8 +70,14 @@ export function World() {
             />
           )
       )}
+
+      <Screen position={[100, 20, 2]} rotation={[-0.1, 90, 0.1]}/>
+      <Screen position={[20, 10, 90]} rotation={[0.5, 0, 0]}/>
+      <Screen position={[-100, 20, -10]} rotation={[-0.5, 0, 0]}/>
+      <Screen position={[0, -20, -90]} rotation={[-0.5, 0, 0]}/>
       <ShaderSphere />
       <Arena />
+      <Lines />
     </>
   )
 }

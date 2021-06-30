@@ -12,14 +12,18 @@ import { useStore } from "./store"
 import { Feed } from "./components/Feed"
 import { Chat } from "./components/Chat"
 import { ErrorScreen } from "./components/ErrorScreen"
+import { AdminUI } from "./components/AdminUI"
 
 function App() {
   const me = useStore((state) => state.me)
   const setCurrentPopup = useStore((state) => state.setCurrentPopup)
   const currentPopup = useStore((state) => state.currentPopup)
+  const isShowingAdminControls = useStore(
+    (state) => state.isShowingAdminControls
+  )
 
   useKeypress("Enter", () => {
-    if (me.isValid && currentPopup !== "chat") {
+    if (me.isValid && currentPopup !== "chat" && !isShowingAdminControls) {
       setCurrentPopup("chat")
     }
   })
@@ -51,6 +55,7 @@ function App() {
       }
       <Feed />
       <DebugInfo />
+      {me.isAdmin && <AdminUI />}
     </>
   )
 }

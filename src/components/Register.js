@@ -5,6 +5,9 @@ import { useEffect } from "react"
 import { Formik, Form } from "formik"
 import { TextField } from "./form/TextField"
 
+const params = new URL(document.location).searchParams
+const showPass = params.get("admin") === "1"
+
 const Overlay = styled.div`
   position: absolute;
   display: flex;
@@ -26,6 +29,13 @@ const ErrorMessage = styled.div`
   color: red;
 `
 
+const FieldGroup = styled.div`
+  margin-top: 1rem;
+  label {
+    display: block;
+  }
+`
+
 export function Register() {
   const me = useStore((state) => state.me)
   const setCurrentPopup = useStore((state) => state.setCurrentPopup)
@@ -37,10 +47,11 @@ export function Register() {
     }
   }, [me, setCurrentPopup])
 
-  const handleSubmit = ({ name }) => {
+  const handleSubmit = ({ name, adminPassword }) => {
     if (name !== "") {
       registerPlayer({
         name,
+        adminPassword,
       })
     }
   }
@@ -49,10 +60,20 @@ export function Register() {
     <Overlay>
       <h2>Welcome!</h2>
       <p>Please enter your nickname</p>
-      <Formik onSubmit={handleSubmit} initialValues={{ name: "" }}>
+      <Formik
+        onSubmit={handleSubmit}
+        initialValues={{ name: "", adminPassword: "" }}
+      >
         <Form>
           <TextField name="name" autoFocus />
-          <button>Go</button>
+          {showPass && (
+            <FieldGroup>
+              <label htmlFor="adminPassword">Admin Pass</label>
+              <TextField name="adminPassword" type="password" />
+            </FieldGroup>
+          )}
+
+          <button type="submit">Go</button>
         </Form>
       </Formik>
       {registerError && <ErrorMessage>{registerError}</ErrorMessage>}

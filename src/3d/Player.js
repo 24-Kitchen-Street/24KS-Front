@@ -44,10 +44,13 @@ export const Player = (props) => {
   const ref = useRef(new Object3D())
   const velocity = useRef(new Vector3(0, 0, 0))
   const { currentPopup } = useStore((state) => state)
+  const isShowingAdminControls = useStore(
+    (state) => state.isShowingAdminControls
+  )
 
   useFrame(() => {
     // dont update player position if there's a popup
-    if (currentPopup !== null) return
+    if (currentPopup !== null || isShowingAdminControls) return
 
     camera.position.copy(ref.current.position)
     frontVector.set(0, 0, Number(backward) - Number(forward))

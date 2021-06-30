@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 import { Field } from "formik"
 
-export function TextField({ autoFocus, name }) {
+export function TextField({ autoFocus, name, type = "text" }) {
   const textbox = useRef(null)
 
   useEffect(() => {
@@ -10,5 +10,5 @@ export function TextField({ autoFocus, name }) {
     }
   }, [autoFocus])
 
-  return <Field type="text" name={name} innerRef={textbox} />
+  return <Field type={type} name={name} innerRef={textbox} />
 }

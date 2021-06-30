@@ -15,6 +15,11 @@ socket.on("register-error", (data) => {
   useStore.getState().updateRegisterError(data.message)
 })
 
+// Show message to admin after ban
+socket.on("ban-response", (data) => {
+  useStore.getState().updateBanResponse(data.message)
+})
+
 // get data of all players and update state
 socket.on("data", ({ players, messages }) => {
   useStore.getState().updatePlayers(players)
@@ -29,6 +34,10 @@ socket.on("server-error", ({ message }) => {
 
 export const registerPlayer = (data) => {
   socket.emit("register", data)
+}
+
+export const banPlayer = (data) => {
+  socket.emit("ban-player", data)
 }
 
 // send data of our player to server

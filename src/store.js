@@ -8,9 +8,11 @@ export const useStore = create((set) => ({
   },
   registerError: null,
   generalError: null,
+  banResponse: null,
   latency: 0,
   feed: [],
   currentPopup: "register",
+  isShowingAdminControls: false,
   addFeedMessages: (messages) =>
     set((state) => ({
       feed: [...messages, ...state.feed].slice(0, MAX_MESSAGES),
@@ -20,5 +22,8 @@ export const useStore = create((set) => ({
   updateLatency: (latency) => set((state) => ({ latency })),
   updateRegisterError: (registerError) => set((state) => ({ registerError })),
   updateGeneralError: (generalError) => set((state) => ({ generalError })),
+  updateBanResponse: (banResponse) => set((state) => ({ banResponse })),
   setCurrentPopup: (currentPopup) => set((state) => ({ currentPopup })),
+  setIsShowingAdminControls: (isShowingAdminControls) =>
+    set((state) => ({ isShowingAdminControls })),
 }))

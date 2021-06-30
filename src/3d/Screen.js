@@ -15,21 +15,21 @@ export function Screen (props) {
         vid.play();
         return vid;
     });
-    useEffect(() => void video.play(), [video]);
-  // const [streamURL, setVideo] = useState("https://iframe.dacast.com/live/82484ae1-49e7-a7fa-184e-2ec57d9a388e/934ebbee-b712-4e40-68ed-0778849dfe9d");
-  const htmlVid = document.getElementById( 'video' );
+  //   useEffect(() => void video.play(), [video]);
+  // // const [streamURL, setVideo] = useState("https://iframe.dacast.com/live/82484ae1-49e7-a7fa-184e-2ec57d9a388e/934ebbee-b712-4e40-68ed-0778849dfe9d");
+  // const htmlVid = document.getElementById( 'video' );
 
   return (
     <>
     {/* <div>
       <video src={video} />;
     </div> */}
-    <mesh position={[5, 5, 0]}>
+    {/* <mesh position={[5, 5, 0]}>
       <meshStandardMaterial side={THREE.DoubleSide}>
         <videoTexture attach="map" args={[htmlVid]} />
       </meshStandardMaterial>
       <planeGeometry args={[240, 100, 4, 4]} />
-    </mesh>
+    </mesh> */}
     <Html>
     <div >
       <video id="video" src={video} />;

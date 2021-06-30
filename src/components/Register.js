@@ -17,7 +17,7 @@ const Overlay = styled.div`
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  color: white;
+  color: red;
   z-index: 9999999999;
 `
 
@@ -47,12 +47,12 @@ export function Register() {
 
   return (
     <Overlay>
-      <h2>Welcome!</h2>
-      <p>Please enter your nickname</p>
+      <h2>Enter, ghost.</h2>
+      <p>You are about to enter the club. Enter your name:</p>
       <Formik onSubmit={handleSubmit} initialValues={{ name: "" }}>
         <Form>
           <TextField name="name" autoFocus />
-          <button>Go</button>
+          <button>Enter</button>
         </Form>
       </Formik>
       {registerError && <ErrorMessage>{registerError}</ErrorMessage>}

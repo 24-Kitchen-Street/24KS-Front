@@ -1,33 +1,24 @@
 import * as THREE from "three";
-import React, { Suspense, useRef, useState } from "react";
-import { useFrame, useResource  } from "@react-three/fiber";
-import { Icosahedron, MeshDistortMaterial, useCubeTexture, useTexture} from "@react-three/drei";
+import { useThree, useFrame } from "@react-three/fiber";
+import React, { useEffect, useRef, useState } from "react";
+import { MeshDistortMaterial } from "@react-three/drei";
 
-
-function Movement({material}) {
-    const main = useRef()
-     // rotation following positions
-    useFrame(({ clock, mouse }) => {
-        main.current.rotation.z = clock.getElapsedTime()
-        main.current.rotation.y = THREE.MathUtils.lerp(main.current.rotation.y, mouse.x * Math.PI, 0.1)
-        main.current.rotation.x = THREE.MathUtils.lerp(main.current.rotation.x, mouse.y * Math.PI, 0.1)
-    })
-    return (
-    <Icosahedron args={[1, 4]} ref={main}  position={[ 0,0,0 ]} />
-    )
-}
 
 export function ReflectiveShape() {
-    // const bumpMap = useTexture("/bump.jpg")
-    const envMap = useCubeTexture(["_back.png", "_bottom.png", "_front.png", "_left.png", "_right.png", "_top.png"], { path: "/Spacebox1" })
-    // const [matRef, material] = useResource()
-    // const [material, set] = useState()
-    const ref = useRef()
-
-
+    const main = useRef()
+    const { width, height } = useThree().size
+    //  rotation following positions
+    // useFrame(({ clock, mouse }) => {
+    //     main.current.rotation.z = clock.getElapsedTime()
+    //     main.current.rotation.y += (mouse.current[0] / (width / 2) - main.rotation.y) * 0.1
+    //     main.current.rotation.x += (mouse.current[1] / (height / 2) - main.rotation.x) * 0.1
+    // })
+    const imgArray= ["/_back.png", "/_bottom.png", "/_front.png", "/_left.png", "/_right.png", "/_top.png"]
+    const [ envMap, set ] = useState()
+    useEffect(() => void new THREE.CubeTextureLoader().load(imgArray, set), [])
     return (
     <>
-        <mesh>            
+        <mesh>   
             <MeshDistortMaterial
                 // ref={matRef}
                 envMap={envMap}
@@ -39,14 +30,11 @@ export function ReflectiveShape() {
                 clearcoat={1}
                 clearcoatRoughness={1}
                 radius={1}
-                distort={0.4}
+                distort={0.6}
               />
-              <Movement />
+              <torusBufferGeometry ref={main} args={[0.5, 64, 64]} position={[ 0,0,0 ]} />
              
-        </mesh>
-
-              {/* {material && <Movement material={material} />} */}
-      
+        </mesh>      
     </>
   )
 }

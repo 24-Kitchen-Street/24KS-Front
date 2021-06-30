@@ -1,51 +1,79 @@
-import react, { useRef, useState, useEffect } from "react";
-import { useAspect } from "@react-three/drei";
+import react, { useRef, useState, useEffect, Fragment, useMemo  } from "react";
+import { useTexture, Html } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import url from "../testvid.mp4";
+import { LinearFilter, Texture, VideoTexture } from "three";
+// import url from "../testvid.mp4";
 
 
 
 export function Screen (props) {
-//     // const size = useAspect(18, 10);
-    const mesh = useRef()
     const [ video ] = useState(() => {
 	    const vid = document.createElement("video");
-        vid.src=url;
+        vid.src="https://iframe.dacast.com/live/82484ae1-49e7-a7fa-184e-2ec57d9a388e/934ebbee-b712-4e40-68ed-0778849dfe9d";
         vid.crossOrigin = "Anonymous";
-        vid.loop = true;
-        vid.muted = true;
         vid.play();
         return vid;
-        // navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-        // .then(function(stream) {
-        // vid.srcObject = stream;
-        // vid.play();
-        // }
-        // )
-        // .catch(function(err) {
-        //     console.log("An error occured! " + err);
-        // });
     });
-    
     useEffect(() => void video.play(), [video]);
+  // const [streamURL, setVideo] = useState("https://iframe.dacast.com/live/82484ae1-49e7-a7fa-184e-2ec57d9a388e/934ebbee-b712-4e40-68ed-0778849dfe9d");
+  const htmlVid = document.getElementById( 'video' );
+
+  return (
+    <>
+    {/* <div>
+      <video src={video} />;
+    </div> */}
+    <mesh position={[5, 5, 0]}>
+      <meshStandardMaterial side={THREE.DoubleSide}>
+        <videoTexture attach="map" args={[htmlVid]} />
+      </meshStandardMaterial>
+      <planeGeometry args={[240, 100, 4, 4]} />
+    </mesh>
+    <Html>
+    <div >
+      <video id="video" src={video} />;
+    </div>
+    </Html>
+    </>
+  )
+}
+
+// export function Screen (props) {
+// //     // const size = useAspect(18, 10);
+//     const mesh = useRef()
+//     const [ video ] = useState(() => {
+// 	    const vid = document.createElement("video");
+//         vid.src="https://iframe.dacast.com/live/82484ae1-49e7-a7fa-184e-2ec57d9a388e/934ebbee-b712-4e40-68ed-0778849dfe9d";
+//         vid.crossOrigin = "Anonymous";
+//         vid.loop = true;
+//         vid.muted = true;
+//         vid.play();
+//         return vid;
+//     });
   
-     return (
-       <>
-       <mesh position={props.position} {...props}>
-         <boxBufferGeometry args={[40, 20, 40]} />
-         <meshStandardMaterial side={THREE.DoubleSide}>
-           <videoTexture attach="map" args={[video]} />
-           <videoTexture attach="map" args={[video]} />
-           <videoTexture attach="map" args={[video]} />
-           <videoTexture attach="map" args={[video]} />
-           <videoTexture attach="map" args={[video]} />
-           <videoTexture attach="map" args={[video]} />
-        </meshStandardMaterial>
-        {/* <meshPhysicalMaterial attach="material" map={texture} roughness={0} /> */}       
-        </mesh>
-       </>
-     );
-};
+    
+//     useEffect(() => void video.play(), [video]);
+
+//     const texture = useTexture(video)
+  
+//      return (
+//        <>
+//        <mesh position={props.position} {...props}>
+//          <boxBufferGeometry args={[40, 20, 40]} />
+//          <meshStandardMaterial side={THREE.DoubleSide}>
+//            <videoTexture attach="map" args={[texture]} />
+//            {/* <videoTexture attach="map" args={[video]} />
+//            <videoTexture attach="map" args={[video]} />
+//            <videoTexture attach="map" args={[video]} />
+//            <videoTexture attach="map" args={[video]} />
+//            <videoTexture attach="map" args={[video]} /> */}
+//         </meshStandardMaterial>
+//         {/* <meshPhysicalMaterial attach="material" map={texture} roughness={0} /> */}       
+//         </mesh>
+//        </>
+//      );
+// };
 
 //   // const mediaSource = new MediaSource();
 // // const url = URL.createObjectURL(mediaSource);

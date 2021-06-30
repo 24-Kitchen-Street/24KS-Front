@@ -1,4 +1,5 @@
 import create from "zustand"
+import { MAX_MESSAGES } from "./config"
 
 export const useStore = create((set) => ({
   players: [],
@@ -10,9 +11,9 @@ export const useStore = create((set) => ({
   latency: 0,
   feed: [],
   currentPopup: "register",
-  addFeedMessage: (message) =>
+  addFeedMessages: (messages) =>
     set((state) => ({
-      feed: [message, ...state.feed],
+      feed: [...messages, ...state.feed].slice(0, MAX_MESSAGES),
     })),
   updatePlayers: (players) => set((state) => ({ players })),
   updateMe: (me) => set((state) => ({ me })),

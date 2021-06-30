@@ -3,4 +3,5 @@ export const SOCKET_URI =
     ? "http://localhost:8080"
     : "https://back-24ks.herokuapp.com/"
 
-export const TICK_INTERVAL = 32
+export const TICK_INTERVAL = 50
+export const MAX_MESSAGES = 100

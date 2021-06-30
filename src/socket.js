@@ -16,13 +16,9 @@ socket.on("register-error", (data) => {
 })
 
 // get data of all players and update state
-socket.on("data", (data) => {
-  useStore.getState().updatePlayers(data.players)
-})
-
-// add feed messages
-socket.on("feed-message", (message) => {
-  useStore.getState().addFeedMessage(message)
+socket.on("data", ({ players, messages }) => {
+  useStore.getState().updatePlayers(players)
+  useStore.getState().addFeedMessages(messages)
 })
 
 // handle general server error

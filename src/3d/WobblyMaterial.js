@@ -6,16 +6,16 @@ import ComponentMaterial from "component-material"
 import { verttop } from "../glsl/verttop.glsl.js"
 import { displaceBody } from "../glsl/displacebody.glsl.js"
 
-export const WobblyMaterial = React.forwardRef((props, ref) => (
+export const WobblyMaterial = ({ materialConfig, from }) => (
   <ComponentMaterial
-    ref={ref}
-    from={props.from}
+    from={from}
     uniforms={{
-      speed: { value: 3, type: "float" },
-      time: { value: 0, type: "float" },
-      frequency: { value: 0.5, type: "float" },
-      amplitude: { value: 0.5, type: "float" },
+      speed: { value: materialConfig.speed, type: "float" },
+      time: { value: materialConfig.time, type: "float" },
+      frequency: { value: materialConfig.frequency, type: "float" },
+      amplitude: { value: materialConfig.amplitude, type: "float" },
     }}
+    {...materialConfig}
   >
     <ComponentMaterial.Vert.Head>{
       /* glsl */ `
@@ -45,4 +45,4 @@ export const WobblyMaterial = React.forwardRef((props, ref) => (
       children="transformed = displacedPosition;"
     />
   </ComponentMaterial>
-))
+)

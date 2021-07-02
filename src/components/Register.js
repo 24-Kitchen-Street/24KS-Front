@@ -1,3 +1,4 @@
+import react, { useState} from "react"
 import { useStore } from "../store"
 import styled from "styled-components"
 import { registerPlayer } from "../socket"
@@ -40,6 +41,7 @@ export function Register() {
   const me = useStore((state) => state.me)
   const setCurrentPopup = useStore((state) => state.setCurrentPopup)
   const registerError = useStore((state) => state.registerError)
+  const [change, setChange] = useState(false);
 
   useEffect(() => {
     if (me.isValid) {
@@ -55,18 +57,15 @@ export function Register() {
     }
   }
 
-  const animateButton = () => {
-
-  }
 
   return (
     <Overlay>
       <Title><h1>Enter the club, ghost</h1></Title>
-      <p>Can we get your name first, ghost ?</p>
+      <p>Can we get your name first, ghost?</p>
       <Formik onSubmit={handleSubmit} initialValues={{ name: "" }}>
           <Form>
             <TextField name="name" autoFocus />
-                <button onMouseEnter={animateButton()} style={{color: "blue", backgroundColor: "none", transform: [0, 0, 0]}}>Enter</button>
+                <button onMouseEnter={() => setChange(true)} onMouseOut={() => setChange(false)}  style={{color: change ? "red" : "blue", backgroundColor: "none"}}>Enter</button>
           </Form>
       </Formik>
       {registerError && <ErrorMessage>{registerError}</ErrorMessage>}

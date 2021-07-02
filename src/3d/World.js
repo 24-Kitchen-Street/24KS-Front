@@ -27,6 +27,7 @@ export function World() {
   else if (currentPopup === null){
     return (
       <>
+        
         <Environment preset="sunset" />
         <Avatars />
         <Arena />

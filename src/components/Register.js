@@ -8,7 +8,7 @@ import { TextField } from "./form/TextField"
 const Overlay = styled.div`
   position: absolute;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   padding: 3rem;
   flex-direction: column;
@@ -17,8 +17,13 @@ const Overlay = styled.div`
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  color: red;
+  color: white;
   z-index: 9999999999;
+`
+
+const Title = styled.div`
+  width: 40%;
+  font-size: 27px;
 `
 
 const ErrorMessage = styled.div`
@@ -47,8 +52,8 @@ export function Register() {
 
   return (
     <Overlay>
-      <h2>Enter, ghost.</h2>
-      <p>You are about to enter the club. Enter your name:</p>
+      <Title><h1>Entering the club, ghost?</h1></Title>
+      <p>Okay. Can we get your name for track and trace first?</p>
       <Formik onSubmit={handleSubmit} initialValues={{ name: "" }}>
         <Form>
           <TextField name="name" autoFocus />

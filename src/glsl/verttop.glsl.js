@@ -8,5 +8,3 @@ vec3 orthogonal(vec3 v) {
   : vec3(0.0, -v.z, v.y));
 }
 `
-
-

@@ -10,6 +10,16 @@ export function Arena(props) {
   const group = useRef()
   const { nodes } = useGLTF("/arena2.glb")
 
+  const clubMat = nodes.structure.material
+  const sc = 10
+
+  clubMat.map.repeat.set(sc, sc)
+  clubMat.roughnessMap.repeat.set(sc, sc)
+  clubMat.roughness = 1
+  clubMat.metalness = 0
+  clubMat.normalMap.repeat.set(sc, sc)
+  clubMat.metalnessMap.repeat.set(sc, sc)
+
   return (
     <group ref={group} {...props} dispose={null} scale={50}>
       <mesh

@@ -19,7 +19,7 @@ export function Lighting() {
     const t = clock.getElapsedTime()
     danceLight0.current.position.x = Math.sin(t) * 40
     danceLight0.current.position.z = Math.cos(t * 2) * 30
-    dirLight.current.intensity = Math.sin(t) * 0.25
+    dirLight.current.intensity = Math.sin(t) * 0.5
     dirLight.current.target.position.x = Math.sin(t)
     dirLight.current.target.position.y = Math.cos(t * 1.5)
     dirLight.current.target.position.z = Math.cos(t)

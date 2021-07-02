@@ -48,6 +48,12 @@ export const Player = (props) => {
     (state) => state.isShowingAdminControls
   )
 
+  useEffect(() => {
+    camera.position.set(0, 0, 500)
+    ref.current.position.set(0, 0, 500)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   useFrame(() => {
     // dont update player position if there's a popup
     if (currentPopup !== null || isShowingAdminControls) return

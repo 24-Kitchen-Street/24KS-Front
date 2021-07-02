@@ -1,24 +1,38 @@
-import React, { useRef } from "react"
-import { useGLTF, useMatcapTexture } from "@react-three/drei"
+import React, { useEffect } from "react"
+import { useGLTF } from "@react-three/drei"
+import { streamMaterial } from "../utils/streamMaterial"
+import { AcidMaterial } from "./AcidMaterial"
+import { useFrame } from "@react-three/fiber"
+
+const acidMat = new AcidMaterial()
 
 export function Arena(props) {
-  const group = useRef()
-  const { nodes } = useGLTF("/arena.glb")
+  const { nodes, scene } = useGLTF("/arena2.glb")
 
-  const [matcap] = useMatcapTexture(
-    100, // index of the matcap texture https://github.com/emmelleppi/matcaps/blob/master/matcap-list.json
-    1024 // size of the texture ( 64, 128, 256, 512, 1024 )
-  )
+  useEffect(() => {
+    const clubMat = nodes.structure.material
+    const clubMatScale = 10
+    clubMat.map.repeat.set(clubMatScale, clubMatScale)
+    clubMat.roughnessMap.repeat.set(clubMatScale, clubMatScale)
+    clubMat.roughness = 1
+    clubMat.metalness = 0
+    clubMat.normalMap.repeat.set(clubMatScale, clubMatScale)
+    clubMat.metalnessMap.repeat.set(clubMatScale, clubMatScale)
 
-  return (
-    <mesh
-      ref={group}
-      geometry={nodes.Cube.geometry}
-      scale={[325.27, 325.27, 325.27]}
-    >
-      <meshMatcapMaterial matcap={matcap} />
-    </mesh>
-  )
+    nodes.widescreen0.material = streamMaterial
+    nodes.widescreen1.material = streamMaterial
+
+    const numScreens = 19
+    for (let i = 0; i < numScreens; i++) {
+      nodes[`screen${i}`].material = acidMat
+    }
+  }, [nodes])
+
+  useFrame(({ clock }) => {
+    acidMat.time = clock.getElapsedTime()
+  })
+
+  return <primitive object={scene} scale={40} />
 }
 
-useGLTF.preload("/arena.glb")
+useGLTF.preload("/arena2.glb")

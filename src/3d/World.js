@@ -1,15 +1,13 @@
 import React from "react"
 import { Arena } from "./Arena"
-import { Environment } from "@react-three/drei"
-import { ShaderSphere } from "../3d/ShaderSphere"
 import { Avatars } from "./Avatars"
+import { Lighting } from "./Lighting"
 
 export function World() {
   return (
     <>
-      <Environment preset="sunset" />
+      <Lighting />
       <Avatars />
-      <ShaderSphere />
       <Arena />
     </>
   )

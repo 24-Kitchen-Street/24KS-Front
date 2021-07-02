@@ -21,10 +21,15 @@ const Overlay = styled.div`
   z-index: 9999999999;
 `
 
+const ButtonStyle = styled.div`
+
+`
+
 const Title = styled.div`
   width: 40%;
   font-size: 27px;
 `
+
 
 const ErrorMessage = styled.div`
   margin-top: 1rem;
@@ -50,15 +55,19 @@ export function Register() {
     }
   }
 
+  const animateButton = () => {
+
+  }
+
   return (
     <Overlay>
-      <Title><h1>Entering the club, ghost?</h1></Title>
-      <p>Okay. Can we get your name for track and trace first?</p>
+      <Title><h1>Enter the club, ghost</h1></Title>
+      <p>Can we get your name first, ghost ?</p>
       <Formik onSubmit={handleSubmit} initialValues={{ name: "" }}>
-        <Form>
-          <TextField name="name" autoFocus />
-          <button>Enter</button>
-        </Form>
+          <Form>
+            <TextField name="name" autoFocus />
+                <button onMouseEnter={animateButton()} style={{color: "blue", backgroundColor: "none", transform: [0, 0, 0]}}>Enter</button>
+          </Form>
       </Formik>
       {registerError && <ErrorMessage>{registerError}</ErrorMessage>}
     </Overlay>

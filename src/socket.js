@@ -20,6 +20,11 @@ socket.on("ban-response", (data) => {
   useStore.getState().updateBanResponse(data.message)
 })
 
+// Show message to admin after unban
+socket.on("unban-response", (data) => {
+  useStore.getState().updateUnbanResponse(data.message)
+})
+
 // get data of all players and update state
 socket.on("data", ({ players, messages }) => {
   useStore.getState().updatePlayers(players)
@@ -38,6 +43,10 @@ export const registerPlayer = (data) => {
 
 export const banPlayer = (data) => {
   socket.emit("ban-player", data)
+}
+
+export const unbanIP = (data) => {
+  socket.emit("unban-ip", data)
 }
 
 // send data of our player to server

@@ -25,6 +25,8 @@ export const useStore = create((set) => ({
   updateGeneralError: (generalError) => set(() => ({ generalError })),
   updateBanResponse: (banResponse) => set(() => ({ banResponse })),
   updateUnbanResponse: (unbanResponse) => set(() => ({ unbanResponse })),
+  updateChatMessageResponse: (chatMessageResponse) =>
+    set(() => ({ chatMessageResponse })),
   setCurrentPopup: (currentPopup) => set(() => ({ currentPopup })),
   setIsShowingAdminControls: (isShowingAdminControls) =>
     set(() => ({ isShowingAdminControls })),

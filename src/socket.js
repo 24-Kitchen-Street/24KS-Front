@@ -25,6 +25,11 @@ socket.on("unban-response", (data) => {
   useStore.getState().updateUnbanResponse(data.message)
 })
 
+// Show message to admin after unban
+socket.on("chat-message-response", (data) => {
+  useStore.getState().updateChatMessageResponse(data.message)
+})
+
 // get data of all players and update state
 socket.on("data", ({ players, messages }) => {
   useStore.getState().updatePlayers(players)
@@ -56,6 +61,7 @@ export const sendPlayerData = (data) => {
 
 export const sendChatMessage = (data) => {
   socket.emit("chat-message", data)
+  useStore.getState().updateChatMessageResponse(null)
 }
 
 // Check ping every so often

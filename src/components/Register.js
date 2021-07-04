@@ -4,6 +4,7 @@ import { registerPlayer } from "../socket"
 import { useEffect } from "react"
 import { Formik, Form } from "formik"
 import { TextField } from "./form/TextField"
+import { ErrorMessage } from "./form/ErrorMessage"
 
 const params = new URL(document.location).searchParams
 const showPass = params.get("admin") === "1"
@@ -22,11 +23,6 @@ const Overlay = styled.div`
   background: rgba(0, 0, 0, 0.5);
   color: white;
   z-index: 9999999999;
-`
-
-const ErrorMessage = styled.div`
-  margin-top: 1rem;
-  color: red;
 `
 
 const FieldGroup = styled.div`

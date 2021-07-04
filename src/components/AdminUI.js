@@ -1,6 +1,6 @@
 import { Form, Formik } from "formik"
 import styled from "styled-components"
-import { banPlayer } from "../socket"
+import { banPlayer, unbanIP } from "../socket"
 import { useStore } from "../store"
 import { TextField } from "./form/TextField"
 
@@ -29,7 +29,7 @@ const UI = styled.div`
 `
 
 export function AdminUI() {
-  const handleSubmit = ({ name }) => {
+  const handleBanSubmit = ({ name }) => {
     if (name !== "") {
       banPlayer({
         name,
@@ -37,7 +37,16 @@ export function AdminUI() {
     }
   }
 
+  const handleUnbanSubmit = ({ address }) => {
+    if (address !== "") {
+      unbanIP({
+        address,
+      })
+    }
+  }
+
   const banResponse = useStore((state) => state.banResponse)
+  const unbanResponse = useStore((state) => state.unbanResponse)
   const isShowing = useStore((state) => state.isShowingAdminControls)
   const setControls = useStore((state) => state.setIsShowingAdminControls)
 
@@ -47,13 +56,22 @@ export function AdminUI() {
       {isShowing && (
         <>
           <h4>Ban User</h4>
-          <Formik onSubmit={handleSubmit} initialValues={{ name: "" }}>
+          <Formik onSubmit={handleBanSubmit} initialValues={{ name: "" }}>
             <Form>
               <TextField name="name" />
               <button type="submit">Go</button>
             </Form>
           </Formik>
           {banResponse && <strong>{banResponse}</strong>}
+
+          <h4>Unban IP Address</h4>
+          <Formik onSubmit={handleUnbanSubmit} initialValues={{ address: "" }}>
+            <Form>
+              <TextField name="address" />
+              <button type="submit">Go</button>
+            </Form>
+          </Formik>
+          {unbanResponse && <strong>{unbanResponse}</strong>}
         </>
       )}
     </UI>

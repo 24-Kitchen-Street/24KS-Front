@@ -11,7 +11,7 @@ const tempObject = new Object3D()
 let player
 
 const memoArray = (m = 1) =>
-  Float32Array.from(new Array(maxInstances * 3).fill())
+  Float32Array.from(new Array(maxInstances * m).fill())
 
 export function InstancedAvatars({ materialConfig, players }) {
   const meshRef = useRef()
@@ -65,7 +65,6 @@ export function InstancedAvatars({ materialConfig, players }) {
     meshRef.current.geometry.attributes.color.needsUpdate = true
     meshRef.current.geometry.attributes.speed.needsUpdate = true
     meshRef.current.instanceMatrix.needsUpdate = true
-    materialConfig.time = clock.getElapsedTime()
   })
   return (
     <instancedMesh

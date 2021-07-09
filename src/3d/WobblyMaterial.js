@@ -10,10 +10,8 @@ export const WobblyMaterial = ({ materialConfig, from }) => (
   <ComponentMaterial
     from={from}
     uniforms={{
-      speed: { value: materialConfig.speed, type: "float" },
+      // speed: { value: materialConfig.speed, type: "float" },
       time: { value: materialConfig.time, type: "float" },
-      frequency: { value: materialConfig.frequency, type: "float" },
-      amplitude: { value: materialConfig.amplitude, type: "float" },
     }}
     {...materialConfig}
   >
@@ -24,8 +22,8 @@ export const WobblyMaterial = ({ materialConfig, from }) => (
     vec3 displace(vec3 point) {
       float amp = amplitude * (point.y * .5) * 1.;
       float t = time + point.x * 0.1 + point.y * 0.1;
-      float sp = speed * 1.;
-      float fq = frequency * 3.;
+      float sp = speed * 10.;
+      float fq = frequency * 1.5;
       point.x += sin(point.y * fq + t * sp) * amp;
       point.z += cos(point.y * fq + t * sp) * amp;
       return point;

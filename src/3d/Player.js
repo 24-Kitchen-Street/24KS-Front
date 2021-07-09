@@ -4,7 +4,7 @@ import * as THREE from "three"
 import React, { useEffect, useRef, useState } from "react"
 import { useThree, useFrame } from "@react-three/fiber"
 import { Object3D, Vector3 } from "three"
-import { TICK_INTERVAL } from "../config"
+import { CLUB_ENTRANCE, INTRO_POSITION, TICK_INTERVAL } from "../config"
 import { sendPlayerData } from "../socket"
 import { useInterval } from "../utils/useInterval"
 import { useStore } from "../store"
@@ -43,16 +43,25 @@ export const Player = (props) => {
   const { camera } = useThree()
   const ref = useRef(new Object3D())
   const velocity = useRef(new Vector3(0, 0, 0))
-  const { currentPopup } = useStore((state) => state)
+  const currentPopup = useStore((state) => state.currentPopup)
+  const me = useStore((state) => state.me)
   const isShowingAdminControls = useStore(
     (state) => state.isShowingAdminControls
   )
 
   useEffect(() => {
-    camera.position.set(0, 0, 500)
-    ref.current.position.set(0, 0, 500)
+    console.log(me.hasRegistered)
+    if (me.hasRegistered) {
+      camera.position.set(...CLUB_ENTRANCE)
+      ref.current.position.set(...CLUB_ENTRANCE)
+    } else {
+      const [x, y, z] = INTRO_POSITION
+      const offset = 10
+      camera.position.set(x, y, z + offset)
+      ref.current.position.set(x, y, z + offset)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [me.hasRegistered])
 
   useFrame(() => {
     // dont update player position if there's a popup

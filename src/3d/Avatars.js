@@ -20,28 +20,33 @@ const tempPos = new Vector3()
 export function Avatars() {
   const players = useStore((state) => state.players)
   const me = useStore((state) => state.me)
+  const skinPlayer = useStore((state) => state.skinPlayer)
 
-  const [everyoneElse, setEveryoneElse] = useState([])
+  const [visiblePlayers, setVisiblePlayers] = useState([])
   const [nearByPlayers, setNearby] = useState([])
 
   const { camera } = useThree()
 
   useEffect(() => {
-    // TODO: could probably do this with one big loop rather than 3 filters
-    setEveryoneElse(players.filter(({ id }) => id !== me.id))
+    if (me.isValid) {
+      setVisiblePlayers(players.filter(({ id }) => id !== me.id))
+    } else {
+      setVisiblePlayers([skinPlayer])
+    }
+
     setNearby(
       players.filter(({ position, id }) => {
         tempPos.set(...position)
         return id !== me.id && tempPos.distanceTo(camera.position) < 20
       })
     )
-  }, [players, me.id, camera.position])
+  }, [players, me.id, camera.position, me.isValid])
 
   return (
     <>
       <InstancedAvatars
         materialConfig={materialConfig}
-        players={everyoneElse}
+        players={visiblePlayers}
       />
       {nearByPlayers.map((player) => (
         <AvatarUI key={player.id} {...player} />

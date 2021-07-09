@@ -1,8 +1,16 @@
 import create from "zustand"
-import { MAX_MESSAGES } from "./config"
+import { MAX_MESSAGES, INTRO_POSITION } from "./config"
 
 export const useStore = create((set) => ({
   players: [],
+  skinPlayer: {
+    position: INTRO_POSITION,
+    rotation: [0, 0, 0],
+    color: [1, 0, 1],
+    wobbleSpeed: 0.5,
+    wobbleAmplitude: 0.5,
+    wobbleFrequency: 0.5,
+  },
   me: {
     isValid: false,
   },

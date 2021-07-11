@@ -36,6 +36,8 @@ export function Register() {
   const me = useStore((state) => state.me)
   const setCurrentPopup = useStore((state) => state.setCurrentPopup)
   const registerError = useStore((state) => state.registerError)
+  const skinPlayer = useStore((state) => state.skinPlayer)
+  const updateSkinPlayer = useStore((state) => state.updateSkinPlayer)
 
   useEffect(() => {
     if (me.isValid) {
@@ -48,6 +50,7 @@ export function Register() {
       registerPlayer({
         name,
         adminPassword,
+        ...skinPlayer,
       })
     }
   }
@@ -68,6 +71,29 @@ export function Register() {
               <TextField name="adminPassword" type="password" />
             </FieldGroup>
           )}
+
+          {[
+            ["wobbleSpeed", "Speed"],
+            ["wobbleAmplitude", "Amplitude"],
+            ["wobbleFrequency", "Frequency"],
+          ].map(([id, name]) => (
+            <FieldGroup key={id}>
+              <label>{name}</label>
+              <input
+                type="range"
+                id={id}
+                name={id}
+                step="0.01"
+                min="0"
+                max="1"
+                value={skinPlayer[id]}
+                onChange={({ target }) => {
+                  const val = parseFloat(target.value)
+                  updateSkinPlayer({ [id]: val })
+                }}
+              />
+            </FieldGroup>
+          ))}
 
           <button type="submit">Go</button>
         </Form>

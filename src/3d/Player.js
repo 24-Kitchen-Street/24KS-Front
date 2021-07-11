@@ -50,7 +50,6 @@ export const Player = (props) => {
   )
 
   useEffect(() => {
-    console.log(me.hasRegistered)
     if (me.hasRegistered) {
       camera.position.set(...CLUB_ENTRANCE)
       ref.current.position.set(...CLUB_ENTRANCE)

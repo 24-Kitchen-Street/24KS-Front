@@ -26,6 +26,15 @@ export const useStore = create((set) => ({
     set((state) => ({
       feed: [...messages, ...state.feed].slice(0, MAX_MESSAGES),
     })),
+  updateSkinPlayer: (properties) => {
+    return set((state) => ({
+      ...state,
+      skinPlayer: {
+        ...state.skinPlayer,
+        ...properties,
+      },
+    }))
+  },
   updatePlayers: (players) => set(() => ({ players })),
   updateMe: (me) => set(() => ({ me })),
   updateLatency: (latency) => set(() => ({ latency })),

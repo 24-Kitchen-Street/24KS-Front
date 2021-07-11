@@ -40,7 +40,7 @@ export function Avatars() {
         return id !== me.id && tempPos.distanceTo(camera.position) < 20
       })
     )
-  }, [players, me.id, camera.position, me.isValid])
+  }, [players, me.id, camera.position, me.isValid, skinPlayer])
 
   return (
     <>

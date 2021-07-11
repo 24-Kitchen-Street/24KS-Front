@@ -1,13 +1,15 @@
 import { useStore } from "../store"
 import styled from "styled-components"
 import { registerPlayer } from "../socket"
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
 import { Formik, Form } from "formik"
 import { TextField } from "./form/TextField"
 import { ErrorMessage } from "./form/ErrorMessage"
+import { Color } from "three"
 
 const params = new URL(document.location).searchParams
 const showPass = params.get("admin") === "1"
+const tempColor = new Color()
 
 const Overlay = styled.div`
   position: absolute;
@@ -38,6 +40,10 @@ export function Register() {
   const registerError = useStore((state) => state.registerError)
   const skinPlayer = useStore((state) => state.skinPlayer)
   const updateSkinPlayer = useStore((state) => state.updateSkinPlayer)
+  const hexColor = useMemo(
+    () => `#${tempColor.setRGB(...skinPlayer.color).getHexString()}`,
+    [skinPlayer.color]
+  )
 
   useEffect(() => {
     if (me.isValid) {
@@ -94,6 +100,20 @@ export function Register() {
               />
             </FieldGroup>
           ))}
+
+          <FieldGroup>
+            <label>Color</label>
+            <input
+              type="color"
+              id="color"
+              name="color"
+              value={hexColor}
+              onChange={({ target }) => {
+                const val = tempColor.set(target.value).toArray()
+                updateSkinPlayer({ color: val })
+              }}
+            />
+          </FieldGroup>
 
           <button type="submit">Go</button>
         </Form>

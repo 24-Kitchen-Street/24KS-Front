@@ -50,9 +50,9 @@ export function InstancedAvatars({ materialConfig, players }) {
       // Update color
       const [r, g, b] = player.color
       const offset = i * 3
-      colorArray[offset] = b
+      colorArray[offset] = r
       colorArray[offset + 1] = g
-      colorArray[offset + 2] = r
+      colorArray[offset + 2] = b
 
       // Update wobble speed, amp, freq
       speedArray[i] = player.wobbleSpeed

@@ -6,10 +6,10 @@ export const useStore = create((set) => ({
   skinPlayer: {
     position: INTRO_POSITION,
     rotation: [0, 0, 0],
-    color: [1, 0, 1],
-    wobbleSpeed: 0.5,
-    wobbleAmplitude: 0.5,
-    wobbleFrequency: 0.5,
+    color: [Math.random(), Math.random(), Math.random()],
+    wobbleSpeed: Math.random(),
+    wobbleAmplitude: Math.random(),
+    wobbleFrequency: Math.random(),
   },
   me: {
     isValid: false,

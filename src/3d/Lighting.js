@@ -1,6 +1,8 @@
+import { Environment } from "@react-three/drei"
 import { useFrame, useThree } from "@react-three/fiber"
 import React, { useEffect, useRef } from "react"
 import { Color } from "three"
+import { useStore } from "../store"
 
 const colorA = new Color("#fa34fa")
 const colorB = new Color("#15e6df")
@@ -10,6 +12,7 @@ export function Lighting() {
   const dirLight = useRef()
 
   const { scene } = useThree()
+  const me = useStore((state) => state.me)
 
   useEffect(() => {
     scene.add(dirLight.current.target)
@@ -26,22 +29,25 @@ export function Lighting() {
   })
   return (
     <>
+      {!me.isValid && <Environment preset="sunset" />}
       <directionalLight ref={dirLight} color={colorB} />
-      <pointLight distance={100} position={[0, 0, 500]} color={colorA} />
-      <pointLight distance={100} position={[0, 0, 200]} color={colorB} />
-      <pointLight
-        ref={danceLight0}
-        distance={100}
-        intensity={10}
-        color={colorA}
-      />
+      <group>
+        <pointLight distance={100} position={[0, 0, 500]} color={colorA} />
+        <pointLight distance={100} position={[0, 0, 200]} color={colorB} />
+        <pointLight
+          ref={danceLight0}
+          distance={100}
+          intensity={10}
+          color={colorA}
+        />
 
-      <pointLight
-        ref={danceLight0}
-        distance={100}
-        intensity={10}
-        color={colorB}
-      />
+        <pointLight
+          ref={danceLight0}
+          distance={100}
+          intensity={10}
+          color={colorB}
+        />
+      </group>
     </>
   )
 }

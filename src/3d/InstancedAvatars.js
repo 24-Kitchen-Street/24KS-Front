@@ -1,58 +1,78 @@
 // Adapted from https://codesandbox.io/s/instanced-vertex-colors-8fo01
 
-import * as THREE from "three"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useMemo, useRef } from "react"
 import { useFrame } from "@react-three/fiber"
 import { useGLTF } from "@react-three/drei"
 import { WobblyMaterial } from "./WobblyMaterial"
+import { InstancedBufferAttribute, Object3D } from "three"
 
-const maxInstances = 500
-
-const tempObject = new THREE.Object3D()
-
-// For all instances that dont have players assigned, put them far away
-// TODO: Maybe there's a less hacky way to do this??
-const hiddenObject = new THREE.Object3D()
-hiddenObject.position.set(9999, 9999, 9999)
-hiddenObject.updateMatrix()
-
+const maxInstances = 1000
+const tempObject = new Object3D()
 let player
+
+const memoArray = (m = 1) =>
+  Float32Array.from(new Array(maxInstances * m).fill())
 
 export function InstancedAvatars({ materialConfig, players }) {
   const meshRef = useRef()
   const { nodes } = useGLTF("/avatar.glb")
-  const [shouldPurge, setShouldPurge] = useState(false)
+
+  const colorArray = useMemo(() => memoArray(3), [])
+  const speedArray = useMemo(() => memoArray(), [])
+  const ampArray = useMemo(() => memoArray(), [])
+  const freqArray = useMemo(() => memoArray(), [])
 
   useEffect(() => {
-    setShouldPurge(true)
-  }, [players.length])
+    const attributes = [
+      ["color", colorArray, 3],
+      ["speed", speedArray, 1],
+      ["frequency", freqArray, 1],
+      ["amplitude", ampArray, 1],
+    ]
 
-  useFrame(({ clock }) => {
-    // Only loop as much as we need
-    const count = shouldPurge ? maxInstances : players.length
+    attributes.forEach((item) => {
+      nodes.tentaghost.geometry.setAttribute(
+        item[0],
+        new InstancedBufferAttribute(item[1], item[2])
+      )
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-    for (let i = 0; i < count; i++) {
+  useFrame(() => {
+    for (let i = 0; i < players.length; i++) {
       player = players[i]
-      if (player) {
-        tempObject.position.set(...player.position)
-        tempObject.rotation.set(...player.rotation)
-        tempObject.updateMatrix()
-        meshRef.current.setMatrixAt(i, tempObject.matrix)
-      } else if (shouldPurge) {
-        // If the number of players change, hide any loose instances
-        meshRef.current.setMatrixAt(i, hiddenObject.matrix)
-      }
+      tempObject.position.set(...player.position)
+      tempObject.rotation.set(...player.rotation)
+      tempObject.updateMatrix()
+      meshRef.current.setMatrixAt(i, tempObject.matrix)
+
+      // Update color
+      const [r, g, b] = player.color
+      const offset = i * 3
+      colorArray[offset] = r
+      colorArray[offset + 1] = g
+      colorArray[offset + 2] = b
+
+      // Update wobble speed, amp, freq
+      speedArray[i] = player.wobbleSpeed
+      ampArray[i] = player.wobbleAmplitude
+      freqArray[i] = player.wobbleFrequency
     }
 
+    meshRef.current.geometry.attributes.color.needsUpdate = true
+    meshRef.current.geometry.attributes.speed.needsUpdate = true
+    meshRef.current.geometry.attributes.amplitude.needsUpdate = true
+    meshRef.current.geometry.attributes.frequency.needsUpdate = true
     meshRef.current.instanceMatrix.needsUpdate = true
-    materialConfig.time = clock.getElapsedTime()
-    setShouldPurge(false)
   })
+
   return (
     <instancedMesh
       ref={meshRef}
       args={[null, null, maxInstances]}
       geometry={nodes.tentaghost.geometry}
+      count={players.length}
     >
       <WobblyMaterial materialConfig={materialConfig} />
     </instancedMesh>

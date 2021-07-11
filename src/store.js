@@ -1,8 +1,16 @@
 import create from "zustand"
-import { MAX_MESSAGES } from "./config"
+import { MAX_MESSAGES, INTRO_POSITION } from "./config"
 
 export const useStore = create((set) => ({
   players: [],
+  skinPlayer: {
+    position: INTRO_POSITION,
+    rotation: [0, 0, 0],
+    color: [Math.random(), Math.random(), Math.random()],
+    wobbleSpeed: Math.random(),
+    wobbleAmplitude: Math.random(),
+    wobbleFrequency: Math.random(),
+  },
   me: {
     isValid: false,
   },
@@ -18,6 +26,15 @@ export const useStore = create((set) => ({
     set((state) => ({
       feed: [...messages, ...state.feed].slice(0, MAX_MESSAGES),
     })),
+  updateSkinPlayer: (properties) => {
+    return set((state) => ({
+      ...state,
+      skinPlayer: {
+        ...state.skinPlayer,
+        ...properties,
+      },
+    }))
+  },
   updatePlayers: (players) => set(() => ({ players })),
   updateMe: (me) => set(() => ({ me })),
   updateLatency: (latency) => set(() => ({ latency })),

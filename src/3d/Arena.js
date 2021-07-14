@@ -3,8 +3,21 @@ import { useGLTF } from "@react-three/drei"
 import { streamMaterial } from "../utils/streamMaterial"
 import { AcidMaterial } from "./AcidMaterial"
 import { useFrame } from "@react-three/fiber"
+import { Box3, Vector3 } from "three"
 
 const acidMat = new AcidMaterial()
+
+// Arena bounds for collision detection
+export const bounds = {
+  dancefloor: new Box3().setFromCenterAndSize(
+    new Vector3(0, 0, 0),
+    new Vector3(220, 160, 310)
+  ),
+  corridor: new Box3().setFromCenterAndSize(
+    new Vector3(0, 0, 320),
+    new Vector3(90, 30, 330)
+  ),
+}
 
 export function Arena(props) {
   const { nodes, scene } = useGLTF("/arena2.glb")
@@ -32,7 +45,16 @@ export function Arena(props) {
     acidMat.time = clock.getElapsedTime()
   })
 
-  return <primitive object={scene} scale={40} />
+  return (
+    <>
+      <primitive object={scene} scale={40} />
+
+      {/* Uncomment this to see collison bounds of the arena */}
+      {/* {Object.values(bounds).map((b) => (
+        <box3Helper box={b} />
+      ))} */}
+    </>
+  )
 }
 
 useGLTF.preload("/arena2.glb")

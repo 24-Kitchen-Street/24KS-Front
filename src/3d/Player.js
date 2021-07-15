@@ -8,6 +8,7 @@ import { CLUB_ENTRANCE, INTRO_POSITION, TICK_INTERVAL } from "../config"
 import { sendPlayerData } from "../socket"
 import { useInterval } from "../utils/useInterval"
 import { useStore } from "../store"
+import { bounds } from "./Arena"
 
 const SPEED = 2
 const keys = { KeyW: "forward", KeyS: "backward", KeyA: "left", KeyD: "right" }
@@ -40,6 +41,7 @@ const usePlayerControls = () => {
 
 export const Player = (props) => {
   const { forward, backward, left, right } = usePlayerControls()
+  const [currBound, setCurrBound] = useState("corridor")
   const { camera } = useThree()
   const ref = useRef(new Object3D())
   const velocity = useRef(new Vector3(0, 0, 0))
@@ -66,7 +68,9 @@ export const Player = (props) => {
     // dont update player position if there's a popup
     if (currentPopup !== null || isShowingAdminControls) return
 
-    camera.position.copy(ref.current.position)
+    const currPos = ref.current.position
+
+    camera.position.copy(currPos)
     frontVector.set(0, 0, Number(backward) - Number(forward))
     sideVector.set(Number(left) - Number(right), 0, 0)
     direction
@@ -75,7 +79,22 @@ export const Player = (props) => {
       .multiplyScalar(SPEED)
       .applyEuler(camera.rotation)
     velocity.current.set(direction.x, direction.y, direction.z)
-    ref.current.position.add(velocity.current)
+    currPos.add(velocity.current)
+
+    // Constrain position to club walls
+    if (currBound === "corridor") {
+      bounds.corridor.clampPoint(currPos, currPos)
+
+      if (bounds.dancefloor.containsPoint(currPos)) {
+        setCurrBound("dancefloor")
+      }
+    } else if (currBound === "dancefloor") {
+      bounds.dancefloor.clampPoint(currPos, currPos)
+
+      if (bounds.corridor.containsPoint(currPos)) {
+        setCurrBound("corridor")
+      }
+    }
   })
 
   useInterval(() => {

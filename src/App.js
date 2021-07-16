@@ -14,6 +14,7 @@ import { Chat } from "./components/Chat"
 import { ErrorScreen } from "./components/ErrorScreen"
 import { AdminUI } from "./components/AdminUI"
 import { SHOW_DEBUG } from "./config"
+import { FollowingUI } from "./components/FollowingUI"
 
 function App() {
   const me = useStore((state) => state.me)
@@ -56,6 +57,7 @@ function App() {
         }[currentPopup]
       }
       {!isClubModeEnabled && <Feed />}
+      {isClubModeEnabled && <FollowingUI />}
       {SHOW_DEBUG && <DebugInfo />}
       {me.isAdmin && <AdminUI />}
     </>

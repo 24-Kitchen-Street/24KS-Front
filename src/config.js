@@ -9,5 +9,5 @@ export const STREAM_URL =
 
 export const TICK_INTERVAL = 50
 export const MAX_MESSAGES = 100
-export const CLUB_ENTRANCE = [0, 0, 500]
-export const INTRO_POSITION = [300, 300, 300]
+export const CLUB_ENTRANCE = [0, 0, 450]
+export const INTRO_POSITION = [0, 0, 600]

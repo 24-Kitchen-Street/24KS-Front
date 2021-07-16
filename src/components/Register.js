@@ -6,6 +6,7 @@ import { Formik, Form } from "formik"
 import { TextField } from "./form/TextField"
 import { ErrorMessage } from "./form/ErrorMessage"
 import { Color } from "three"
+import { playVideo } from "../utils/streamMaterial"
 
 const params = new URL(document.location).searchParams
 const showPass = params.get("admin") === "1"
@@ -58,6 +59,8 @@ export function Register() {
         adminPassword,
         ...skinPlayer,
       })
+
+      playVideo()
     }
   }
 

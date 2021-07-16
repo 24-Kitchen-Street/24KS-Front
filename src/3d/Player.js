@@ -3,7 +3,12 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useThree, useFrame } from "@react-three/fiber"
 import { Object3D, Vector3 } from "three"
-import { CLUB_ENTRANCE, INTRO_POSITION, TICK_INTERVAL } from "../config"
+import {
+  CAM_CHANGE_RATE,
+  CLUB_ENTRANCE,
+  INTRO_POSITION,
+  TICK_INTERVAL,
+} from "../config"
 import { sendPlayerData } from "../socket"
 import { useInterval } from "../utils/useInterval"
 import { useStore } from "../store"
@@ -16,6 +21,7 @@ const direction = new Vector3()
 const frontVector = new Vector3()
 const sideVector = new Vector3()
 const center = new Vector3(0, 0, 0)
+const tempVec = new Vector3(0, 0, 0)
 
 const usePlayerControls = () => {
   const [movement, setMovement] = useState({
@@ -42,6 +48,11 @@ const usePlayerControls = () => {
 export const Player = (props) => {
   const { forward, backward, left, right } = usePlayerControls()
   const [currBound, setCurrBound] = useState("corridor")
+  const [cameraMode, setCameraMode] = useState({
+    isFollowing: false,
+    lastChange: Date.now(),
+    followingPlayerIndex: null,
+  })
   const { camera } = useThree()
   const ref = useRef(new Object3D())
   const velocity = useRef(new Vector3(0, 0, 0))
@@ -71,15 +82,39 @@ export const Player = (props) => {
     const currPos = ref.current.position
 
     if (me.isClubMode) {
-      // Move the camera automatically in club mode
-      const t = clock.getElapsedTime()
+      const state = useStore.getState()
 
-      const x = Math.cos(t * 0.2) * 80
-      const y = Math.sin(t * 0.05) * 80
-      const z = Math.sin(t * 0.1) * 80
+      if (cameraMode.lastChange + CAM_CHANGE_RATE < Date.now()) {
+        setCameraMode({
+          isFollowing: !cameraMode.isFollowing,
+          lastChange: Date.now(),
+          followingPlayerIndex: Math.floor(
+            Math.random() * state.players.length
+          ),
+        })
+      }
 
-      currPos.set(x, y, z)
-      camera.lookAt(center)
+      if (cameraMode.isFollowing) {
+        // Follow a player
+        const player = state.players[cameraMode.followingPlayerIndex]
+        const [x, y, z] = player.position
+
+        if (player) {
+          currPos.set(x, y, z + 10)
+          tempVec.set(0, 0, 10)
+          camera.rotation.set(0, 0, 0)
+        }
+      } else {
+        // Move the camera automatically in club mode
+        const t = clock.getElapsedTime()
+
+        const x = Math.cos(t * 0.2) * 80
+        const y = Math.sin(t * 0.05) * 80
+        const z = Math.sin(t * 0.1) * 80
+
+        currPos.set(x, y, z)
+        camera.lookAt(center)
+      }
     } else {
       frontVector.set(0, 0, Number(backward) - Number(forward))
       sideVector.set(Number(left) - Number(right), 0, 0)

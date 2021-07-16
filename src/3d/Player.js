@@ -48,15 +48,13 @@ const usePlayerControls = () => {
 export const Player = (props) => {
   const { forward, backward, left, right } = usePlayerControls()
   const [currBound, setCurrBound] = useState("corridor")
-  const [cameraMode, setCameraMode] = useState({
-    isFollowing: false,
-    lastChange: Date.now(),
-    followingPlayerIndex: null,
-  })
   const { camera } = useThree()
   const ref = useRef(new Object3D())
   const velocity = useRef(new Vector3(0, 0, 0))
   const currentPopup = useStore((state) => state.currentPopup)
+  const updateClubMode = useStore((state) => state.updateClubMode)
+  const clubMode = useStore((state) => state.clubMode)
+
   const me = useStore((state) => state.me)
   const isShowingAdminControls = useStore(
     (state) => state.isShowingAdminControls
@@ -81,30 +79,36 @@ export const Player = (props) => {
 
     const currPos = ref.current.position
 
-    if (me.isClubMode) {
+    if (clubMode.isEnabled) {
       const state = useStore.getState()
+      let skipFollow = false
 
-      if (cameraMode.lastChange + CAM_CHANGE_RATE < Date.now()) {
-        setCameraMode({
-          isFollowing: !cameraMode.isFollowing,
+      if (clubMode.lastChange + CAM_CHANGE_RATE < Date.now()) {
+        updateClubMode({
+          followingIndex:
+            clubMode.followingIndex === -1
+              ? Math.floor(Math.random() * state.players.length)
+              : -1,
           lastChange: Date.now(),
-          followingPlayerIndex: Math.floor(
-            Math.random() * state.players.length
-          ),
         })
       }
 
-      if (cameraMode.isFollowing) {
+      if (clubMode.followingIndex !== -1) {
         // Follow a player
-        const player = state.players[cameraMode.followingPlayerIndex]
-        const [x, y, z] = player.position
+        const player = state.players[clubMode.followingIndex]
 
-        if (player) {
+        if (player && player.id !== me.id) {
+          const [x, y, z] = player.position
           currPos.set(x, y, z + 10)
           tempVec.set(0, 0, 10)
           camera.rotation.set(0, 0, 0)
+        } else {
+          // Dont do follow if its me (the camera ghost)
+          skipFollow = true
         }
-      } else {
+      }
+
+      if (clubMode.followingIndex === -1 || skipFollow) {
         // Move the camera automatically in club mode
         const t = clock.getElapsedTime()
 

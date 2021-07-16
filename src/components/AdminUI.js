@@ -32,9 +32,9 @@ export function AdminUI() {
   const banResponse = useStore((state) => state.banResponse)
   const unbanResponse = useStore((state) => state.unbanResponse)
   const isShowing = useStore((state) => state.isShowingAdminControls)
-  const isClubMode = useStore((state) => state.me.isClubMode)
   const setControls = useStore((state) => state.setIsShowingAdminControls)
-  const updateMe = useStore((state) => state.updateMe)
+  const updateClubMode = useStore((state) => state.updateClubMode)
+  const isClubModeEnabled = useStore((state) => state.clubMode.isEnabled)
 
   const handleBanSubmit = ({ name }) => {
     if (name !== "") {
@@ -53,12 +53,12 @@ export function AdminUI() {
   }
 
   const handleLaunchClubMode = () => {
-    updateMe({ isClubMode: true })
+    updateClubMode({ isEnabled: true })
     setControls(false)
   }
 
   return (
-    !isClubMode && (
+    !isClubModeEnabled && (
       <UI onClick={(e) => e.stopPropagation()}>
         <h3 onClick={() => setControls(!isShowing)}>Admin Controls</h3>
         {isShowing && (

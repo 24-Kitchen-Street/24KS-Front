@@ -11,9 +11,13 @@ export const useStore = create((set) => ({
     wobbleAmplitude: Math.random(),
     wobbleFrequency: Math.random(),
   },
+  clubMode: {
+    isEnabled: false,
+    followingIndex: -1,
+    lastChange: Date.now(),
+  },
   me: {
     isValid: false,
-    isClubMode: false,
   },
   registerError: null,
   generalError: null,
@@ -38,6 +42,8 @@ export const useStore = create((set) => ({
   },
   updatePlayers: (players) => set(() => ({ players })),
   updateMe: (me) => set((state) => ({ me: { ...state.me, ...me } })),
+  updateClubMode: (settings) =>
+    set((state) => ({ clubMode: { ...state.clubMode, ...settings } })),
   updateLatency: (latency) => set(() => ({ latency })),
   updateRegisterError: (registerError) => set(() => ({ registerError })),
   updateGeneralError: (generalError) => set(() => ({ generalError })),

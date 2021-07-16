@@ -17,6 +17,7 @@ import { SHOW_DEBUG } from "./config"
 
 function App() {
   const me = useStore((state) => state.me)
+  const isClubModeEnabled = useStore((state) => state.clubMode.isEnabled)
   const setCurrentPopup = useStore((state) => state.setCurrentPopup)
   const currentPopup = useStore((state) => state.currentPopup)
   const isShowingAdminControls = useStore(
@@ -54,7 +55,7 @@ function App() {
           error: <ErrorScreen />,
         }[currentPopup]
       }
-      {!me.isClubMode && <Feed />}
+      {!isClubModeEnabled && <Feed />}
       {SHOW_DEBUG && <DebugInfo />}
       {me.isAdmin && <AdminUI />}
     </>

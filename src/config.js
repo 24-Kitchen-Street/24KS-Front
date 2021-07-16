@@ -1,7 +1,7 @@
 export const SOCKET_URI =
   process.env.REACT_APP_SOCKET_URI_MODE === "local"
     ? "http://localhost:8080"
-    : "https://back-24ks.herokuapp.com/"
+    : process.env.REACT_APP_SOCKET_URI
 
 export const STREAM_URL =
   process.env.REACT_APP_STREAM_URL ||

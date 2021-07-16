@@ -3,15 +3,14 @@
 - `yarn start` - starts local app, connects to heroku server
 - `yarn dev` - starts local app, connects to local server (you must start this locally, on the other repo)
 
-# Testing a stream
+# Local env vars
 
-You'll need a `.env.local` file in the root of the project to test your own stream URL. It should look like this:
+You'll need to create an `.env.local` file with in the root of the project with some variables such as the socket URI and the stream URL. Example file:
 
 ```
+REACT_APP_SOCKET_URI=https://club-geist.herokuapp.com
 REACT_APP_STREAM_URL=https://mystreamURL.m3u8
 ```
-
-If this environment variable isn't set up, a fallback test stream URL is used
 
 # Admin
 

@@ -5,7 +5,7 @@
 
 # Testing a stream
 
-You'll need a `.env` file in the root of the project to test your own stream URL. It should look like this:
+You'll need a `.env.local` file in the root of the project to test your own stream URL. It should look like this:
 
 ```
 REACT_APP_STREAM_URL=https://mystreamURL.m3u8

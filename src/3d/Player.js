@@ -1,6 +1,5 @@
 // Player controls originally adapted from https://codesandbox.io/s/minecraft-vkgi6
 
-import * as THREE from "three"
 import React, { useEffect, useRef, useState } from "react"
 import { useThree, useFrame } from "@react-three/fiber"
 import { Object3D, Vector3 } from "three"
@@ -13,9 +12,10 @@ import { bounds } from "./Arena"
 const SPEED = 2
 const keys = { KeyW: "forward", KeyS: "backward", KeyA: "left", KeyD: "right" }
 const moveFieldByKey = (key) => keys[key]
-const direction = new THREE.Vector3()
-const frontVector = new THREE.Vector3()
-const sideVector = new THREE.Vector3()
+const direction = new Vector3()
+const frontVector = new Vector3()
+const sideVector = new Vector3()
+const center = new Vector3(0, 0, 0)
 
 const usePlayerControls = () => {
   const [movement, setMovement] = useState({
@@ -64,37 +64,50 @@ export const Player = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me.hasRegistered])
 
-  useFrame(() => {
+  useFrame(({ clock }) => {
     // dont update player position if there's a popup
     if (currentPopup !== null || isShowingAdminControls) return
 
     const currPos = ref.current.position
 
-    camera.position.copy(currPos)
-    frontVector.set(0, 0, Number(backward) - Number(forward))
-    sideVector.set(Number(left) - Number(right), 0, 0)
-    direction
-      .subVectors(frontVector, sideVector)
-      .normalize()
-      .multiplyScalar(SPEED)
-      .applyEuler(camera.rotation)
-    velocity.current.set(direction.x, direction.y, direction.z)
-    currPos.add(velocity.current)
+    if (me.isClubMode) {
+      // Move the camera automatically in club mode
+      const t = clock.getElapsedTime()
 
-    // Constrain position to club walls
-    if (currBound === "corridor") {
-      bounds.corridor.clampPoint(currPos, currPos)
+      const x = Math.cos(t * 0.2) * 80
+      const y = Math.sin(t * 0.05) * 80
+      const z = Math.sin(t * 0.1) * 80
 
-      if (bounds.dancefloor.containsPoint(currPos)) {
-        setCurrBound("dancefloor")
-      }
-    } else if (currBound === "dancefloor") {
-      bounds.dancefloor.clampPoint(currPos, currPos)
+      currPos.set(x, y, z)
+      camera.lookAt(center)
+    } else {
+      frontVector.set(0, 0, Number(backward) - Number(forward))
+      sideVector.set(Number(left) - Number(right), 0, 0)
+      direction
+        .subVectors(frontVector, sideVector)
+        .normalize()
+        .multiplyScalar(SPEED)
+        .applyEuler(camera.rotation)
+      velocity.current.set(direction.x, direction.y, direction.z)
+      currPos.add(velocity.current)
 
-      if (bounds.corridor.containsPoint(currPos)) {
-        setCurrBound("corridor")
+      // Constrain position to club walls
+      if (currBound === "corridor") {
+        bounds.corridor.clampPoint(currPos, currPos)
+
+        if (bounds.dancefloor.containsPoint(currPos)) {
+          setCurrBound("dancefloor")
+        }
+      } else if (currBound === "dancefloor") {
+        bounds.dancefloor.clampPoint(currPos, currPos)
+
+        if (bounds.corridor.containsPoint(currPos)) {
+          setCurrBound("corridor")
+        }
       }
     }
+
+    camera.position.copy(currPos)
   })
 
   useInterval(() => {

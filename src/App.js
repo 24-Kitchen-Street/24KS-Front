@@ -13,6 +13,7 @@ import { Feed } from "./components/Feed"
 import { Chat } from "./components/Chat"
 import { ErrorScreen } from "./components/ErrorScreen"
 import { AdminUI } from "./components/AdminUI"
+import { SHOW_DEBUG } from "./config"
 
 function App() {
   const me = useStore((state) => state.me)
@@ -53,8 +54,8 @@ function App() {
           error: <ErrorScreen />,
         }[currentPopup]
       }
-      <Feed />
-      <DebugInfo />
+      {!me.isClubMode && <Feed />}
+      {SHOW_DEBUG && <DebugInfo />}
       {me.isAdmin && <AdminUI />}
     </>
   )

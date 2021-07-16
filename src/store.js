@@ -13,6 +13,7 @@ export const useStore = create((set) => ({
   },
   me: {
     isValid: false,
+    isClubMode: false,
   },
   registerError: null,
   generalError: null,
@@ -36,7 +37,7 @@ export const useStore = create((set) => ({
     }))
   },
   updatePlayers: (players) => set(() => ({ players })),
-  updateMe: (me) => set(() => ({ me })),
+  updateMe: (me) => set((state) => ({ me: { ...state.me, ...me } })),
   updateLatency: (latency) => set(() => ({ latency })),
   updateRegisterError: (registerError) => set(() => ({ registerError })),
   updateGeneralError: (generalError) => set(() => ({ generalError })),

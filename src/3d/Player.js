@@ -10,6 +10,7 @@ import { useInterval } from "../utils/useInterval"
 import { useStore } from "../store"
 import { bounds } from "./Arena"
 
+
 const SPEED = 2
 const keys = { KeyW: "forward", KeyS: "backward", KeyA: "left", KeyD: "right" }
 const moveFieldByKey = (key) => keys[key]

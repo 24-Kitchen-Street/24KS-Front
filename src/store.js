@@ -11,6 +11,12 @@ export const useStore = create((set) => ({
     wobbleAmplitude: Math.random(),
     wobbleFrequency: Math.random(),
   },
+  // keydown: {
+  //   w : up,
+  //   s : back,
+  //   a : left,
+  //   d : right,
+  // },
   me: {
     isValid: false,
   },

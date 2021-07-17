@@ -13,8 +13,11 @@ import { Feed } from "./components/Feed"
 import { Chat } from "./components/Chat"
 import { ErrorScreen } from "./components/ErrorScreen"
 import { AdminUI } from "./components/AdminUI"
+import { Joystick } from "react-joystick-component"
 
 function App() {
+  // const handleMove = useStote((state) => state.)
+
   const me = useStore((state) => state.me)
   const setCurrentPopup = useStore((state) => state.setCurrentPopup)
   const currentPopup = useStore((state) => state.currentPopup)
@@ -43,6 +46,7 @@ function App() {
         <Player />
         {me.isValid && <PointerLockControls />}
       </Canvas>
+      
       {
         // Only one of these popups can display at a time
         // This is essentially a switch statement, its just neater as an object!

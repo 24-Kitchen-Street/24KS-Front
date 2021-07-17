@@ -5,6 +5,7 @@ import { Lighting } from "./Lighting"
 import { IntroRoom } from "./IntroRoom"
 import { ReflectiveShape } from "./ReflectiveShape"
 import { ShaderSphere } from "./ShaderSphere"
+import { Joystick } from 'react-joystick-component';
 // import { ShapeOne } from "./ShapeOne"
 
 export function World() {
@@ -14,7 +15,6 @@ export function World() {
       <Avatars />
       <Arena />
       <ReflectiveShape />
-
     </>
   )
 }

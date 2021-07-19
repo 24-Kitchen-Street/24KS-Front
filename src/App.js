@@ -13,7 +13,7 @@ import { Feed } from "./components/Feed"
 import { Chat } from "./components/Chat"
 import { ErrorScreen } from "./components/ErrorScreen"
 import { AdminUI } from "./components/AdminUI"
-import { Joystick } from "react-joystick-component"
+import { JoySticks } from './components/JoySticks';
 
 function App() {
   // const handleMove = useStote((state) => state.)
@@ -37,16 +37,25 @@ function App() {
     }
   })
 
+  const handleMove = () => {
+
+  }
+
+  const handleStop = () => {
+
+  }
+
   return (
     <>
-      <Canvas>
+    <JoySticks />
+     <Canvas>
         <Suspense fallback={null}>
           <World />
         </Suspense>
         <Player />
         {me.isValid && <PointerLockControls />}
+        
       </Canvas>
-      
       {
         // Only one of these popups can display at a time
         // This is essentially a switch statement, its just neater as an object!

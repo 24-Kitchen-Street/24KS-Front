@@ -17,6 +17,13 @@ export const useStore = create((set) => ({
   //   a : left,
   //   d : right,
   // },
+  // handleMove: () => 
+  //   set((state) => ({
+  //     forward: false,
+  //     backward: false,
+  //     left: false,
+  //     right: false,
+  //   })),
   me: {
     isValid: false,
   },

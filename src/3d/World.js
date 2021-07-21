@@ -14,7 +14,7 @@ export function World() {
       <Lighting />
       <Avatars />
       <Arena />
-      <ReflectiveShape />
+      {/* <ReflectiveShape /> */}
     </>
   )
 }

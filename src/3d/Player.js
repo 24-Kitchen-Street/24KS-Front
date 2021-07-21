@@ -24,6 +24,13 @@ const usePlayerControls = () => {
     left: false,
     right: false,
   })
+
+  const leftjoyX = useStore(state => state.leftjoyX)
+  const leftjoyY = useStore(state => state.leftjoyY)
+
+  console.log(leftjoyX, leftjoyY)
+
+
   useEffect(() => {
     const handleKeyDown = (e) =>
       setMovement((m) => ({ ...m, [moveFieldByKey(e.code)]: true }))
@@ -51,6 +58,26 @@ export const Player = (props) => {
   const isShowingAdminControls = useStore(
     (state) => state.isShowingAdminControls
   )
+    // if (is mobile device / small device)
+//   useEffect(() => {
+//      updatePointerLock
+//     function onMouseMove( event ) {
+//       const _PI_2 = Math.PI / 2;
+//       const scope = this;
+//       this.minPolarAngle = 0; // radians
+//       this.maxPolarAngle = Math.PI; // radians
+//       if (scope.isLocked === false ) return;
+    
+//       const movementX = event.movementX;
+//       const movementY = event.movementY;
+    
+//       camera.y -= movementX * 0.002;
+//       camera.y -= movementY * 0.002;
+    
+//       camera.x = Math.max( _PI_2 - scope.maxPolarAngle, Math.min( _PI_2 - scope.minPolarAngle, camera.x ) );
+     
+//   }
+// } , [])
 
   useEffect(() => {
     if (me.hasRegistered) {
@@ -62,6 +89,7 @@ export const Player = (props) => {
       camera.position.set(x, y, z + offset)
       ref.current.position.set(x, y, z + offset)
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me.hasRegistered])
 
@@ -73,6 +101,7 @@ export const Player = (props) => {
 
     camera.position.copy(currPos)
     frontVector.set(0, 0, Number(backward) - Number(forward))
+    //x y stays 0, backwards = true, 1 -1, 0 or 1
     sideVector.set(Number(left) - Number(right), 0, 0)
     direction
       .subVectors(frontVector, sideVector)
@@ -103,6 +132,7 @@ export const Player = (props) => {
       position: ref.current.position.toArray(),
       rotation: camera.rotation.toArray(),
     })
+
   }, TICK_INTERVAL)
 
   return <mesh ref={ref} />

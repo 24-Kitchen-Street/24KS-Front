@@ -18,7 +18,8 @@ export function ShapeOne(props) {
     geometry={nodes.distorted1.geometry}
     material={props.material}
     >
-      <primitive object={ scene }  scale={30} />
+      <primitive object={ scene }  scale={30} attach="geometry"/>
+      <meshStandardMaterial color="pink" attach="material" />
      </mesh>
     </>
   )

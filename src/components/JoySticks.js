@@ -1,5 +1,8 @@
+import { useEffect, useState} from "react";
 import { Joystick } from "react-joystick-component"
+import { useStore } from "../store"
 import styled from "styled-components"
+import { sendChatMessage } from "../socket";
 
 const JoysticksContainer = styled.div`
     display: flex;
@@ -13,18 +16,18 @@ const JoysticksContainer = styled.div`
 
 `
 
-const handleMove = () => {
-    
-}
-const handleStop = () => {
-
-}
-
 export function JoySticks () {
+   // updating the store using useStore
+const updateLeftJoy = useStore(state => state.updateLeftJoy)
+
+  function handleEvent (event) {
+    //holder function for right joy & stop
+      console.log(event)    
+  }
     return (
       <JoysticksContainer>
-        <Joystick size={100} baseColor="purple" stickColor="white" move={handleMove} stop={handleStop}></Joystick>
-        <Joystick size={100} baseColor="yellow" stickColor="white" move={handleMove} stop={handleStop}></Joystick>        
+        <Joystick size={100} baseColor="purple" stickColor="white" move={event => updateLeftJoy(event)} stop={handleEvent}></Joystick>
+        <Joystick size={100} baseColor="yellow" stickColor="white" move={handleEvent} stop={handleEvent}></Joystick>        
       </JoysticksContainer>
     )
   }

@@ -11,19 +11,6 @@ export const useStore = create((set) => ({
     wobbleAmplitude: Math.random(),
     wobbleFrequency: Math.random(),
   },
-  // keydown: {
-  //   w : up,
-  //   s : back,
-  //   a : left,
-  //   d : right,
-  // },
-  // handleMove: () => 
-  //   set((state) => ({
-  //     forward: false,
-  //     backward: false,
-  //     left: false,
-  //     right: false,
-  //   })),
   me: {
     isValid: false,
   },
@@ -48,6 +35,40 @@ export const useStore = create((set) => ({
       },
     }))
   },
+  leftjoyX: 0,
+  leftjoyY: 0,
+  // movementLeftJoy: (state) => {
+  //   return set((state) => ({
+  //     ...state,
+  //     joystickLeft: {
+  //         ...state.x,
+  //         ...state.y,
+  //     }
+  //   }))
+  // },
+  updateLeftJoy: (event) => set(state => ({
+    leftjoyX: event.x,
+    leftjoyY: event.y
+  })),
+  stopLeftJoy: (state) => {
+    return set((state) => ({
+      ...state,
+      joystickLeft: {
+        x : state, ...state.x,
+        y: state, ...state.y 
+      }
+    }))
+  },
+  // updateRightJoy: (position) => {
+  //   return set((state) => ({
+  //     ...state,
+  //     joystickPositions: {
+  //       ...position.x,
+  //       ...position.y,
+  //       ...position
+  //     }
+  //   }))
+  // },
   updatePlayers: (players) => set(() => ({ players })),
   updateMe: (me) => set(() => ({ me })),
   updateLatency: (latency) => set(() => ({ latency })),

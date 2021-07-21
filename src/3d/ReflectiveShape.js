@@ -5,6 +5,13 @@ import { MeshDistortMaterial, useTexture} from "@react-three/drei";
 import { ShapeOne } from './ShapeOne';
 
 
+
+// const envTexture = new THREE.TextureLoader();
+// envTexture.load('_front.png', function (texture){
+//          const material = new THREE.MeshBasicMaterial();
+//          material.envMap = texture;
+// });
+
 export function ReflectiveShape() {
     // const envMap = useTexture("_front.png", { path: "/Spacebox1" })
     const ref = useRef()
@@ -13,18 +20,7 @@ export function ReflectiveShape() {
     return (
     <>
         <mesh>            
-            <MeshDistortMaterial
-                // envMap={envMap}
-                // bumpMap={bumpMap}
-                color={"#FF1493"}
-                roughness={0.1}
-                metalness={1}
-                bumpScale={0.005}
-                clearcoat={1}
-                clearcoatRoughness={1}
-                radius={1}
-                distort={0.4}
-              />
+            <meshStandardMaterial color="pink" attach="material" />
               {/* <meshBasicMaterial color={"#FF1493"} /> */}
               <ShapeOne />
              

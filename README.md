@@ -10,6 +10,7 @@ You'll need to create an `.env.local` file with in the root of the project with 
 ```
 REACT_APP_SOCKET_URI=https://club-geist.herokuapp.com
 REACT_APP_STREAM_URL=https://mystreamURL.m3u8
+REACT_APP_CAM_CHANGE_RATE=1000
 ```
 
 # Admin

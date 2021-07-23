@@ -7,6 +7,7 @@ import { TextField } from "./form/TextField"
 import { ErrorMessage } from "./form/ErrorMessage"
 import { Color } from "three"
 import { SHOW_ADMIN } from "../config"
+import { playVideo } from "../utils/streamMaterial"
 
 const tempColor = new Color()
 
@@ -57,6 +58,8 @@ export function Register() {
         adminPassword,
         ...skinPlayer,
       })
+
+      playVideo()
     }
   }
 

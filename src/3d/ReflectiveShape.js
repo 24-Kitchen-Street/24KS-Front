@@ -1,8 +1,8 @@
 import * as THREE from "three";
 import React, { Suspense, useRef, useState } from "react";
 import { useFrame, useResource  } from "@react-three/fiber";
-import { Icosahedron, MeshDistortMaterial, useCubeTexture, useTexture} from "@react-three/drei";
-
+import { MeshDistortMaterial, useTexture} from "@react-three/drei";
+import { ShapeOne } from './ShapeOne';
 
 function Movement({material}) {
     const main = useRef()
@@ -13,15 +13,13 @@ function Movement({material}) {
         main.current.rotation.x = THREE.MathUtils.lerp(main.current.rotation.x, mouse.y * Math.PI, 0.1)
     })
     return (
-    <Icosahedron args={[1, 4]} ref={main}  position={[ 0,0,0 ]} />
+    <ShapeOne ref={main}  position={[ 0,0,0 ]} />
     )
 }
 
+
 export function ReflectiveShape() {
-    // const bumpMap = useTexture("/bump.jpg")
-    const envMap = useCubeTexture(["_back.png", "_bottom.png", "_front.png", "_left.png", "_right.png", "_top.png"], { path: "/Spacebox1" })
-    // const [matRef, material] = useResource()
-    // const [material, set] = useState()
+    // const envMap = useTexture("_front.png", { path: "/Spacebox1" })
     const ref = useRef()
 
 
@@ -29,8 +27,7 @@ export function ReflectiveShape() {
     <>
         <mesh>            
             <MeshDistortMaterial
-                // ref={matRef}
-                envMap={envMap}
+                // envMap={envMap}
                 // bumpMap={bumpMap}
                 color={"#FF1493"}
                 roughness={0.1}
@@ -41,7 +38,7 @@ export function ReflectiveShape() {
                 radius={1}
                 distort={0.4}
               />
-              <Movement />
+              <ShapeOne />
              
         </mesh>
 

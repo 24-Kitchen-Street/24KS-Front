@@ -16,6 +16,10 @@ REACT_APP_STREAM_URL=https://mystreamURL.m3u8
 
 Add `?admin=1` to the URL to bring up admin controls. When no environment var is set, password defaults to "dev".
 
+# FPS and latency
+
+Add `?debug=1` to show FPS and latency in the corner
+
 # Testing errors
 
 - When sending a chat message, you can send "test-error-1" to emulate a server error

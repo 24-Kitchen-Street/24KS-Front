@@ -78,12 +78,14 @@ export const Player = (props) => {
     if (currentPopup !== null || isShowingAdminControls) return
 
     const currPos = ref.current.position
+    let lookCenter = true
 
     if (clubMode.isEnabled) {
       const state = useStore.getState()
       let skipFollow = false
 
       if (clubMode.lastChange + CAM_CHANGE_RATE < Date.now()) {
+        console.log("change")
         updateClubMode({
           followingIndex:
             clubMode.followingIndex === -1
@@ -101,7 +103,7 @@ export const Player = (props) => {
           const [x, y, z] = player.position
           currPos.set(x, y, z + 10)
           tempVec.set(0, 0, 10)
-          camera.rotation.set(0, 0, 0)
+          lookCenter = false
         } else {
           // Dont do follow if its me (the camera ghost)
           skipFollow = true
@@ -117,7 +119,6 @@ export const Player = (props) => {
         const z = Math.sin(t * 0.1) * 80
 
         currPos.set(x, y, z)
-        camera.lookAt(center)
       }
     } else {
       frontVector.set(0, 0, Number(backward) - Number(forward))
@@ -147,6 +148,12 @@ export const Player = (props) => {
     }
 
     camera.position.copy(currPos)
+
+    if (lookCenter) {
+      camera.lookAt(center)
+    } else {
+      camera.rotation.set(0, 0, 0)
+    }
   })
 
   useInterval(() => {

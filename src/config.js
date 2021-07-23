@@ -15,4 +15,5 @@ export const CLUB_ENTRANCE = [0, 0, 450]
 export const INTRO_POSITION = [0, 0, 600]
 export const SHOW_ADMIN = params.get("admin") === "1"
 export const SHOW_DEBUG = params.get("debug") === "1"
-export const CAM_CHANGE_RATE = 1000
+export const CAM_CHANGE_RATE =
+  parseInt(process.env.REACT_APP_CAM_CHANGE_RATE) || 5000

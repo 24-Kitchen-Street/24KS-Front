@@ -120,6 +120,14 @@ export const Player = (props) => {
 
         currPos.set(x, y, z)
       }
+
+      camera.position.copy(currPos)
+
+      if (lookCenter) {
+        camera.lookAt(center)
+      } else {
+        camera.rotation.set(0, 0, 0)
+      }
     } else {
       frontVector.set(0, 0, Number(backward) - Number(forward))
       sideVector.set(Number(left) - Number(right), 0, 0)
@@ -145,14 +153,7 @@ export const Player = (props) => {
           setCurrBound("corridor")
         }
       }
-    }
-
-    camera.position.copy(currPos)
-
-    if (lookCenter) {
-      camera.lookAt(center)
-    } else {
-      camera.rotation.set(0, 0, 0)
+      camera.position.copy(currPos)
     }
   })
 

@@ -1,6 +1,6 @@
 import "./App.css"
 import { World } from "./3d/World"
-import { Suspense } from "react"
+import { Suspense, useEffect } from "react"
 import { Canvas } from "@react-three/fiber"
 import useKeypress from "react-use-keypress"
 import { PointerLockControls } from "@react-three/drei"
@@ -24,6 +24,10 @@ function App() {
   const isShowingAdminControls = useStore(
     (state) => state.isShowingAdminControls
   )
+
+  useEffect(() => {
+    document.body.classList.toggle("cursorHidden", isClubModeEnabled)
+  }, [isClubModeEnabled])
 
   useKeypress("Enter", () => {
     if (me.isValid && currentPopup !== "chat" && !isShowingAdminControls) {

@@ -14,6 +14,7 @@ import { Chat } from "./components/Chat"
 import { ErrorScreen } from "./components/ErrorScreen"
 import { AdminUI } from "./components/AdminUI"
 import { JoySticks } from './components/JoySticks';
+import { SpeechBubble } from './components/SpeechBubble';
 
 function App() {
   // const handleMove = useStote((state) => state.)
@@ -37,18 +38,17 @@ function App() {
     }
   })
 
-  const handleMove = () => {
 
-  }
-
-  const handleStop = () => {
-
-  }
 
   return (
     <>
+    {/* need to hide joys in intro */}
+
+    {/* {currentPopup === "Chat" <JoySticks />} */}
     <JoySticks />
-     <Canvas>
+    {/* need to hide speech in main room */}
+
+     <Canvas>       
         <Suspense fallback={null}>
           <World />
         </Suspense>

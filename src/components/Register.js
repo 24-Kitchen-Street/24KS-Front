@@ -7,9 +7,15 @@ import { TextField } from "./form/TextField"
 import { ErrorMessage } from "./form/ErrorMessage"
 import { Color } from "three"
 
+
 const params = new URL(document.location).searchParams
 const showPass = params.get("admin") === "1"
 const tempColor = new Color()
+
+
+const Shape = styled.div`
+
+`
 
 const Overlay = styled.div`
   position: absolute;
@@ -27,11 +33,44 @@ const Overlay = styled.div`
   z-index: 9999999999;
 `
 
+
+const CircularSb = styled.div`
+    border: 5px solid #00bfb6;
+    background-color: rgba(0, 0, 0, 0);
+    margin: 70px auto;
+    border-radius: 40%;
+    padding: 2rem;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 90;
+    font-family: arial;
+    color: #00bfb6;
+    left: 0;
+`
+
+
+const Column = styled.div`
+  /* display: flex;
+  flex-direction: row;
+  width: 100%; */
+`
+
+
 const FieldGroup = styled.div`
-  margin-top: 1rem;
+  margin-top: 0.5rem;
+  font-size: 20px;
   label {
     display: block;
   }
+`
+const Button = styled.button `
+  background-color: transparent;
+  border: none ;
+  text-decoration: underline;
+  text-align: center;
+  color: red;
+  padding: 1rem;
+  cursor: pointer;
 `
 
 export function Register() {
@@ -62,27 +101,34 @@ export function Register() {
   }
 
   return (
-    <Overlay>
-      <h2>Welcome!</h2>
-      <p>Please enter your nickname</p>
+    <Overlay>  
+      <CircularSb>
+      <p>Welcome to Club Geist. What's your name? Write on the dotted line</p>
+      </CircularSb>
+      <CircularSb>
       <Formik
         onSubmit={handleSubmit}
         initialValues={{ name: "", adminPassword: "" }}
       >
         <Form>
-          <TextField name="name" autoFocus />
+      
+       
+       <TextField name="name" autoFocus />
+        
           {showPass && (
             <FieldGroup>
               <label htmlFor="adminPassword">Admin Pass</label>
               <TextField name="adminPassword" type="password" />
             </FieldGroup>
           )}
+                   
 
           {[
             ["wobbleSpeed", "Speed"],
             ["wobbleAmplitude", "Amplitude"],
             ["wobbleFrequency", "Frequency"],
           ].map(([id, name]) => (
+         
             <FieldGroup key={id}>
               <label>{name}</label>
               <input
@@ -99,8 +145,9 @@ export function Register() {
                 }}
               />
             </FieldGroup>
+       
           ))}
-
+ 
           <FieldGroup>
             <label>Color</label>
             <input
@@ -113,12 +160,17 @@ export function Register() {
                 updateSkinPlayer({ color: val })
               }}
             />
+            
           </FieldGroup>
-
-          <button type="submit">Go</button>
+         <Column>
+          <FieldGroup>
+                Ready? Let's<Button type="submit">Go</Button>
+            </FieldGroup> 
+         </Column>         
         </Form>
       </Formik>
       {registerError && <ErrorMessage>{registerError}</ErrorMessage>}
+      </CircularSb>
     </Overlay>
   )
 }

@@ -58,6 +58,9 @@ export const Player = (props) => {
   const isShowingAdminControls = useStore(
     (state) => state.isShowingAdminControls
   )
+
+
+  // let isMobile: boolean = (width <= 768);
     // if (is mobile device / small device)
 //   useEffect(() => {
 //      updatePointerLock

@@ -10,7 +10,7 @@ const JoysticksContainer = styled.div`
     bottom:0;
     left:0;
     opacity: 2.0;
-    background: rgba(0, 0, 0, 1);
+    background: rgba(0, 0, 0, 0);
     z-index: 10000;
 
 
@@ -20,14 +20,16 @@ export function JoySticks () {
    // updating the store using useStore
 const updateLeftJoy = useStore(state => state.updateLeftJoy)
 
+// needs an if mobile function here
   function handleEvent (event) {
     //holder function for right joy & stop
-      console.log(event)    
+      console.log(event)  
+      console.log(updateLeftJoy)  
   }
     return (
       <JoysticksContainer>
-        <Joystick size={100} baseColor="purple" stickColor="white" move={event => updateLeftJoy(event)} stop={handleEvent}></Joystick>
-        <Joystick size={100} baseColor="yellow" stickColor="white" move={handleEvent} stop={handleEvent}></Joystick>        
+        <Joystick size={100} baseColor="#00bfb6" stickColor="white" move={event => updateLeftJoy(event)} stop={handleEvent}></Joystick>
+        <Joystick size={100} baseColor="#00bfb6" stickColor="white" move={handleEvent} stop={handleEvent}></Joystick>        
       </JoysticksContainer>
     )
   }

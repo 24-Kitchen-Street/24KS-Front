@@ -21,6 +21,7 @@ export const useStore = create((set) => ({
   latency: 0,
   feed: [],
   currentPopup: "register",
+  gamePlay: true,
   isShowingAdminControls: false,
   addFeedMessages: (messages) =>
     set((state) => ({
@@ -79,6 +80,7 @@ export const useStore = create((set) => ({
   updateChatMessageResponse: (chatMessageResponse) =>
     set(() => ({ chatMessageResponse })),
   setCurrentPopup: (currentPopup) => set(() => ({ currentPopup })),
+  setGamePlay: (gamePlay) => set(() => ({ gamePlay })),
   setIsShowingAdminControls: (isShowingAdminControls) =>
     set(() => ({ isShowingAdminControls })),
 }))

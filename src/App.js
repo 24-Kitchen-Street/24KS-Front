@@ -20,6 +20,7 @@ function App() {
   // const handleMove = useStote((state) => state.)
 
   const me = useStore((state) => state.me)
+  const gamePlay = useStore((state) =>state.gamePlay)
   const setCurrentPopup = useStore((state) => state.setCurrentPopup)
   const currentPopup = useStore((state) => state.currentPopup)
   const isShowingAdminControls = useStore(
@@ -45,17 +46,23 @@ function App() {
     {/* need to hide joys in intro */}
 
     {/* {currentPopup === "Chat" <JoySticks />} */}
-    <JoySticks />
+    {me.isValid && <JoySticks />}
     {/* need to hide speech in main room */}
-
+    {gamePlay ?
      <Canvas>       
-        <Suspense fallback={null}>
-          <World />
-        </Suspense>
-        <Player />
-        {me.isValid && <PointerLockControls />}
-        
-      </Canvas>
+     <Suspense fallback={null}>
+       <World />
+     </Suspense>
+     <Player />
+     {me.isValid && <PointerLockControls />}     
+    </Canvas> : 
+    <Canvas>       
+    <Suspense fallback={null}>
+    </Suspense>
+    <Player />
+   </Canvas>
+    }
+
       {
         // Only one of these popups can display at a time
         // This is essentially a switch statement, its just neater as an object!
@@ -66,7 +73,7 @@ function App() {
           error: <ErrorScreen />,
         }[currentPopup]
       }
-      <Feed />
+      {me.isValid && <Feed />}
       <DebugInfo />
       {me.isAdmin && <AdminUI />}
     </>

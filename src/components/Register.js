@@ -6,6 +6,7 @@ import { Formik, Form } from "formik"
 import { TextField } from "./form/TextField"
 import { ErrorMessage } from "./form/ErrorMessage"
 import { Color } from "three"
+import { OutlineContent } from "./OutlineContent"
 
 
 const params = new URL(document.location).searchParams
@@ -13,9 +14,6 @@ const showPass = params.get("admin") === "1"
 const tempColor = new Color()
 
 
-const Shape = styled.div`
-
-`
 
 const Overlay = styled.div`
   position: absolute;
@@ -31,34 +29,14 @@ const Overlay = styled.div`
   background: rgba(0, 0, 0, 0.5);
   color: white;
   z-index: 9999999999;
-`
-
-
-const CircularSb = styled.div`
-    border: 5px solid #00bfb6;
-    background-color: rgba(0, 0, 0, 0);
-    margin: 70px auto;
-    border-radius: 40%;
-    padding: 2rem;
-    text-align: center;
-    font-size: 20px;
-    font-weight: 90;
-    font-family: arial;
-    color: #00bfb6;
-    left: 0;
-`
-
-
-const Column = styled.div`
-  /* display: flex;
-  flex-direction: row;
-  width: 100%; */
+  font-family: 'Libre Baskerville', serif;
 `
 
 
 const FieldGroup = styled.div`
   margin-top: 0.5rem;
   font-size: 20px;
+  font-family: 'Libre Baskerville', serif;
   label {
     display: block;
   }
@@ -75,6 +53,7 @@ const Button = styled.button `
 
 export function Register() {
   const me = useStore((state) => state.me)
+  const setGamePlay = useStore((state) => state.setGamePlay)  
   const setCurrentPopup = useStore((state) => state.setCurrentPopup)
   const registerError = useStore((state) => state.registerError)
   const skinPlayer = useStore((state) => state.skinPlayer)
@@ -102,10 +81,10 @@ export function Register() {
 
   return (
     <Overlay>  
-      <CircularSb>
-      <p>Welcome to Club Geist. What's your name? Write on the dotted line</p>
-      </CircularSb>
-      <CircularSb>
+      <OutlineContent>
+      <p>Welcome to Club Geist. What's your name? </p>
+      </OutlineContent>
+      <OutlineContent>
       <Formik
         onSubmit={handleSubmit}
         initialValues={{ name: "", adminPassword: "" }}
@@ -162,15 +141,13 @@ export function Register() {
             />
             
           </FieldGroup>
-         <Column>
           <FieldGroup>
-                Ready? Let's<Button type="submit">Go</Button>
-            </FieldGroup> 
-         </Column>         
+                Ready? Let's<Button onClick={() => setGamePlay(false)} type="submit">Go</Button>
+            </FieldGroup>        
         </Form>
       </Formik>
       {registerError && <ErrorMessage>{registerError}</ErrorMessage>}
-      </CircularSb>
+      </OutlineContent>
     </Overlay>
   )
 }

@@ -4,9 +4,9 @@ import { useStore } from "../store"
 const Container = styled.div`
   position: absolute;
   padding: 1rem;
-  width: 15rem;
+  width: 12rem;
   flex-direction: column;
-  bottom: 0;
+  top: 0;
   right: 0;
 
   border: 5px solid #00bfb6;

@@ -2,10 +2,12 @@ import React, { useEffect } from "react"
 import { useGLTF } from "@react-three/drei"
 import { streamMaterial } from "../utils/streamMaterial"
 import { AcidMaterial } from "./AcidMaterial"
+import { ShaderTestMaterial } from "./ShaderTestMaterial"
 import { useFrame } from "@react-three/fiber"
 import { Box3, Vector3 } from "three"
 
 const acidMat = new AcidMaterial()
+const shaderMat = new ShaderTestMaterial()
 
 // Arena bounds for collision detection
 export const bounds = {

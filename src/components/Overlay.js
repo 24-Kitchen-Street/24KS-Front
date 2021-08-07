@@ -14,4 +14,5 @@ export const Overlay = styled.div`
   background: rgba(0, 0, 0, 0.5);
   color: white;
   z-index: 9999999999;
+  font-family: 'Libre Baskerville', serif;
 `

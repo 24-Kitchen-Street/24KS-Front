@@ -11,8 +11,8 @@ const Container = styled.div`
 
   border: 5px solid #00bfb6;
   background: rgba(0, 0, 0, 0.5);
-    margin: 70px auto;
-    text-align: center;
+    margin: 50px auto;
+    text-align: left;
     font-size: 20px;
     font-weight: 90;
     font-family: arial;
@@ -31,6 +31,10 @@ const Container = styled.div`
 const Inner = styled.div`
   max-height: 15rem;
   overflow: scroll;
+  ::-webkit-scrollbar {
+    background-color: black;
+    visibility: hidden;
+  }
 `
 
 const Row = styled.div`

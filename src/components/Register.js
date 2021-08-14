@@ -7,6 +7,7 @@ import { TextField } from "./form/TextField"
 import { ErrorMessage } from "./form/ErrorMessage"
 import { Color } from "three"
 import { OutlineContent } from "./OutlineContent"
+import { Loading } from "./Loading"
 
 
 const params = new URL(document.location).searchParams
@@ -53,7 +54,9 @@ const Button = styled.button `
 
 export function Register() {
   const me = useStore((state) => state.me)
+  const isLoading = useStore((state) => state.isLoading);
   const setGamePlay = useStore((state) => state.setGamePlay)  
+  const setIsLoading = useStore((state) => state.setIsLoading);
   const setCurrentPopup = useStore((state) => state.setCurrentPopup)
   const registerError = useStore((state) => state.registerError)
   const skinPlayer = useStore((state) => state.skinPlayer)
@@ -69,6 +72,12 @@ export function Register() {
     }
   }, [me, setCurrentPopup])
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2500);
+  })
+
   const handleSubmit = ({ name, adminPassword }) => {
     if (name !== "") {
       registerPlayer({
@@ -79,8 +88,13 @@ export function Register() {
     }
   }
 
+
   return (
-    <Overlay>  
+    <>
+    {isLoading===true ?
+      <Loading />
+    :
+      <Overlay>  
       <OutlineContent>
       <p>Welcome to Club Geist. What's your name? </p>
       </OutlineContent>
@@ -91,8 +105,8 @@ export function Register() {
       >
         <Form>
       
-       
-       <TextField name="name" autoFocus />
+      
+      <TextField name="name" autoFocus />
         
           {showPass && (
             <FieldGroup>
@@ -100,14 +114,14 @@ export function Register() {
               <TextField name="adminPassword" type="password" />
             </FieldGroup>
           )}
-                   
+                  
 
           {[
             ["wobbleSpeed", "Speed"],
             ["wobbleAmplitude", "Amplitude"],
             ["wobbleFrequency", "Frequency"],
           ].map(([id, name]) => (
-         
+        
             <FieldGroup key={id}>
               <label>{name}</label>
               <input
@@ -124,9 +138,9 @@ export function Register() {
                 }}
               />
             </FieldGroup>
-       
+      
           ))}
- 
+
           <FieldGroup>
             <label>Color</label>
             <input
@@ -149,5 +163,7 @@ export function Register() {
       {registerError && <ErrorMessage>{registerError}</ErrorMessage>}
       </OutlineContent>
     </Overlay>
+      }
+    </>
   )
 }

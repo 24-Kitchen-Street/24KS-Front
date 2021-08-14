@@ -17,6 +17,11 @@ const direction = new THREE.Vector3()
 const frontVector = new THREE.Vector3()
 const sideVector = new THREE.Vector3()
 
+
+const normaliseValues = (val, max, min) => { 
+  return (val - min) / (max - min); 
+}
+
 const usePlayerControls = () => {
   const [movement, setMovement] = useState({
     forward: false,
@@ -26,9 +31,48 @@ const usePlayerControls = () => {
   })
 
   const leftjoyX = useStore(state => state.leftjoyX)
-  const leftjoyY = useStore(state => state.leftjoyY)
+  const leftjoyY = useStore(state => state.leftjoyY)  
+  const eventLeftJoy = useStore(state => state.leftJoyMovement)
 
   console.log(leftjoyX, leftjoyY)
+
+
+  // useEffect(() => {
+  //   const handleJoy = (e) => {
+  //     let normValues = normaliseValues(leftjoyX, 1, 0) 
+  //     console.log(normValues)
+  //   //   if (leftjoyX >= 0 && leftjoyY >= 50 && leftjoyY <=0 ) {
+  //   //     setMovement((m) => ({...m, forward: true}))
+  //   //   } else if (leftjoyX >= 0 && leftjoyY >= -50 && leftjoyY <= 0) {
+  //   //     setMovement((m) => ({...m, backward: true }))
+  //   //   } else if (leftjoyX === -50 && leftjoyX <= 0 && leftjoyY === 0) {
+  //   //     setMovement((m) => ({...m, left: true }))
+  //   //   } else {
+  //   //     setMovement((m) => ({...m, right: true }))
+  //   //   }
+  //   // }
+    
+  //   // if (leftjoyMovement === "forward")
+  //   // setMovement((m) => ({...m, forward: true}))
+  //   // }
+  //   // switch (leftjoyX, leftjoyY) {
+  //   //   case forward: 
+      
+  //   //   const handleJoy = (e) => 
+  //   //   setMovement((m) => ({...m, forward: true }))     
+  //   const handleJoyStop = (e) => 
+  //     setMovement((m) => ({...m, [moveFieldByKey(e.code)]: false}))
+  //   //   // document.addEventListener("touchstart", handleJoy)
+  //     document.addEventListener("mousedown", handleJoy)
+  //     document.addEventListener("mouseup", handleJoyStop)  
+  //     return () => {
+  //       // document.addEventListener("touchstart", handleJoy)
+  //       document.addEventListener("mousedown", handleJoy)
+  //       document.addEventListener("mouseup", handleJoyStop)        
+  //     }    
+  //   // }
+
+  // }, [])
 
 
   useEffect(() => {
@@ -60,28 +104,6 @@ export const Player = (props) => {
   )
 
 
-  // let isMobile: boolean = (width <= 768);
-    // if (is mobile device / small device)
-//   useEffect(() => {
-//      updatePointerLock
-//     function onMouseMove( event ) {
-//       const _PI_2 = Math.PI / 2;
-//       const scope = this;
-//       this.minPolarAngle = 0; // radians
-//       this.maxPolarAngle = Math.PI; // radians
-//       if (scope.isLocked === false ) return;
-    
-//       const movementX = event.movementX;
-//       const movementY = event.movementY;
-    
-//       camera.y -= movementX * 0.002;
-//       camera.y -= movementY * 0.002;
-    
-//       camera.x = Math.max( _PI_2 - scope.maxPolarAngle, Math.min( _PI_2 - scope.minPolarAngle, camera.x ) );
-     
-//   }
-// } , [])
-
   useEffect(() => {
     if (me.hasRegistered) {
       camera.position.set(...CLUB_ENTRANCE)
@@ -101,7 +123,6 @@ export const Player = (props) => {
     if (currentPopup !== null || isShowingAdminControls) return
 
     const currPos = ref.current.position
-
     camera.position.copy(currPos)
     frontVector.set(0, 0, Number(backward) - Number(forward))
     //x y stays 0, backwards = true, 1 -1, 0 or 1
@@ -140,3 +161,38 @@ export const Player = (props) => {
 
   return <mesh ref={ref} />
 }
+
+  // let isMobile: boolean = (width <= 768);
+    // if (is mobile device / small device)
+//   useEffect(() => {
+//      updatePointerLock
+//     function onMouseMove( event ) {
+//       const _PI_2 = Math.PI / 2;
+//       const scope = this;
+//       this.minPolarAngle = 0; // radians
+//       this.maxPolarAngle = Math.PI; // radians
+//       if (scope.isLocked === false ) return;
+    
+//       const movementX = event.movementX;
+//       const movementY = event.movementY;
+    
+//       camera.y -= movementX * 0.002;
+//       camera.y -= movementY * 0.002;
+    
+//       camera.x = Math.max( _PI_2 - scope.maxPolarAngle, Math.min( _PI_2 - scope.minPolarAngle, camera.x ) );
+     
+//   }
+// } , [])
+
+
+
+
+  // if (leftjoyX >= 0 && leftjoyY >= 50 && leftjoyY <=0 ) {
+  //   setMovement((m) => ({...m, forward: true}))
+  // } else if (leftjoyX >= 0 && leftjoyY >= -50 && leftjoyY <= 0) {
+  //   setMovement((m) => ({...m, backward: true }))
+  // } else if (leftjoyX === -50 && leftjoyX <= 0 && leftjoyY === 0) {
+  //   setMovement((m) => ({...m, left: true }))
+  // } else {
+  //   setMovement((m) => ({...m, right: true }))
+  // }

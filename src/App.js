@@ -1,4 +1,6 @@
 import "./App.css"
+import React, {useState, useEffect} from "react"
+// import Loading from "./components/Loading"
 import { World } from "./3d/World"
 import { Suspense } from "react"
 import { Canvas } from "@react-three/fiber"
@@ -14,18 +16,26 @@ import { Chat } from "./components/Chat"
 import { ErrorScreen } from "./components/ErrorScreen"
 import { AdminUI } from "./components/AdminUI"
 import { JoySticks } from './components/JoySticks';
-import { SpeechBubble } from './components/SpeechBubble';
+import { Loading } from './components/Loading';
 
 function App() {
   // const handleMove = useStote((state) => state.)
 
   const me = useStore((state) => state.me)
+  const isLoading = useStore((state) => state.isLoading);
   const gamePlay = useStore((state) =>state.gamePlay)
   const setCurrentPopup = useStore((state) => state.setCurrentPopup)
+  const setIsLoading = useStore((state) => state.setIsLoading);
   const currentPopup = useStore((state) => state.currentPopup)
   const isShowingAdminControls = useStore(
     (state) => state.isShowingAdminControls
   )
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2500);
+  })
 
   useKeypress("Enter", () => {
     if (me.isValid && currentPopup !== "chat" && !isShowingAdminControls) {
@@ -43,25 +53,33 @@ function App() {
 
   return (
     <>
+
     {/* need to hide joys in intro */}
 
     {/* {currentPopup === "Chat" <JoySticks />} */}
     {me.isValid && <JoySticks />}
-    {/* need to hide speech in main room */}
-    {gamePlay ?
-     <Canvas>       
-     <Suspense fallback={null}>
-       <World />
-     </Suspense>
-     <Player />
-     {me.isValid && <PointerLockControls />}     
-    </Canvas> : 
-    <Canvas>       
-    <Suspense fallback={null}>
-    </Suspense>
-    <Player />
-   </Canvas>
-    }
+    {isLoading===true ?
+        <Loading />
+      :
+        <>
+
+        {/* need to hide speech in main room */}
+        {gamePlay ?
+        <Canvas>       
+        <Suspense fallback={null}>
+          <World />
+        </Suspense>
+        <Player />
+        {me.isValid && <PointerLockControls />}     
+        </Canvas> : 
+        <Canvas>       
+        <Suspense fallback={null}>
+        </Suspense>
+        <Player />
+      </Canvas>
+        }
+        </>
+    }    
 
       {
         // Only one of these popups can display at a time
@@ -76,6 +94,7 @@ function App() {
       {me.isValid && <Feed />}
       <DebugInfo />
       {me.isAdmin && <AdminUI />}
+      
     </>
   )
 }

@@ -5,10 +5,12 @@ import styled from "styled-components"
 import { sendChatMessage } from "../socket";
 
 const JoysticksContainer = styled.div`
-    display: flex;
     position: absolute;
-    bottom:0;
-    left:0;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem;
+    bottom: 0;
+    left:0; 
     opacity: 2.0;
     background: rgba(0, 0, 0, 0);
     z-index: 10000;
@@ -28,8 +30,8 @@ const updateLeftJoy = useStore(state => state.updateLeftJoy)
   }
     return (
       <JoysticksContainer>
-        <Joystick size={100} baseColor="#00bfb6" stickColor="white" move={event => updateLeftJoy(event)} stop={handleEvent}></Joystick>
-        <Joystick size={100} baseColor="#00bfb6" stickColor="white" move={handleEvent} stop={handleEvent}></Joystick>        
+        <Joystick size={100} baseColor="#00bfb6" stickColor="white" move={event => updateLeftJoy(event)} stop={event => updateLeftJoy(event)}></Joystick>
+        <Joystick size={100} baseColor="transparent" stickColor="white" move={handleEvent} stop={handleEvent}></Joystick>        
       </JoysticksContainer>
     )
   }

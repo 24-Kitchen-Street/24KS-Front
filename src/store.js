@@ -14,6 +14,7 @@ export const useStore = create((set) => ({
   me: {
     isValid: false,
   },
+  isLoading: true,
   registerError: null,
   generalError: null,
   banResponse: null,
@@ -38,6 +39,7 @@ export const useStore = create((set) => ({
   },
   leftjoyX: 0,
   leftjoyY: 0,
+  leftJoyMovement: null,
   // movementLeftJoy: (state) => {
   //   return set((state) => ({
   //     ...state,
@@ -48,8 +50,9 @@ export const useStore = create((set) => ({
   //   }))
   // },
   updateLeftJoy: (event) => set(state => ({
-    leftjoyX: event.x,
-    leftjoyY: event.y
+    leftjoyX: event.x,  
+    leftjoyY: event.y,
+    leftJoyMovement: event.type,
   })),
   stopLeftJoy: (state) => {
     return set((state) => ({
@@ -70,6 +73,7 @@ export const useStore = create((set) => ({
   //     }
   //   }))
   // },
+  setIsLoading: (isLoading) => set(() => ({ isLoading })),
   updatePlayers: (players) => set(() => ({ players })),
   updateMe: (me) => set(() => ({ me })),
   updateLatency: (latency) => set(() => ({ latency })),

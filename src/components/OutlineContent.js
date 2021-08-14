@@ -2,8 +2,9 @@ import styled from "styled-components"
 
 
 export const OutlineContent = styled.div`
-margin: 70px auto;
+/* margin: 70px auto; */
 border-radius: 40%;
+height: fit-content;
 padding: 0.5rem;
 text-align: center;
 font-size: 20px;

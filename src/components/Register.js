@@ -20,9 +20,10 @@ const Overlay = styled.div`
   position: absolute;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: 3rem;
   flex-direction: column;
+
   left: 0;
   top: 0;
   right: 0;
@@ -75,7 +76,7 @@ export function Register() {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 2500);
+    }, 3500);
   })
 
   const handleSubmit = ({ name, adminPassword }) => {
@@ -96,7 +97,7 @@ export function Register() {
     :
       <Overlay>  
       <OutlineContent>
-      <p>Welcome to Club Geist. What's your name? </p>
+      <p>Choose your name and character settings. </p>
       </OutlineContent>
       <OutlineContent>
       <Formik

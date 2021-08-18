@@ -5,10 +5,14 @@ import styled from "styled-components";
 
 var stylingObject = {
   input: {
-    color: "#00bfb6",
-    background: "transparent",
+    display: "flex",
+    color: "black",
+    fontFamily: "'Libre Baskerville', serif",
+    fontSize: "22px",
+    borderRadius: "20px",
+    background: "rgba(0, 255, 255, 0.5)",
     textAlign: "center",
-    width: "80%",
+    width: "50%",
     borderBottom: "5px dotted red",
     border: "none",
     outline: "none",

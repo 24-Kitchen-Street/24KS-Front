@@ -14,6 +14,7 @@ const Button = styled.div `
   background-color: rgba(0, 0, 0, 0.5);
   padding: 0.5rem;
   border-radius: 40%;
+  font-family: 'Libre Baskerville', serif;
   cursor: pointer;
 
 `

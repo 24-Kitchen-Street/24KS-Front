@@ -8,6 +8,7 @@ import { ErrorMessage } from "./form/ErrorMessage"
 import { Color } from "three"
 import { OutlineContent } from "./OutlineContent"
 import { Loading } from "./Loading"
+import px2vw from "../utils/px2vw"
 
 
 const params = new URL(document.location).searchParams
@@ -19,28 +20,85 @@ const tempColor = new Color()
 const Overlay = styled.div`
   position: absolute;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   padding: 3rem;
-  flex-direction: column;
-
+  margin: 50px;
   left: 0;
   top: 0;
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  color: white;
+  color: #00bfb6;
   z-index: 9999999999;
   font-family: 'Libre Baskerville', serif;
+
+  p {
+    font-size: 22px;
+   }
+
+   @media (max-height: 600px) {
+
+    height: fit-content;
+
+  }
+
+  /* @media (min-width: 768px) {
+    width: ${px2vw(320, 768)};
+    min-height: ${px2vw(200, 768)};
+    height: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    width: ${px2vw(500)};
+    min-height: ${px2vw(300)};
+    height: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 1.5rem;
+  } */
 `
 
 
 const FieldGroup = styled.div`
-  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.3rem;
   font-size: 20px;
+  justify-content: center;
+  align-items: center;
   font-family: 'Libre Baskerville', serif;
   label {
+    border-radius: 50px;
     display: block;
+    background-color: rgba(0, 0, 0, 0.5);;
+    padding: 0.3rem;
+  }
+
+  @media (min-width: 300px) {
+    font-size: 18px;
+    height: fit-content;
+
+  }
+  @media (min-height: 300px) {
+    font-size: 22px;
+    height: fit-content;
+
+  }
+  @media (max-height: 300px) {
+    font-size: 15px;
+    height: fit-content;
+
+  }
+
+
+  @media (min-width: 1024px) {
+    font-size: 22px;
+    height: fit-content;
+
+
   }
 `
 const Button = styled.button `
@@ -50,8 +108,12 @@ const Button = styled.button `
   text-align: center;
   color: red;
   padding: 1rem;
+  font-family: 'Libre Baskerville', serif;
   cursor: pointer;
 `
+
+
+
 
 export function Register() {
   const me = useStore((state) => state.me)
@@ -96,9 +158,9 @@ export function Register() {
       <Loading />
     :
       <Overlay>  
-      <OutlineContent>
+     
       <p>Choose your name and character settings. </p>
-      </OutlineContent>
+    
       <OutlineContent>
       <Formik
         onSubmit={handleSubmit}
@@ -106,8 +168,11 @@ export function Register() {
       >
         <Form>
       
-      
+      <FieldGroup>
+      <label>Name</label>
       <TextField name="name" autoFocus />
+      </FieldGroup>
+
         
           {showPass && (
             <FieldGroup>

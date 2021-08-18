@@ -39,13 +39,15 @@ export function Arena(props) {
 
     const numScreens = 19
     for (let i = 0; i < numScreens; i++) {
-      nodes[`screen${i}`].material = acidMat
+      nodes[`screen${i}`].material = shaderMat
     }
   }, [nodes])
 
   useFrame(({ clock }) => {
-    acidMat.time = clock.getElapsedTime()
+    shaderMat.time = clock.getElapsedTime()
   })
+
+
 
   return (
     <>

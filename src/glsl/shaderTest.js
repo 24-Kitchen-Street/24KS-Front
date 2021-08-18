@@ -1,23 +1,66 @@
 import glsl from "babel-plugin-glsl/macro"
-import tint from "./tint";
 
 export const shaderTest = glsl`
+#ifdef GL_ES
 precision mediump float;
+#endif
+
+#pragma glslify: snoise = require(glsl-noise-simplex/3d.glsl)
 
 uniform vec2 u_resolution;
-uniform vec2 u_mouse;
-uniform float u_time;
+uniform float time;
+varying vec2 vUv;
 
-#pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
-#pragma glslify: tint = require("./tint.js");
+const int AMOUNT = 12;
 
-void main() {
-     vec2 st = gl_FragCoord.xy/u_resolution; // get the screen space
-     
-    vec3 pos = vec3(st.xy, u_time); // travel along the Z-dimension in time.
-    vec3 rgb = vec3(0.1, cos(u_time), 0.5); // cycle the green color
-    vec3 noise = vec3(snoise3(pos),snoise3(pos),snoise3(pos)); // generate the noise
+void main(){
+    vec2 u_resolution = gl_FragCoord.xy ;
+	vec2 coord = 20.0 * (gl_FragCoord.xy - u_resolution / 2.0) / min(u_resolution.y, u_resolution.x);
 
-    gl_FragColor = vec4(tint(noise, rgb), 1.0); // tint the noise with our function and draw the pixel
+    
+	float len;
+    float p = fract(snoise(vec3(vUv.xy * 0.5, time * 0.5)) * 5.);
+
+	for (int i = 0; i < AMOUNT; i++){
+		len = length(vec2(coord.x, coord.y));
+
+		coord.x = coord.x - cos(coord.y + sin(p)) + cos(time / 9.0);
+		coord.y = coord.y + sin(coord.x + cos(p)) + sin(time / 12.0);
+	}
+
+	// gl_FragColor = vec4(cos(len * 2.0), cos(len * 3.0), cos(len * 1.0), 1.0);
+
+	// we can have a seperate color, obviously. so comment out the gl_FragColor above & uncomment the lines below
+	vec3 color = vec3(cos(len * 3.0), cos(len * 4.0), cos(len * 2.0));
+	// gl_FragColor = vec4(color, p);
+    gl_FragColor = vec4(0.8 * sin(color + vUv.yxx), 1.0);
 }
+
 `
+
+// float p = fract(snoise(vec3(vUv.xy * 0.5, time * 0.5)) * 5.);
+// gl_FragColor.rgba = vec4(0.5 * sin(vUv.yxx + time) + color, p);
+
+
+
+// float p = fract(snoise(vec3(vUv.xy * 0.5, time * 0.5)) * 5.);
+// gl_FragColor.rgba = vec4(0.5 * sin(vUv.yxx + time) + color, p);
+// precision mediump float;
+
+// uniform vec2 u_resolution;
+// uniform float u_time;
+// uniform vec3 color;
+
+// void main(){
+
+
+// 	gl_FragColor = vec4(color, 1.0);
+// }
+
+// uniform vec3 resolution;
+// uniform float time;
+// uniform vec3 color;
+// void main() {
+
+//     gl_FragColor = vec4(1.0, 1.0, 0.0, 1.0);
+// }

@@ -1,4 +1,5 @@
 import * as THREE from "three";
+<<<<<<< HEAD
 import { useThree, useFrame } from "@react-three/fiber";
 import React, { useEffect, useRef, useState } from "react";
 import { MeshDistortMaterial } from "@react-three/drei";
@@ -33,6 +34,32 @@ export function ReflectiveShape() {
                 distort={0.6}
               />
               <torusBufferGeometry ref={main} args={[0.5, 64, 64]} position={[ 0,0,0 ]} />
+=======
+import React, { Suspense, useRef, useState } from "react";
+import { useFrame, useResource  } from "@react-three/fiber";
+import { MeshDistortMaterial, useTexture} from "@react-three/drei";
+import { ShapeOne } from './ShapeOne';
+
+
+
+// const envTexture = new THREE.TextureLoader();
+// envTexture.load('_front.png', function (texture){
+//          const material = new THREE.MeshBasicMaterial();
+//          material.envMap = texture;
+// });
+
+export function ReflectiveShape() {
+    // const envMap = useTexture("_front.png", { path: "/Spacebox1" })
+    const ref = useRef()
+
+
+    return (
+    <>
+        <mesh>            
+            <meshStandardMaterial color="pink" attach="material" />
+              {/* <meshBasicMaterial color={"#FF1493"} /> */}
+              <ShapeOne />
+>>>>>>> 04d4dc80f760fcf3c9f1dec0b90a62ef231dd3a0
              
         </mesh>      
     </>

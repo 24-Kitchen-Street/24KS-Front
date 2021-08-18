@@ -5,6 +5,7 @@ export const Overlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100vh;
   padding: 3rem;
   flex-direction: column;
   left: 0;
@@ -12,6 +13,7 @@ export const Overlay = styled.div`
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  color: white;
+  color: #00bfb6;
   z-index: 9999999999;
+  font-family: 'Libre Baskerville', serif;
 `

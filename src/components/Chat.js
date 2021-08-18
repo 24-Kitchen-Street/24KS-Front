@@ -3,6 +3,7 @@ import { sendChatMessage } from "../socket"
 import { useStore } from "../store"
 import { Form, Formik } from "formik"
 import { TextField } from "./form/TextField"
+import { ErrorMessage } from "./form/ErrorMessage"
 
 const Overlay = styled.div`
   position: absolute;
@@ -21,14 +22,16 @@ const Overlay = styled.div`
 `
 
 export function Chat() {
+  const chatMessageResponse = useStore((state) => state.chatMessageResponse)
   const setCurrentPopup = useStore((state) => state.setCurrentPopup)
 
-  const handleSubmit = ({ message }) => {
-    if (message !== "") {
+  const handleSubmit = ({ message }, { resetForm }) => {
+    if (message) {
       sendChatMessage({
-        message: message,
+        message,
       })
-
+      resetForm()
+    } else {
       setCurrentPopup(null)
     }
   }
@@ -41,6 +44,9 @@ export function Chat() {
           <button>Enter</button>
         </Form>
       </Formik>
+      {chatMessageResponse && (
+        <ErrorMessage>{chatMessageResponse}</ErrorMessage>
+      )}
     </Overlay>
   )
 }

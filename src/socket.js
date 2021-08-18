@@ -15,6 +15,21 @@ socket.on("register-error", (data) => {
   useStore.getState().updateRegisterError(data.message)
 })
 
+// Show message to admin after ban
+socket.on("ban-response", (data) => {
+  useStore.getState().updateBanResponse(data.message)
+})
+
+// Show message to admin after unban
+socket.on("unban-response", (data) => {
+  useStore.getState().updateUnbanResponse(data.message)
+})
+
+// Show message to admin after unban
+socket.on("chat-message-response", (data) => {
+  useStore.getState().updateChatMessageResponse(data.message)
+})
+
 // get data of all players and update state
 socket.on("data", ({ players, messages }) => {
   useStore.getState().updatePlayers(players)
@@ -31,6 +46,14 @@ export const registerPlayer = (data) => {
   socket.emit("register", data)
 }
 
+export const banPlayer = (data) => {
+  socket.emit("ban-player", data)
+}
+
+export const unbanIP = (data) => {
+  socket.emit("unban-ip", data)
+}
+
 // send data of our player to server
 export const sendPlayerData = (data) => {
   socket.emit("player-data", data)
@@ -38,6 +61,7 @@ export const sendPlayerData = (data) => {
 
 export const sendChatMessage = (data) => {
   socket.emit("chat-message", data)
+  useStore.getState().updateChatMessageResponse(null)
 }
 
 // Check ping every so often

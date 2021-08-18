@@ -4,15 +4,24 @@ import { Field } from "formik"
 
 
 
-const TextBoxStyle = styled.div`
-  /* align-items: center; */
-  width: 30%;
-  text-decoration: none;
-  padding: 1rem;
-  z-index: 9999999999;
-`
+var stylingObject = {
+  input: {
+    display: "flex",
+    color: "black",
+    fontFamily: "'Libre Baskerville', serif",
+    fontSize: "22px",
+    borderRadius: "20px",
+    background: "rgba(0, 255, 255, 0.5)",
+    textAlign: "center",
+    width: "50%",
+    borderBottom: "5px dotted red",
+    border: "none",
+    outline: "none",
+    height: "30px"
+  },
+}
 
-export function TextField({ autoFocus, name }) {
+export function TextField({ autoFocus, name, type = "text" }) {
   const textbox = useRef(null)
 
   useEffect(() => {
@@ -21,5 +30,5 @@ export function TextField({ autoFocus, name }) {
     }
   }, [autoFocus])
 
-  return <TextBoxStyle><Field type="text" name={name} innerRef={textbox} /></TextBoxStyle>
+  return <Field style={stylingObject.input} type={type} name={name} innerRef={textbox} />
 }

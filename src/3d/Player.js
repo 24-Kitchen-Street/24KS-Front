@@ -37,44 +37,6 @@ const usePlayerControls = () => {
   console.log(leftjoyX, leftjoyY)
 
 
-  // useEffect(() => {
-  //   const handleJoy = (e) => {
-  //     let normValues = normaliseValues(leftjoyX, 1, 0) 
-  //     console.log(normValues)
-  //   //   if (leftjoyX >= 0 && leftjoyY >= 50 && leftjoyY <=0 ) {
-  //   //     setMovement((m) => ({...m, forward: true}))
-  //   //   } else if (leftjoyX >= 0 && leftjoyY >= -50 && leftjoyY <= 0) {
-  //   //     setMovement((m) => ({...m, backward: true }))
-  //   //   } else if (leftjoyX === -50 && leftjoyX <= 0 && leftjoyY === 0) {
-  //   //     setMovement((m) => ({...m, left: true }))
-  //   //   } else {
-  //   //     setMovement((m) => ({...m, right: true }))
-  //   //   }
-  //   // }
-    
-  //   // if (leftjoyMovement === "forward")
-  //   // setMovement((m) => ({...m, forward: true}))
-  //   // }
-  //   // switch (leftjoyX, leftjoyY) {
-  //   //   case forward: 
-      
-  //   //   const handleJoy = (e) => 
-  //   //   setMovement((m) => ({...m, forward: true }))     
-  //   const handleJoyStop = (e) => 
-  //     setMovement((m) => ({...m, [moveFieldByKey(e.code)]: false}))
-  //   //   // document.addEventListener("touchstart", handleJoy)
-  //     document.addEventListener("mousedown", handleJoy)
-  //     document.addEventListener("mouseup", handleJoyStop)  
-  //     return () => {
-  //       // document.addEventListener("touchstart", handleJoy)
-  //       document.addEventListener("mousedown", handleJoy)
-  //       document.addEventListener("mouseup", handleJoyStop)        
-  //     }    
-  //   // }
-
-  // }, [])
-
-
   useEffect(() => {
     const handleKeyDown = (e) =>
       setMovement((m) => ({ ...m, [moveFieldByKey(e.code)]: true }))
@@ -162,6 +124,49 @@ export const Player = (props) => {
   return <mesh ref={ref} />
 }
 
+
+
+
+
+  // useEffect(() => {
+  //   const handleJoy = (e) => {
+  //     let normValues = normaliseValues(leftjoyX, 1, 0) 
+  //     console.log(normValues)
+  //   //   if (leftjoyX >= 0 && leftjoyY >= 50 && leftjoyY <=0 ) {
+  //   //     setMovement((m) => ({...m, forward: true}))
+  //   //   } else if (leftjoyX >= 0 && leftjoyY >= -50 && leftjoyY <= 0) {
+  //   //     setMovement((m) => ({...m, backward: true }))
+  //   //   } else if (leftjoyX === -50 && leftjoyX <= 0 && leftjoyY === 0) {
+  //   //     setMovement((m) => ({...m, left: true }))
+  //   //   } else {
+  //   //     setMovement((m) => ({...m, right: true }))
+  //   //   }
+  //   // }
+    
+  //   // if (leftjoyMovement === "forward")
+  //   // setMovement((m) => ({...m, forward: true}))
+  //   // }
+  //   // switch (leftjoyX, leftjoyY) {
+  //   //   case forward: 
+      
+  //   //   const handleJoy = (e) => 
+  //   //   setMovement((m) => ({...m, forward: true }))     
+  //   const handleJoyStop = (e) => 
+  //     setMovement((m) => ({...m, [moveFieldByKey(e.code)]: false}))
+  //   //   // document.addEventListener("touchstart", handleJoy)
+  //     document.addEventListener("mousedown", handleJoy)
+  //     document.addEventListener("mouseup", handleJoyStop)  
+  //     return () => {
+  //       // document.addEventListener("touchstart", handleJoy)
+  //       document.addEventListener("mousedown", handleJoy)
+  //       document.addEventListener("mouseup", handleJoyStop)        
+  //     }    
+  //   // }
+
+  // }, [])
+
+
+  
   // let isMobile: boolean = (width <= 768);
     // if (is mobile device / small device)
 //   useEffect(() => {

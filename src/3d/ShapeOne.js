@@ -1,7 +1,11 @@
 import React, { useEffect, useRef } from "react"
 import { useFrame } from "@react-three/fiber"
 import { useGLTF } from "@react-three/drei"
+import { shaderMaterial } from "@react-three/drei"
+import { ShaderTestMaterial } from "./ShaderTestMaterial"
 
+// const acidMat = new AcidMaterial()
+const shaderMat = new ShaderTestMaterial()
 
 
 export function ShapeOne(props) {

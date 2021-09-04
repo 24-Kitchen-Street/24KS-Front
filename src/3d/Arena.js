@@ -9,6 +9,7 @@ import { Box3, Vector3 } from "three"
 const acidMat = new AcidMaterial()
 const shaderMat = new ShaderTestMaterial()
 
+const mats = [shaderMat, acidMat]
 // Arena bounds for collision detection
 export const bounds = {
   dancefloor: new Box3().setFromCenterAndSize(
@@ -38,16 +39,37 @@ export function Arena(props) {
     nodes.widescreen1.material = streamMaterial
 
     const numScreens = 19
+    var max = mats.length;
+
     for (let i = 0; i < numScreens; i++) {
       if (i % 2 === 0) {
-        nodes[`screen${i}`].material = shaderMat
+        setInterval(function() {
+          for (let x = 0; x < max; x++) {
+            // let variedMats = mats[x]
+            nodes[`screen${i}`].material = mats[x]
+          }
+        }, 20000)
       }
       else {
-        nodes[`screen${i}`].material = acidMat
+
+          nodes[`screen${i}`].material = acidMat
+       
       }
       
     }
   }, [nodes])
+
+//   setInterval(function() {
+//     for (let i = 0; i < max; i++) {
+//       if (i < 1) {
+//         nodes[`screen${i}`].material = shaderMat
+//       } else {
+//         nodes[`screen${i}`].material = acidMat
+//       }
+//     }
+    
+//   }, 3000)    
+// }
 
   useFrame(({ clock }) => {
     shaderMat.time = clock.getElapsedTime()

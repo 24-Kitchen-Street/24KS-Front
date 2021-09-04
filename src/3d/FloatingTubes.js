@@ -2,7 +2,6 @@ import * as THREE from "three";
 import React, { Suspense, useRef, useState } from "react";
 import { useFrame, useResource  } from "@react-three/fiber";
 import { MeshDistortMaterial, useTexture} from "@react-three/drei";
-import { ShapeOne } from './ShapeOne';
 
 import { ShaderTestMaterial } from "./ShaderTestMaterial"
 import { AcidMaterial } from "./AcidMaterial"
@@ -17,7 +16,7 @@ const acidMat = new AcidMaterial()
 //          material.envMap = texture;
 // });
 
-export function TwistedShape(props) {
+export function FloatingTubes(props) {
     // const envMap = useTexture("_front.png", { path: "/Spacebox1" })
     const ref = useRef()
     const mats = [shaderMat, acidMat]
@@ -33,12 +32,12 @@ export function TwistedShape(props) {
       <>
         <mesh
         ref = {ref}
-        material = {mats[1]}
+        // material = {mats[1]}
         position= {props.position}
         >        
             <boxBufferGeometry attach="geometry" args={[20, 10, 10, 16]} />
   
-              {/* <meshBasicMaterial color={"#FF1493"} /> */}
+            <meshPhongMaterial color={"#FF1493"} />
             
         </mesh>      
    

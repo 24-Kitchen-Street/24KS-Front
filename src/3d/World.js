@@ -5,10 +5,11 @@ import { Lighting } from "./Lighting"
 import { IntroRoom } from "./IntroRoom"
 import { ReflectiveShape } from "./ReflectiveShape"
 import { ShaderSphere } from "./ShaderSphere"
-import { TwistedShape } from "./TwistedShape"
+import { FloatingTubes } from "./FloatingTubes"
 import { Joystick } from 'react-joystick-component';
 import { ShapeOne } from "./ShapeOne"
 import { TorusBufferGeometry } from "three"
+import { Portal } from "./Portal"
 
 
 export function World() {
@@ -16,16 +17,18 @@ export function World() {
     <>
       <Lighting />
       <Avatars />
-      <TwistedShape />
+      <FloatingTubes />
       {/* get these shapes instanced nicely! */}
-        <TwistedShape position={[10, 10, 10]}/>
-        <TwistedShape position={[-50, -20, 50]}/>
-        <TwistedShape position={[50, 10, 80]}/>
-        <TwistedShape position={[0, 30, 80]}/>
-        <TwistedShape position={[0, -40, 90]}/>
+        <FloatingTubes position={[10, 10, 10]}/>
+        <FloatingTubes position={[-50, -20, 50]}/>
+        <FloatingTubes position={[50, 10, 80]}/>
+        <FloatingTubes position={[0, 30, 80]}/>
+        <FloatingTubes position={[0, -40, 90]}/>
       <Arena />
-      
-      {/* <ShapeOne /> */}
+      <ShapeOne />
+
+
+
       {/* <mesh 
       scale={[10, 10, 10]}
       >

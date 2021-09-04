@@ -7,3 +7,5 @@ export const TICK_INTERVAL = 50
 export const MAX_MESSAGES = 100
 export const CLUB_ENTRANCE = [0, 0, 450]
 export const INTRO_POSITION = [0, 0, 600]
+// export const INTRO_POSITION_MOBILE = [10, 0, 600]
+// simple check on screen size to swap out

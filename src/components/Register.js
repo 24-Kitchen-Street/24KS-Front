@@ -21,11 +21,11 @@ const tempColor = new Color()
 const Overlay = styled.div`
   position: absolute;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 3rem;
-  margin: 50px;
+  padding: 1rem;
+  height: 100vh;
   left: 0;
   top: 0;
   right: 0;
@@ -35,13 +35,16 @@ const Overlay = styled.div`
   z-index: 9999999999;
   font-family: 'Libre Baskerville', serif;
 
+
   p {
     font-size: 22px;
    }
 
    @media (max-height: 600px) {
-
-    height: fit-content;
+    font-size: 15px;
+  }
+   @media (max-height: 500px) {
+    font-size: 13px;
 
   }
 
@@ -75,7 +78,7 @@ const FieldGroup = styled.div`
     border-radius: 50px;
     display: block;
     background-color: rgba(0, 0, 0, 0.5);;
-    padding: 0.3rem;
+    padding: 0.1rem;
   }
 
   @media (min-width: 300px) {

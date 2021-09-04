@@ -71,7 +71,7 @@ export const Portal = (props) => {
     const uniforms = useMemo(
         () => ({
                 u_time: { type: "f", value: 1.0 },
-                u_resolution: { type: "vec2", value: new THREE.Vector2( window.innerWidth, window.innerHeight)}
+                u_resolution: { type: "vec2", value: new THREE.Vector2( window.innerWidth / 2, window.innerHeight / 2)}
                 // texture: {type: "t", value: new THREE.TextureLoader().load( "./AmbientOcc.jpg" )}
                 // colorA: {type: 'vec3', value: new THREE.Color(0x74ebd5)},
         }),
@@ -81,9 +81,10 @@ export const Portal = (props) => {
         portalRef.current.material.uniforms.u_time.value = clock.oldTime * 0.00005;
       });
   return (
-    <mesh ref={portalRef} {...props} position={[0,0,-5]} rotation={[0, 0, 0]}>
-            <planeBufferGeometry attach="geometry" args={[6, 9]}/>
+    <mesh ref={portalRef} {...props} position={[0,0,0]} rotation={[0, 0, 0]}>
+            <planeBufferGeometry attach="geometry" args={[90, 90]}/>
             <shaderMaterial
+                doublesided="true"
                 attach="material"
                 uniforms={uniforms}
                 fragmentShader={fragmentShader}

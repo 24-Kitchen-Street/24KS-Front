@@ -6,9 +6,17 @@ import React, { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { useGLTF } from '@react-three/drei'
 
+import { ShaderTestMaterial } from "./ShaderTestMaterial"
+import { AcidMaterial } from "./AcidMaterial"
+
+const shaderMat = new ShaderTestMaterial()
+const acidMat = new AcidMaterial()
+
+
 export function ShapeOne (props) {
   const group = useRef()
-  const { nodes, materials } = useGLTF('/distorted1.glb')
+  const mats = [shaderMat, acidMat]
+  const { nodes, materials } = useGLTF('/twisted.glb')
   useFrame(() => {
     group.current.rotation.x = group.current.rotation.y -= 0.001;
   });
@@ -17,15 +25,17 @@ export function ShapeOne (props) {
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes.distorted1.geometry}
-        material={materials.initialShadingGroup}
+        geometry={nodes.twisted.geometry}
+
         rotation={[1.72, 0.78, -0.44]}
-        scale={[20.61, 20.63, 20.57]}
+        scale={[40.61, 40.63, 40.57]}
+
         
       />
+
       
     </group>
   )
 }
 
-useGLTF.preload('/distorted1.glb')
+useGLTF.preload('/twisted.glb')

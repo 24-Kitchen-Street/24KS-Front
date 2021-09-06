@@ -5,11 +5,14 @@ import { AcidMaterial } from "./AcidMaterial"
 import { ShaderTestMaterial } from "./ShaderTestMaterial"
 import { useFrame } from "@react-three/fiber"
 import { Box3, Vector3 } from "three"
+import { LiquidMaterial } from "./LiquidMaterial"
 
 const acidMat = new AcidMaterial()
 const shaderMat = new ShaderTestMaterial()
+const liquidMat = new LiquidMaterial()
 
 const mats = [shaderMat, acidMat]
+var max = mats.length;
 // Arena bounds for collision detection
 export const bounds = {
   dancefloor: new Box3().setFromCenterAndSize(
@@ -39,20 +42,18 @@ export function Arena(props) {
     nodes.widescreen1.material = streamMaterial
 
     const numScreens = 19
-    var max = mats.length;
+    
 
     for (let i = 0; i < numScreens; i++) {
+      
+ 
       if (i % 2 === 0) {
-        setInterval(function() {
-          for (let x = 0; x < max; x++) {
-            // let variedMats = mats[x]
-            nodes[`screen${i}`].material = mats[x]
-          }
-        }, 20000)
+ 
+        nodes[`screen${i}`].material = liquidMat
       }
       else {
 
-          nodes[`screen${i}`].material = acidMat
+          nodes[`screen${i}`].material = shaderMat
        
       }
       
@@ -70,10 +71,16 @@ export function Arena(props) {
     
 //   }, 3000)    
 // }
+       // setInterval(function() {
+        //   for (let x = 0; x < max; x++) {
+        //     // let variedMats = mats[x]
+        //     nodes[`screen${i}`].material = shaderMat
+        //   }
+        // }, 20000)
 
   useFrame(({ clock }) => {
     shaderMat.time = clock.getElapsedTime()
-    acidMat.time = clock.getElapsedTime()
+    liquidMat.time = clock.getElapsedTime()
   })
 
 

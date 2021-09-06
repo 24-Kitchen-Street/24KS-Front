@@ -5,23 +5,34 @@ import px2vw from "../utils/px2vw"
 export const OutlineContent = styled.div`
 /* margin: 70px auto; */
 display: flex;
-flex-direction: column;
 justify-content: center;
 align-items: center;
-border-radius: 40%;
 height: 100vh;
-padding: 1.5rem;
+padding: 2.5rem;
 text-align: center;
 font-size: 18px;
-border: 5px solid rgba(255,255,255, 0.4);
-background-color: rgba(0, 0, 0, 0);
+border: 1px solid rgba(255,255,255, 0.3);
+/* background-color: rgba(0, 0, 0, 0.5); */
 color: #00bfb6;
 left: 0;
 font-family: 'Libre Baskerville', serif;
 @media (max-height: 600px) {
     font-size: 15px;
     overflow-y: scroll;
+    height: 100vh;
   }
+@media (max-width: 672px) {
+    font-size: 15px;
+    overflow-y: scroll;
+    width: 50%;
+  }
+@media (max-height: 400px) {
+    font-size: 15px;
+    overflow-y: scroll;
+    height: 100vh;
+  }
+
+
 
 
 // `

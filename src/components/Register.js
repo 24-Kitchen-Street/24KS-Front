@@ -20,11 +20,12 @@ const tempColor = new Color()
 
 const Overlay = styled.div`
   position: absolute;
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
+  padding: 2rem;
   height: 100vh;
   left: 0;
   top: 0;
@@ -34,6 +35,7 @@ const Overlay = styled.div`
   color: #00bfb6;
   z-index: 9999999999;
   font-family: 'Libre Baskerville', serif;
+  overflow-y: scroll;
 
 
   p {
@@ -67,18 +69,19 @@ const Overlay = styled.div`
 
 
 const FieldGroup = styled.div`
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  margin-top: 1.3rem;
-  font-size: 20px;
+  margin-top: 1.0rem; */
+  font-size: 18px;
   justify-content: center;
   align-items: center;
   font-family: 'Libre Baskerville', serif;
+  border: 1px solid rgba(255,255,255, 0.3);
   label {
-    border-radius: 50px;
+    border-radius: 10px;
     display: block;
-    background-color: rgba(0, 0, 0, 0.5);;
-    padding: 0.1rem;
+    padding: 1.0rem;
+
   }
 
   @media (min-width: 300px) {
@@ -87,7 +90,7 @@ const FieldGroup = styled.div`
 
   }
   @media (min-height: 300px) {
-    font-size: 22px;
+    font-size: 18px;
     height: fit-content;
 
   }
@@ -110,10 +113,33 @@ const Button = styled.button `
   border: none ;
   text-decoration: underline;
   text-align: center;
-  color: red;
+  color: white;
   padding: 1rem;
   font-family: 'Libre Baskerville', serif;
   cursor: pointer;
+  @media (max-width: 772px) {
+    font-size: 20px;
+  }
+`
+
+const Text = styled.div `
+  padding: 2rem;
+  height: 70%;
+  width: 100%;
+  text-align: left;
+  font-size: 22px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255,255,255, 0.3);
+  right: 0;
+  @media (max-height: 600px) {
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding: 2.5rem;
+
+  }
 `
 
 
@@ -161,11 +187,14 @@ export function Register() {
     {isLoading===true ?
       <Loading />
     :
+
+   
       <Overlay>  
-     
-      <p>Choose your name and character settings. </p>
+      <Text>Choose your name and character settings. </Text>
+     <OutlineContent>
+      
     
-      <OutlineContent>
+     
       <Formik
         onSubmit={handleSubmit}
         initialValues={{ name: "", adminPassword: "" }}
@@ -177,7 +206,7 @@ export function Register() {
       <TextField name="name" autoFocus />
       </FieldGroup>
 
-        
+      
           {showPass && (
             <FieldGroup>
               <label htmlFor="adminPassword">Admin Pass</label>
@@ -226,13 +255,14 @@ export function Register() {
             
           </FieldGroup>
           <FieldGroup>
-                Ready? Let's<Button onClick={() => setGamePlay(false)} type="submit">Go</Button>
+               <Button onClick={() => setGamePlay(false)} type="submit">Enter</Button>
             </FieldGroup>        
         </Form>
       </Formik>
       {registerError && <ErrorMessage>{registerError}</ErrorMessage>}
       </OutlineContent>
     </Overlay>
+ 
       }
     </>
   )

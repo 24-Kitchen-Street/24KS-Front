@@ -6,14 +6,14 @@ import { Field } from "formik"
 
 var stylingObject = {
   input: {
-    display: "flex",
+    // display: "flex",
     color: "black",
     fontFamily: "'Libre Baskerville', serif",
     fontSize: "22px",
     borderRadius: "20px",
     background: "rgba(0, 255, 255, 0.5)",
     textAlign: "center",
-    width: "50%",
+    // width: "50%",
     borderBottom: "5px dotted red",
     border: "none",
     outline: "none",

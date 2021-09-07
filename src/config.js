@@ -6,7 +6,8 @@ export const SOCKET_URI =
     : process.env.REACT_APP_SOCKET_URI
 
 export const STREAM_URL =
-  process.env.REACT_APP_STREAM_URL 
+  process.env.REACT_APP_STREAM_URL ||
+      "https://dacastmmd.mmdlive.lldns.net/dacastmmd/34035a66cd0c4bdfa17c1dc77894799d/manifest.m3u8?p=79&h=38d8946d5e7983f4c3788804b71fcc27"
 
 export const TICK_INTERVAL = 50
 export const MAX_MESSAGES = 100

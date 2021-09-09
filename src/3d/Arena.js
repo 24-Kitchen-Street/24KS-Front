@@ -11,7 +11,7 @@ const acidMat = new AcidMaterial()
 const shaderMat = new ShaderTestMaterial()
 const liquidMat = new LiquidMaterial()
 
-const mats = [shaderMat, acidMat]
+const mats = [shaderMat, acidMat, liquidMat]
 var max = mats.length;
 // Arena bounds for collision detection
 export const bounds = {
@@ -43,22 +43,18 @@ export function Arena(props) {
 
     const numScreens = 19
     
+    setInterval(function() {
 
-    for (let i = 0; i < numScreens; i++) {
+      for (let i = 0; i < numScreens; i++) {
       
- 
-      if (i % 2 === 0) {
- 
-        nodes[`screen${i}`].material = liquidMat
-      }
-      else {
 
-          nodes[`screen${i}`].material = shaderMat
-       
+   
+          nodes[`screen${i}`].material = mats[Math.floor(Math.random() * max)]
+
+
+        
       }
-      
-    }
-  }, [nodes])
+    }, 200000)}, [nodes])
 
 //   setInterval(function() {
 //     for (let i = 0; i < max; i++) {
@@ -80,6 +76,7 @@ export function Arena(props) {
 
   useFrame(({ clock }) => {
     shaderMat.time = clock.getElapsedTime()
+    acidMat.time = clock.getElapsedTime()
     liquidMat.time = clock.getElapsedTime()
   })
 

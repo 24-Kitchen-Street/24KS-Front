@@ -30,7 +30,7 @@ const updateLeftJoy = useStore(state => state.updateLeftJoy)
   }
     return (
       <JoysticksContainer>
-        <Joystick size={100} baseColor="#00bfb6" stickColor="white" move={event => updateLeftJoy(event)} stop={event => updateLeftJoy(event)}></Joystick>
+        <Joystick size={100} baseColor="#4f38e4" stickColor="white" move={event => updateLeftJoy(event)} stop={event => updateLeftJoy(event)}></Joystick>
         <Joystick size={100} baseColor="transparent" stickColor="white" move={handleEvent} stop={handleEvent}></Joystick>        
       </JoysticksContainer>
     )

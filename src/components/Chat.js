@@ -21,6 +21,20 @@ const Overlay = styled.div`
   z-index: 9999999999;
 `
 
+const Button = styled.button `
+  background-color: transparent;
+  border: none ;
+  text-decoration: underline;
+  text-align: center;
+  color: white;
+  padding: 1rem;
+  font-family: 'Libre Baskerville', serif;
+  cursor: pointer;
+  @media (max-width: 772px) {
+    font-size: 20px;
+  }
+`
+
 export function Chat() {
   const chatMessageResponse = useStore((state) => state.chatMessageResponse)
   const setCurrentPopup = useStore((state) => state.setCurrentPopup)
@@ -41,7 +55,7 @@ export function Chat() {
       <Formik onSubmit={handleSubmit} initialValues={{ message: "" }}>
         <Form>
           <TextField name="message" autoFocus />
-          <button>Enter</button>
+          <Button>Enter</Button>
         </Form>
       </Formik>
       {chatMessageResponse && (

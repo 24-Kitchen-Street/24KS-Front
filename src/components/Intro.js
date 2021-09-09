@@ -10,24 +10,19 @@ const ButtonContainer = styled.div `
 `
 
 const Button = styled.div `
-  border: 5px solid #00bfb6;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 0.5rem;
+  border: 5px solid #4f38e4;
+  padding: 1.5rem;
   border-radius: 40%;
-  font-family: 'Libre Baskerville', serif;
   cursor: pointer;
 
 `
 
 const Instructions = styled.div`
   display: flex;
-  align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 3rem;
+  align-items: center;
   flex-direction: column;
-  font-family: 'Libre Baskerville', serif;
-  color: #00bfb6;
+  color: #fbedfe;
 `
 
 const List = styled.ul `
@@ -76,7 +71,6 @@ export function Intro() {
 
   return (
     <Overlay >
-      <OutlineContent> 
         <Instructions>
           {showInstructions ? 
             <>
@@ -98,7 +92,6 @@ export function Intro() {
           </>
           }
         </Instructions>             
-      </OutlineContent >
     </Overlay>
   )
 }

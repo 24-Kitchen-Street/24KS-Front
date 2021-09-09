@@ -9,7 +9,7 @@ const Container = styled.div`
   top: 0;
   right: 0;
 
-  border: 5px solid #00bfb6;
+  border: 5px solid #4f38e4;
   background: rgba(0, 0, 0, 0.5);
     margin: 50px auto;
     text-align: left;

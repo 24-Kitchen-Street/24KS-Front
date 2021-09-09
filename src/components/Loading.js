@@ -12,7 +12,7 @@ const LoadingScreen = styled.div`
     position: relative;
     z-index: 99999999;
     padding: 40px;
-    background-color: #00bfb6;
+    background-color: #4f38e4;
 `
 
 const Logo = styled.img `

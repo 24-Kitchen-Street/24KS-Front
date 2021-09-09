@@ -10,14 +10,14 @@ var stylingObject = {
     color: "black",
     fontFamily: "'Libre Baskerville', serif",
     fontSize: "22px",
-    borderRadius: "20px",
-    background: "rgba(0, 255, 255, 0.5)",
+    borderRadius: "10px",
+    background: "#fbedfe",
     textAlign: "center",
     // width: "50%",
-    borderBottom: "5px dotted red",
     border: "none",
     outline: "none",
-    height: "30px"
+    height: "30px",
+    zIndex: "99999999999"
   },
 }
 

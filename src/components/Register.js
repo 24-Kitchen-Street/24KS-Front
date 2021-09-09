@@ -31,8 +31,8 @@ const Overlay = styled.div`
   top: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  color: #00bfb6;
+  background: rgba(0, 0, 0, 0.4);
+  color: #cf3820;
   z-index: 9999999999;
   font-family: 'Libre Baskerville', serif;
   overflow-y: scroll;
@@ -72,7 +72,9 @@ const FieldGroup = styled.div`
   /* display: flex;
   flex-direction: column;
   margin-top: 1.0rem; */
-  font-size: 18px;
+  color: #fbedfe;
+  background-color: #4f38e450;
+  padding: 0px;
   justify-content: center;
   align-items: center;
   font-family: 'Libre Baskerville', serif;
@@ -83,7 +85,6 @@ const FieldGroup = styled.div`
     padding: 1.0rem;
 
   }
-
   @media (min-width: 300px) {
     font-size: 18px;
     height: fit-content;
@@ -99,8 +100,6 @@ const FieldGroup = styled.div`
     height: fit-content;
 
   }
-
-
   @media (min-width: 1024px) {
     font-size: 22px;
     height: fit-content;
@@ -123,15 +122,13 @@ const Button = styled.button `
 `
 
 const Text = styled.div `
+  position: absolute;
   padding: 2rem;
-  height: 70%;
-  width: 100%;
-  text-align: left;
-  font-size: 22px;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid rgba(255,255,255, 0.3);
-  right: 0;
+  height: fit-content;
+  width: 30%;
+  font-size: 28px;
+  color: #fbedfe;
+
   @media (max-height: 600px) {
     font-size: 18px;
     display: flex;
@@ -141,6 +138,67 @@ const Text = styled.div `
 
   }
 `
+
+const Container = styled.div `
+
+`
+
+const WaveBox = styled.div `
+    position: fixed;
+    top: 0;
+    transform: rotate(90deg); 
+    left: 0;
+`
+
+const WaveOne = styled.div `
+  position: absolute;
+  opacity: .9;
+  width: 1500;
+  height: 1300px;
+  margin-left: -150px;
+  margin-top: -250px;
+  border-radius: 43%;
+  animation: rotate 7000ms infinite linear;
+  opacity: .8;
+  background: #593661;
+  @keyframes rotate {
+  from { transform: rotate(0deg); }
+  from { transform: rotate(-360deg); }
+}
+`
+const WaveTwo = styled.div `
+  position: absolute;
+  opacity: .4;
+  width: 1500px;
+  height: 1300px;
+  margin-left: -150px;
+  margin-top: -250px;
+  border-radius: 43%;
+  animation: rotate 7000ms infinite linear;
+  opacity: .2;
+  background: #0af;
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  from { transform: rotate(360deg); }
+}
+`
+const WaveThree = styled.div `
+  position: absolute;
+  opacity: .4;
+  width: 1000px;
+  height: 3000px;
+  margin-left: -150px;
+  margin-top: -250px;
+  border-radius: 43%;
+  animation: rotate 7000ms infinite linear;
+  opacity: .2;
+  background: #0af;
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  from { transform: rotate(360deg); }
+}
+`
+
 
 
 
@@ -189,12 +247,23 @@ export function Register() {
     :
 
    
-      <Overlay>  
+      <Overlay>
+      <Container>
       <Text>Choose your name and character settings. </Text>
+      </Container> 
+      
      <OutlineContent>
       
-    
-     
+     <WaveBox>
+        <WaveOne>
+          <WaveTwo>
+            <WaveThree>
+
+            </WaveThree>
+          </WaveTwo>
+        </WaveOne>
+      </WaveBox> 
+
       <Formik
         onSubmit={handleSubmit}
         initialValues={{ name: "", adminPassword: "" }}
@@ -254,9 +323,9 @@ export function Register() {
             />
             
           </FieldGroup>
-          <FieldGroup>
+        
                <Button onClick={() => setGamePlay(false)} type="submit">Enter</Button>
-            </FieldGroup>        
+                  
         </Form>
       </Formik>
       {registerError && <ErrorMessage>{registerError}</ErrorMessage>}

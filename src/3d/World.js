@@ -13,11 +13,12 @@ export function World() {
       <Avatars />
       <FloatingTubes />
       {/* get these shapes instanced nicely! */}
-        <FloatingTubes position={[10, 10, 10]}/>
+        <FloatingTubes position={[10, 10, -100]}/>
         <FloatingTubes position={[-50, -20, 50]}/>
-        <FloatingTubes position={[50, 10, 80]}/>
-        <FloatingTubes position={[0, 30, 80]}/>
-        <FloatingTubes position={[0, -40, 90]}/>
+        <FloatingTubes position={[50, 0, 0]}/>
+        <FloatingTubes position={[-90, -20, -120]}/>
+        <FloatingTubes position={[0, 30, -120]}/>
+        <FloatingTubes position={[40, -40, 90]}/>
         <Discoball position= {[0,0,0]} />
 
       <Arena />

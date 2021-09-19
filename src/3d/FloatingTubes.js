@@ -26,7 +26,7 @@ export function FloatingTubes(props) {
       mats[1].time = clock.getElapsedTime() / 20
     })
     useFrame(() => {
-      ref.current.rotation.x = ref.current.rotation.y += 0.01;
+      ref.current.rotation.x = ref.current.rotation.y += 0.002;
     });
   
     return (
@@ -36,7 +36,7 @@ export function FloatingTubes(props) {
         // material = {mats[1]}
         position= {props.position}
         >        
-            < ShapeOne args={[20, 10, 10, 16]} />
+            < ShapeOne args={[10, 10, 10, 16]} />
   
             <meshPhongMaterial color={"#FF1493"} />
             

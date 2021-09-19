@@ -26,9 +26,9 @@ export function ShapeOne (props) {
         castShadow
         receiveShadow
         geometry={nodes.twisted.geometry}
-
+        material={materials.geometry}
         rotation={[1.72, 0.78, -0.44]}
-        scale={[40.61, 40.63, 40.57]}
+        scale={[20.61, 20.63, 20.57]}
 
         
       />

@@ -43,12 +43,12 @@ export function Arena(props) {
 
     for (let i = 0; i < numScreens; i++) {
       if (i % 2 === 0) {
-        setInterval(function() {
-          for (let x = 0; x < max; x++) {
+        // setInterval(function() {
+        //   for (let x = 0; x < max; x++) {
             // let variedMats = mats[x]
-            nodes[`screen${i}`].material = mats[x]
-          }
-        }, 20000)
+            nodes[`screen${i}`].material = shaderMat
+        //   }
+        // }, 20000)
       }
       else {
 

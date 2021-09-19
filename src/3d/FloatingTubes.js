@@ -3,6 +3,7 @@ import React, { Suspense, useRef, useState } from "react";
 import { useFrame, useResource  } from "@react-three/fiber";
 import { MeshDistortMaterial, useTexture} from "@react-three/drei";
 
+import { ShapeOne } from "./ShapeOne";
 import { ShaderTestMaterial } from "./ShaderTestMaterial"
 import { AcidMaterial } from "./AcidMaterial"
 
@@ -35,7 +36,7 @@ export function FloatingTubes(props) {
         // material = {mats[1]}
         position= {props.position}
         >        
-            <boxBufferGeometry attach="geometry" args={[20, 10, 10, 16]} />
+            < ShapeOne args={[20, 10, 10, 16]} />
   
             <meshPhongMaterial color={"#FF1493"} />
             

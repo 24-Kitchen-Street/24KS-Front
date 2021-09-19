@@ -2,14 +2,8 @@ import React from "react"
 import { Arena } from "./Arena"
 import { Avatars } from "./Avatars"
 import { Lighting } from "./Lighting"
-import { IntroRoom } from "./IntroRoom"
-import { ReflectiveShape } from "./ReflectiveShape"
-import { ShaderSphere } from "./ShaderSphere"
 import { FloatingTubes } from "./FloatingTubes"
-import { Joystick } from 'react-joystick-component';
-import { ShapeOne } from "./ShapeOne"
-import { TorusBufferGeometry } from "three"
-import { Portal } from "./Portal"
+import { Discoball } from "./Discoball"
 
 
 export function World() {
@@ -24,8 +18,10 @@ export function World() {
         <FloatingTubes position={[50, 10, 80]}/>
         <FloatingTubes position={[0, 30, 80]}/>
         <FloatingTubes position={[0, -40, 90]}/>
+        <Discoball position= {[0,0,0]} />
+
       <Arena />
-      <ShapeOne />
+
 
 
 

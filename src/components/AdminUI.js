@@ -29,6 +29,13 @@ const UI = styled.div`
 `
 
 export function AdminUI() {
+  const banResponse = useStore((state) => state.banResponse)
+  const unbanResponse = useStore((state) => state.unbanResponse)
+  const isShowing = useStore((state) => state.isShowingAdminControls)
+  const setControls = useStore((state) => state.setIsShowingAdminControls)
+  const updateClubMode = useStore((state) => state.updateClubMode)
+  const isClubModeEnabled = useStore((state) => state.clubMode.isEnabled)
+
   const handleBanSubmit = ({ name }) => {
     if (name !== "") {
       banPlayer({
@@ -45,35 +52,41 @@ export function AdminUI() {
     }
   }
 
-  const banResponse = useStore((state) => state.banResponse)
-  const unbanResponse = useStore((state) => state.unbanResponse)
-  const isShowing = useStore((state) => state.isShowingAdminControls)
-  const setControls = useStore((state) => state.setIsShowingAdminControls)
+  const handleLaunchClubMode = () => {
+    updateClubMode({ isEnabled: true })
+    setControls(false)
+  }
 
   return (
-    <UI onClick={(e) => e.stopPropagation()}>
-      <h3 onClick={() => setControls(!isShowing)}>Admin Controls</h3>
-      {isShowing && (
-        <>
-          <h4>Ban User</h4>
-          <Formik onSubmit={handleBanSubmit} initialValues={{ name: "" }}>
-            <Form>
-              <TextField name="name" />
-              <button type="submit">Go</button>
-            </Form>
-          </Formik>
-          {banResponse && <strong>{banResponse}</strong>}
+    !isClubModeEnabled && (
+      <UI onClick={(e) => e.stopPropagation()}>
+        <h3 onClick={() => setControls(!isShowing)}>Admin Controls</h3>
+        {isShowing && (
+          <>
+            <h4>Ban User</h4>
+            <Formik onSubmit={handleBanSubmit} initialValues={{ name: "" }}>
+              <Form>
+                <TextField name="name" />
+                <button type="submit">Go</button>
+              </Form>
+            </Formik>
+            {banResponse && <strong>{banResponse}</strong>}
 
-          <h4>Unban IP Address</h4>
-          <Formik onSubmit={handleUnbanSubmit} initialValues={{ address: "" }}>
-            <Form>
-              <TextField name="address" />
-              <button type="submit">Go</button>
-            </Form>
-          </Formik>
-          {unbanResponse && <strong>{unbanResponse}</strong>}
-        </>
-      )}
-    </UI>
+            <h4>Unban IP Address</h4>
+            <Formik
+              onSubmit={handleUnbanSubmit}
+              initialValues={{ address: "" }}
+            >
+              <Form>
+                <TextField name="address" />
+                <button type="submit">Go</button>
+              </Form>
+            </Formik>
+            {unbanResponse && <strong>{unbanResponse}</strong>}
+            <button onClick={handleLaunchClubMode}>Launch club mode</button>
+          </>
+        )}
+      </UI>
+    )
   )
 }

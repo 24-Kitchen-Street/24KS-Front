@@ -42,22 +42,25 @@ export function InstancedAvatars({ materialConfig, players }) {
   useFrame(() => {
     for (let i = 0; i < players.length; i++) {
       player = players[i]
-      tempObject.position.set(...player.position)
-      tempObject.rotation.set(...player.rotation)
+      const pos = player.position ?? [0, 0, 0]
+      const rot = player.rotation ?? [0, 0, 0]
+
+      tempObject.position.set(...pos)
+      tempObject.rotation.set(...rot)
       tempObject.updateMatrix()
       meshRef.current.setMatrixAt(i, tempObject.matrix)
 
       // Update color
-      const [r, g, b] = player.color
+      const [r, g, b] = player.color ?? [0, 0, 0]
       const offset = i * 3
       colorArray[offset] = r
       colorArray[offset + 1] = g
       colorArray[offset + 2] = b
 
       // Update wobble speed, amp, freq
-      speedArray[i] = player.wobbleSpeed
-      ampArray[i] = player.wobbleAmplitude
-      freqArray[i] = player.wobbleFrequency
+      speedArray[i] = player.wobbleSpeed ?? 1
+      ampArray[i] = player.wobbleAmplitude ?? 1
+      freqArray[i] = player.wobbleFrequency ?? 1
     }
 
     meshRef.current.geometry.attributes.color.needsUpdate = true

@@ -30,17 +30,30 @@ const usePlayerControls = () => {
     left: false,
     right: false,
   })
+  const leftJoyX = useStore(state => state.leftJoyX)
+  const leftJoyY = useStore(state => state.leftJoyY)  
+  const leftJoyType = useStore(state => state.leftJoyMovement)
+  const leftJoyDirection = useStore(state => state.leftJoyDirection)
+  console.log(leftJoyX, leftJoyY, leftJoyType, leftJoyDirection)
+
+  // how to use store values inside the useEffect?
   useEffect(() => {
-    const handleKeyDown = (e) =>
-      setMovement((m) => ({ ...m, [moveFieldByKey(e.code)]: true }))
-    const handleKeyUp = (e) =>
-      setMovement((m) => ({ ...m, [moveFieldByKey(e.code)]: false }))
-    document.addEventListener("keydown", handleKeyDown)
-    document.addEventListener("keyup", handleKeyUp)
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown)
-      document.removeEventListener("keyup", handleKeyUp)
+    if (leftJoyType !== "move") {
+      const handleKeyDown = (e) =>
+        setMovement((m) => ({ ...m, [moveFieldByKey(e.code)]: true }))
+      const handleKeyUp = (e) =>
+        setMovement((m) => ({ ...m, [moveFieldByKey(e.code)]: false }))
+      document.addEventListener("keydown", handleKeyDown)
+      document.addEventListener("keyup", handleKeyUp)
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown)
+        document.removeEventListener("keyup", handleKeyUp)
+      }
+    } else {
+      setMovement((m) => ({ ...m, [leftJoyDirection.toLowerCase()]: true }))
+      console.log(movement)
     }
+
   }, [])
   return movement
 }
@@ -129,6 +142,7 @@ export const Player = (props) => {
         camera.rotation.set(0, 0, 0)
       }
     } else {
+      // nest if else here for mobile controls
       frontVector.set(0, 0, Number(backward) - Number(forward))
       sideVector.set(Number(left) - Number(right), 0, 0)
       direction

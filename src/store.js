@@ -54,9 +54,10 @@ export const useStore = create((set) => ({
   setCurrentPopup: (currentPopup) => set(() => ({ currentPopup })),
   setIsShowingAdminControls: (isShowingAdminControls) =>
     set(() => ({ isShowingAdminControls })),
-  leftjoyX: 0,
-  leftjoyY: 0,
+  leftJoyX: 0,
+  leftJoyY: 0,
   leftJoyMovement: null,
+  leftJoyDirection: null,
   // movementLeftJoy: (state) => {
   //   return set((state) => ({
   //     ...state,
@@ -67,9 +68,10 @@ export const useStore = create((set) => ({
   //   }))
   // },
   updateLeftJoy: (event) => set(state => ({
-    leftjoyX: event.x,  
-    leftjoyY: event.y,
+    leftJoyX: event.x,  
+    leftJoyY: event.y,
     leftJoyMovement: event.type,
+    leftJoyDirection: event.direction
   })),
   stopLeftJoy: (state) => {
     return set((state) => ({

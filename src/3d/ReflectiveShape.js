@@ -1,7 +1,5 @@
 import * as THREE from "three";
-import React, { Suspense, useRef, useState } from "react";
-import { useFrame, useResource  } from "@react-three/fiber";
-import { MeshDistortMaterial, useTexture} from "@react-three/drei";
+import React, { useRef } from "react";
 import { ShapeOne } from './ShapeOne';
 
 

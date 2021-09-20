@@ -21,6 +21,7 @@ export function Avatars() {
   const players = useStore((state) => state.players)
   const me = useStore((state) => state.me)
   const skinPlayer = useStore((state) => state.skinPlayer)
+  const isClubModeEnabled = useStore((state) => state.clubMode.isEnabled)
 
   const [visiblePlayers, setVisiblePlayers] = useState([])
   const [nearByPlayers, setNearby] = useState([])
@@ -48,9 +49,8 @@ export function Avatars() {
         materialConfig={materialConfig}
         players={visiblePlayers}
       />
-      {nearByPlayers.map((player) => (
-        <AvatarUI key={player.id} {...player} />
-      ))}
+      {!isClubModeEnabled &&
+        nearByPlayers.map((player) => <AvatarUI key={player.id} {...player} />)}
     </>
   )
 }

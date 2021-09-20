@@ -1,6 +1,6 @@
 import "./App.css"
 import { World } from "./3d/World"
-import { Suspense } from "react"
+import { Suspense, useEffect } from "react"
 import { Canvas } from "@react-three/fiber"
 import useKeypress from "react-use-keypress"
 import { PointerLockControls } from "@react-three/drei"
@@ -13,14 +13,22 @@ import { Feed } from "./components/Feed"
 import { Chat } from "./components/Chat"
 import { ErrorScreen } from "./components/ErrorScreen"
 import { AdminUI } from "./components/AdminUI"
+import { SHOW_DEBUG } from "./config"
+import { FollowingUI } from "./components/FollowingUI"
+import { JoySticks } from './components/JoySticks';
 
 function App() {
   const me = useStore((state) => state.me)
+  const isClubModeEnabled = useStore((state) => state.clubMode.isEnabled)
   const setCurrentPopup = useStore((state) => state.setCurrentPopup)
   const currentPopup = useStore((state) => state.currentPopup)
   const isShowingAdminControls = useStore(
     (state) => state.isShowingAdminControls
   )
+
+  useEffect(() => {
+    document.body.classList.toggle("cursorHidden", isClubModeEnabled)
+  }, [isClubModeEnabled])
 
   useKeypress("Enter", () => {
     if (me.isValid && currentPopup !== "chat" && !isShowingAdminControls) {
@@ -36,6 +44,7 @@ function App() {
 
   return (
     <>
+      {me.isValid && <JoySticks />}
       <Canvas>
         <Suspense fallback={null}>
           <World />
@@ -53,8 +62,9 @@ function App() {
           error: <ErrorScreen />,
         }[currentPopup]
       }
-      <Feed />
-      <DebugInfo />
+      {!isClubModeEnabled && <Feed />}
+      {isClubModeEnabled && <FollowingUI />}
+      {SHOW_DEBUG && <DebugInfo />}
       {me.isAdmin && <AdminUI />}
     </>
   )

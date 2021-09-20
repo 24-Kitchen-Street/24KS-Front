@@ -6,9 +6,9 @@ import { Formik, Form } from "formik"
 import { TextField } from "./form/TextField"
 import { ErrorMessage } from "./form/ErrorMessage"
 import { Color } from "three"
+import { SHOW_ADMIN } from "../config"
+import { playVideo } from "../utils/streamMaterial"
 
-const params = new URL(document.location).searchParams
-const showPass = params.get("admin") === "1"
 const tempColor = new Color()
 
 const Overlay = styled.div`
@@ -58,6 +58,8 @@ export function Register() {
         adminPassword,
         ...skinPlayer,
       })
+
+      playVideo()
     }
   }
 
@@ -71,7 +73,7 @@ export function Register() {
       >
         <Form>
           <TextField name="name" autoFocus />
-          {showPass && (
+          {SHOW_ADMIN && (
             <FieldGroup>
               <label htmlFor="adminPassword">Admin Pass</label>
               <TextField name="adminPassword" type="password" />

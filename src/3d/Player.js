@@ -13,6 +13,7 @@ import { sendPlayerData } from "../socket"
 import { useInterval } from "../utils/useInterval"
 import { useStore } from "../store"
 import { bounds } from "./Arena"
+import { isTouchDevice } from "../utils/isTouchDevice"
 
 const SPEED = 2
 const keys = { KeyW: "forward", KeyS: "backward", KeyA: "left", KeyD: "right" }
@@ -54,7 +55,7 @@ export const Player = (props) => {
   const currentPopup = useStore((state) => state.currentPopup)
   const updateClubMode = useStore((state) => state.updateClubMode)
   const clubMode = useStore((state) => state.clubMode)
-
+  const joysticks = useStore((state) => state.joysticks)
   const me = useStore((state) => state.me)
   const isShowingAdminControls = useStore(
     (state) => state.isShowingAdminControls
@@ -129,11 +130,20 @@ export const Player = (props) => {
         camera.rotation.set(0, 0, 0)
       }
     } else {
-      frontVector.set(0, 0, Number(backward) - Number(forward))
-      sideVector.set(Number(left) - Number(right), 0, 0)
+      if (isTouchDevice()) {
+        const sensitivity = 0.03
+        const [lx, ly] = joysticks.left
+        const [rx, ry] = joysticks.right
+        frontVector.set(0, 0, -ly * sensitivity)
+        sideVector.set(-lx * sensitivity, 0, 0)
+      } else {
+        frontVector.set(0, 0, Number(backward) - Number(forward))
+        sideVector.set(Number(left) - Number(right), 0, 0)
+      }
+
       direction
         .subVectors(frontVector, sideVector)
-        .normalize()
+        // .normalize()
         .multiplyScalar(SPEED)
         .applyEuler(camera.rotation)
       velocity.current.set(direction.x, direction.y, direction.z)

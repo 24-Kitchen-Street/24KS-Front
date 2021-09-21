@@ -14,6 +14,7 @@ import { useInterval } from "../utils/useInterval"
 import { useStore } from "../store"
 import { bounds } from "./Arena"
 import { isTouchDevice } from "../utils/isTouchDevice"
+import { Euler } from "three"
 
 const SPEED = 2
 const keys = { KeyW: "forward", KeyS: "backward", KeyA: "left", KeyD: "right" }
@@ -23,6 +24,11 @@ const frontVector = new Vector3()
 const sideVector = new Vector3()
 const center = new Vector3(0, 0, 0)
 const tempVec = new Vector3(0, 0, 0)
+const joystickEuler = new Euler(0, 0, 0, "YXZ")
+
+const PI_2 = Math.PI / 2
+const minPolarAngle = 0
+const maxPolarAngle = Math.PI
 
 const usePlayerControls = () => {
   const [movement, setMovement] = useState({
@@ -131,11 +137,28 @@ export const Player = (props) => {
       }
     } else {
       if (isTouchDevice()) {
-        const sensitivity = 0.03
+        // Joystick controls
         const [lx, ly] = joysticks.left
         const [rx, ry] = joysticks.right
+
+        // Left joystick for player movement on X and Z axis
+        // (left, right, forwards, back)
+        let sensitivity = 0.03
         frontVector.set(0, 0, -ly * sensitivity)
         sideVector.set(-lx * sensitivity, 0, 0)
+
+        // Right joystick for pointing in a direction, logic taken from pointerlock controls
+        // https://github.com/mrdoob/three.js/blob/master/examples/jsm/controls/PointerLockControls.js
+        sensitivity = 0.0007
+        joystickEuler.x += ry * sensitivity
+        joystickEuler.y -= rx * sensitivity
+        joystickEuler.x = Math.max(
+          PI_2 - maxPolarAngle,
+          Math.min(PI_2 - minPolarAngle, joystickEuler.x)
+        )
+
+        // Use euler to set actual camera rotation
+        camera.quaternion.setFromEuler(joystickEuler)
       } else {
         frontVector.set(0, 0, Number(backward) - Number(forward))
         sideVector.set(Number(left) - Number(right), 0, 0)
@@ -143,9 +166,9 @@ export const Player = (props) => {
 
       direction
         .subVectors(frontVector, sideVector)
-        // .normalize()
         .multiplyScalar(SPEED)
         .applyEuler(camera.rotation)
+
       velocity.current.set(direction.x, direction.y, direction.z)
       currPos.add(velocity.current)
 

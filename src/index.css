@@ -13,6 +13,16 @@ body,
   padding: 0;
 }
 
+h1,
+h2,
+h3 {
+  margin-bottom: 1rem;
+}
+
+p {
+  margin-top: 0;
+}
+
 body {
   margin: 0;
   font-family: sans-serif;
@@ -23,4 +33,8 @@ input[type="text"],
 input[type="password"],
 button {
   font-size: 30px;
+}
+
+input[type="text"] {
+  width: 100%;
 }

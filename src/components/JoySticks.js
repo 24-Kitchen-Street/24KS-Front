@@ -5,11 +5,13 @@ import { useStore } from "../store"
 const JoysticksContainer = styled.div`
   display: flex;
   position: absolute;
+  justify-content: space-between;
+  padding: 2rem;
   bottom: 0;
   left: 0;
+  right: 0;
   opacity: 2;
-  background: rgba(0, 0, 0, 1);
-  z-index: 10000;
+  z-index: 9999999999999;
 `
 
 export function JoySticks() {

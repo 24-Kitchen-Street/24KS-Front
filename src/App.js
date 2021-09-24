@@ -62,7 +62,7 @@ function App() {
           error: <ErrorScreen />,
         }[currentPopup]
       }
-      {!isClubModeEnabled && <Feed />}
+      {me.isValid && !isClubModeEnabled && <Feed />}
       {isClubModeEnabled && <FollowingUI />}
       {SHOW_DEBUG && <DebugInfo />}
       {me.isAdmin && <AdminUI />}

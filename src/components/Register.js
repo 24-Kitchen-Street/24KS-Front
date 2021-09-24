@@ -12,6 +12,11 @@ import { playVideo } from "../utils/streamMaterial"
 const tempColor = new Color()
 
 const Overlay = styled.div`
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(0, 0, 0, 0) 50%
+  );
   position: absolute;
   display: flex;
   justify-content: center;

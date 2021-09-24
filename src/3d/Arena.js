@@ -2,10 +2,12 @@ import React, { useEffect } from "react"
 import { useGLTF } from "@react-three/drei"
 import { streamMaterial } from "../utils/streamMaterial"
 import { AcidMaterial } from "./AcidMaterial"
+import { VibesMaterial } from "./VibesMaterial"
 import { useFrame } from "@react-three/fiber"
 import { Box3, Vector3 } from "three"
 
-const acidMat = new AcidMaterial()
+// Collection of materials to assign to the screens
+const mats = [new AcidMaterial(), new VibesMaterial()]
 
 // Arena bounds for collision detection
 export const bounds = {
@@ -36,13 +38,19 @@ export function Arena(props) {
     nodes.widescreen1.material = streamMaterial
 
     const numScreens = 19
+
     for (let i = 0; i < numScreens; i++) {
-      nodes[`screen${i}`].material = acidMat
+      // Loop through materials for each screen
+      nodes[`screen${i}`].material = mats[i % mats.length]
     }
   }, [nodes])
 
   useFrame(({ clock }) => {
-    acidMat.time = clock.getElapsedTime()
+    mats.forEach((mat, i) => {
+      // Update the time for each material, with a time offset
+      const offset = i * 0.5
+      mat.time = clock.getElapsedTime() + offset
+    })
   })
 
   return (

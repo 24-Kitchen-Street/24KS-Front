@@ -50,7 +50,7 @@ function App() {
           <World />
         </Suspense>
         <Player />
-        {me.isValid && !isTouchDevice() && <PointerLockControls />} */}
+        {me.isValid && !isTouchDevice() && <PointerLockControls />}
       </Canvas>
       {
         // Only one of these popups can display at a time

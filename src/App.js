@@ -50,7 +50,7 @@ function App() {
           <World />
         </Suspense>
         <Player />
-        {me.isValid && !isTouchDevice() && <PointerLockControls />} */}
+        {me.isValid && !isTouchDevice() && <PointerLockControls />}
       </Canvas>
       {
         // Only one of these popups can display at a time
@@ -62,7 +62,7 @@ function App() {
           error: <ErrorScreen />,
         }[currentPopup]
       }
-      {!isClubModeEnabled && <Feed />}
+      {me.isValid && !isClubModeEnabled && <Feed />}
       {isClubModeEnabled && <FollowingUI />}
       {SHOW_DEBUG && <DebugInfo />}
       {me.isAdmin && <AdminUI />}

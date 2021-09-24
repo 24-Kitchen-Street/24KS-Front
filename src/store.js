@@ -2,7 +2,12 @@ import create from "zustand"
 import { MAX_MESSAGES, INTRO_POSITION as INP } from "./config"
 
 // TODO: Horrible magic numbers to get X position of intro ghost
-const x = (window.innerWidth / 2) * 0.01
+let x = 0
+if (window.innerWidth < 1200) {
+  x = (window.innerWidth / 4) * 0.01
+}
+
+console.log(x)
 
 export const useStore = create((set) => ({
   players: [],

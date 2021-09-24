@@ -120,13 +120,13 @@ export const Player = (props) => {
 
         // Left joystick for player movement on X and Z axis
         // (left, right, forwards, back)
-        let sensitivity = 0.03
+        let sensitivity = 0.8
         frontVector.set(0, 0, -ly * sensitivity)
         sideVector.set(-lx * sensitivity, 0, 0)
 
         // Right joystick for pointing in a direction, logic taken from pointerlock controls
         // https://github.com/mrdoob/three.js/blob/master/examples/jsm/controls/PointerLockControls.js
-        sensitivity = 0.0007
+        sensitivity = 0.03
         joystickEuler.x += ry * sensitivity
         joystickEuler.y -= rx * sensitivity
         joystickEuler.x = Math.max(

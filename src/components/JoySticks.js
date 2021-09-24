@@ -1,6 +1,7 @@
-import { Joystick } from "react-joystick-component"
 import styled from "styled-components"
 import { useStore } from "../store"
+import "react-nipple/lib/styles.css"
+import ReactNipple from "react-nipple"
 
 const JoysticksContainer = styled.div`
   display: flex;
@@ -14,25 +15,47 @@ const JoysticksContainer = styled.div`
   z-index: 9999999999999;
 `
 
+// https://github.com/yoannmoinet/nipplejs/issues/54
+// Having to calculate relative positions for joysticks
+/// as library just gives angles and distance
+const maxDist = 50
+const toCart = ({ distance, angle: { radian } }) => ({
+  x: (Math.cos(radian) * distance) / maxDist,
+  y: (Math.sin(radian) * distance) / maxDist,
+})
+
+const commonProps = {
+  options: {
+    mode: "static",
+    position: { top: "50%", left: "50%" },
+  },
+  style: {
+    width: 150,
+    height: 150,
+  },
+}
+
 export function JoySticks() {
   const updateJoystick = useStore((state) => state.updateJoystick)
 
   return (
     <JoysticksContainer>
-      <Joystick
-        size={100}
-        baseColor="#4f38e4"
-        stickColor="white"
-        move={(e) => updateJoystick("left", e.x, e.y)}
-        stop={(e) => updateJoystick("left", 0, 0)}
-      ></Joystick>
-      <Joystick
-        size={100}
-        baseColor="#4f38e4"
-        stickColor="white"
-        move={(e) => updateJoystick("right", e.x, e.y)}
-        stop={(e) => updateJoystick("right", 0, 0)}
-      ></Joystick>
+      <ReactNipple
+        {...commonProps}
+        onMove={(evt, data) => {
+          const { x, y } = toCart(data)
+          updateJoystick("left", x, y)
+        }}
+        onEnd={() => updateJoystick("left", 0, 0)}
+      />
+      <ReactNipple
+        {...commonProps}
+        onMove={(evt, data) => {
+          const { x, y } = toCart(data)
+          updateJoystick("right", x, y)
+        }}
+        onEnd={() => updateJoystick("right", 0, 0)}
+      />
     </JoysticksContainer>
   )
 }

@@ -15,6 +15,8 @@ import { ErrorScreen } from "./components/ErrorScreen"
 import { AdminUI } from "./components/AdminUI"
 import { SHOW_DEBUG } from "./config"
 import { FollowingUI } from "./components/FollowingUI"
+import { JoySticks } from "./components/JoySticks"
+import { isTouchDevice } from "./utils/isTouchDevice"
 
 function App() {
   const me = useStore((state) => state.me)
@@ -48,7 +50,7 @@ function App() {
           <World />
         </Suspense>
         <Player />
-        {me.isValid && <PointerLockControls />}
+        {me.isValid && !isTouchDevice() && <PointerLockControls />} */}
       </Canvas>
       {
         // Only one of these popups can display at a time
@@ -64,6 +66,7 @@ function App() {
       {isClubModeEnabled && <FollowingUI />}
       {SHOW_DEBUG && <DebugInfo />}
       {me.isAdmin && <AdminUI />}
+      {me.isValid && isTouchDevice() && <JoySticks />}
     </>
   )
 }

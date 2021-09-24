@@ -19,6 +19,10 @@ export const useStore = create((set) => ({
   me: {
     isValid: false,
   },
+  joysticks: {
+    left: [0, 0],
+    right: [0, 0],
+  },
   registerError: null,
   generalError: null,
   banResponse: null,
@@ -27,6 +31,8 @@ export const useStore = create((set) => ({
   feed: [],
   currentPopup: "register",
   isShowingAdminControls: false,
+  updateJoystick: (side, x, y) =>
+    set((state) => ({ joysticks: { ...state.joysticks, [side]: [x, y] } })),
   addFeedMessages: (messages) =>
     set((state) => ({
       feed: [...messages, ...state.feed].slice(0, MAX_MESSAGES),

@@ -13,40 +13,24 @@ import { sendPlayerData } from "../socket"
 import { useInterval } from "../utils/useInterval"
 import { useStore } from "../store"
 import { bounds } from "./Arena"
+import { isTouchDevice } from "../utils/isTouchDevice"
+import { Euler } from "three"
+import { useKeyboardControls } from "../utils/useKeyboardControls"
 
 const SPEED = 2
-const keys = { KeyW: "forward", KeyS: "backward", KeyA: "left", KeyD: "right" }
-const moveFieldByKey = (key) => keys[key]
 const direction = new Vector3()
 const frontVector = new Vector3()
 const sideVector = new Vector3()
 const center = new Vector3(0, 0, 0)
 const tempVec = new Vector3(0, 0, 0)
+const joystickEuler = new Euler(0, 0, 0, "YXZ")
 
-const usePlayerControls = () => {
-  const [movement, setMovement] = useState({
-    forward: false,
-    backward: false,
-    left: false,
-    right: false,
-  })
-  useEffect(() => {
-    const handleKeyDown = (e) =>
-      setMovement((m) => ({ ...m, [moveFieldByKey(e.code)]: true }))
-    const handleKeyUp = (e) =>
-      setMovement((m) => ({ ...m, [moveFieldByKey(e.code)]: false }))
-    document.addEventListener("keydown", handleKeyDown)
-    document.addEventListener("keyup", handleKeyUp)
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown)
-      document.removeEventListener("keyup", handleKeyUp)
-    }
-  }, [])
-  return movement
-}
+const PI_2 = Math.PI / 2
+const minPolarAngle = 0
+const maxPolarAngle = Math.PI
 
 export const Player = (props) => {
-  const { forward, backward, left, right } = usePlayerControls()
+  const { forward, backward, left, right } = useKeyboardControls()
   const [currBound, setCurrBound] = useState("corridor")
   const { camera } = useThree()
   const ref = useRef(new Object3D())
@@ -54,7 +38,7 @@ export const Player = (props) => {
   const currentPopup = useStore((state) => state.currentPopup)
   const updateClubMode = useStore((state) => state.updateClubMode)
   const clubMode = useStore((state) => state.clubMode)
-
+  const joysticks = useStore((state) => state.joysticks)
   const me = useStore((state) => state.me)
   const isShowingAdminControls = useStore(
     (state) => state.isShowingAdminControls
@@ -129,13 +113,39 @@ export const Player = (props) => {
         camera.rotation.set(0, 0, 0)
       }
     } else {
-      frontVector.set(0, 0, Number(backward) - Number(forward))
-      sideVector.set(Number(left) - Number(right), 0, 0)
+      if (isTouchDevice()) {
+        // Joystick controls
+        const [lx, ly] = joysticks.left
+        const [rx, ry] = joysticks.right
+
+        // Left joystick for player movement on X and Z axis
+        // (left, right, forwards, back)
+        let sensitivity = 0.8
+        frontVector.set(0, 0, -ly * sensitivity)
+        sideVector.set(-lx * sensitivity, 0, 0)
+
+        // Right joystick for pointing in a direction, logic taken from pointerlock controls
+        // https://github.com/mrdoob/three.js/blob/master/examples/jsm/controls/PointerLockControls.js
+        sensitivity = 0.03
+        joystickEuler.x += ry * sensitivity
+        joystickEuler.y -= rx * sensitivity
+        joystickEuler.x = Math.max(
+          PI_2 - maxPolarAngle,
+          Math.min(PI_2 - minPolarAngle, joystickEuler.x)
+        )
+
+        // Use euler to set actual camera rotation
+        camera.quaternion.setFromEuler(joystickEuler)
+      } else {
+        frontVector.set(0, 0, Number(backward) - Number(forward))
+        sideVector.set(Number(left) - Number(right), 0, 0)
+      }
+
       direction
         .subVectors(frontVector, sideVector)
-        .normalize()
         .multiplyScalar(SPEED)
         .applyEuler(camera.rotation)
+
       velocity.current.set(direction.x, direction.y, direction.z)
       currPos.add(velocity.current)
 

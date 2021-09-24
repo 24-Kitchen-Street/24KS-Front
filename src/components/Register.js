@@ -14,7 +14,6 @@ const tempColor = new Color()
 const Overlay = styled.div`
   position: absolute;
   display: flex;
-  align-items: center;
   justify-content: center;
   padding: 3rem;
   flex-direction: column;
@@ -22,9 +21,12 @@ const Overlay = styled.div`
   top: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
   color: white;
   z-index: 9999999999;
+
+  button {
+    margin-top: 1rem;
+  }
 `
 
 const FieldGroup = styled.div`
@@ -65,14 +67,14 @@ export function Register() {
 
   return (
     <Overlay>
-      <h2>Welcome!</h2>
-      <p>Please enter your nickname</p>
       <Formik
         onSubmit={handleSubmit}
         initialValues={{ name: "", adminPassword: "" }}
       >
         <Form>
+          <label>Name</label>
           <TextField name="name" autoFocus />
+
           {SHOW_ADMIN && (
             <FieldGroup>
               <label htmlFor="adminPassword">Admin Pass</label>
@@ -117,7 +119,7 @@ export function Register() {
             />
           </FieldGroup>
 
-          <button type="submit">Go</button>
+          <button type="submit">Enter the Club</button>
         </Form>
       </Formik>
       {registerError && <ErrorMessage>{registerError}</ErrorMessage>}

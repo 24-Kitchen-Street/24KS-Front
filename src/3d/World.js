@@ -10,6 +10,7 @@ export function World() {
       <Lighting />
       <Avatars />
       <Discoball position={[0, 0, 0]} />
+
       <Arena />
     </>
   )

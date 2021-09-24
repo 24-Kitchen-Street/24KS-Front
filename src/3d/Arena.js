@@ -6,8 +6,8 @@ import { VibesMaterial } from "./VibesMaterial"
 import { useFrame } from "@react-three/fiber"
 import { Box3, Vector3 } from "three"
 
-const acidMat = new AcidMaterial()
-const vibesMat = new VibesMaterial()
+// Collection of materials to assign to the screens
+const mats = [new AcidMaterial(), new VibesMaterial()]
 
 // Arena bounds for collision detection
 export const bounds = {
@@ -40,17 +40,17 @@ export function Arena(props) {
     const numScreens = 19
 
     for (let i = 0; i < numScreens; i++) {
-      if (i % 2 === 0) {
-        nodes[`screen${i}`].material = vibesMat
-      } else {
-        nodes[`screen${i}`].material = acidMat
-      }
+      // Loop through materials for each screen
+      nodes[`screen${i}`].material = mats[i % mats.length]
     }
   }, [nodes])
 
   useFrame(({ clock }) => {
-    acidMat.time = clock.getElapsedTime()
-    vibesMat.time = clock.getElapsedTime() + 0.5
+    mats.forEach((mat, i) => {
+      // Update the time for each material, with a time offset
+      const offset = i * 0.5
+      mat.time = clock.getElapsedTime() + offset
+    })
   })
 
   return (

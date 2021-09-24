@@ -8,7 +8,6 @@ import { Box3, Vector3 } from "three"
 
 const acidMat = new AcidMaterial()
 const vibesMat = new VibesMaterial()
-const mats = [vibesMat, acidMat]
 
 // Arena bounds for collision detection
 export const bounds = {
@@ -39,29 +38,19 @@ export function Arena(props) {
     nodes.widescreen1.material = streamMaterial
 
     const numScreens = 19
-    var max = mats.length;
 
     for (let i = 0; i < numScreens; i++) {
       if (i % 2 === 0) {
-        // setInterval(function() {
-        //   for (let x = 0; x < max; x++) {
-            // let variedMats = mats[x]
-            nodes[`screen${i}`].material = vibesMat
-        //   }
-        // }, 20000)
+        nodes[`screen${i}`].material = vibesMat
+      } else {
+        nodes[`screen${i}`].material = acidMat
       }
-      else {
-
-          nodes[`screen${i}`].material = acidMat
-       
-      }
-      
     }
   }, [nodes])
 
   useFrame(({ clock }) => {
     acidMat.time = clock.getElapsedTime()
-    vibesMat.time = clock.getElapsedTime()
+    vibesMat.time = clock.getElapsedTime() + 0.5
   })
 
   return (

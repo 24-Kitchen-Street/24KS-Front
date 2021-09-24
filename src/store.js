@@ -1,10 +1,13 @@
 import create from "zustand"
-import { MAX_MESSAGES, INTRO_POSITION } from "./config"
+import { MAX_MESSAGES, INTRO_POSITION as INP } from "./config"
+
+// TODO: Horrible magic numbers to get X position of intro ghost
+const x = (window.innerWidth / 2) * 0.01
 
 export const useStore = create((set) => ({
   players: [],
   skinPlayer: {
-    position: INTRO_POSITION,
+    position: [INP[0] + x, INP[1], INP[2]],
     rotation: [0, 0, 0],
     color: [Math.random(), Math.random(), Math.random()],
     wobbleSpeed: Math.random(),

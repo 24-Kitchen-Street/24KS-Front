@@ -2,7 +2,7 @@ const params = new URL(document.location).searchParams
 
 export const SOCKET_URI =
   process.env.REACT_APP_SOCKET_URI_MODE === "local"
-    ? "http://localhost:8080"
+    ? process.env.REACT_APP_SOCKET_URI_LOCAL || "http://localhost:8080"
     : process.env.REACT_APP_SOCKET_URI
 
 export const STREAM_URL =

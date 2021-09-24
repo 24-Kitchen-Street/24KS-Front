@@ -8,6 +8,7 @@ import { ErrorMessage } from "./form/ErrorMessage"
 import { Color } from "three"
 import { SHOW_ADMIN } from "../config"
 import { playVideo } from "../utils/streamMaterial"
+import { isTouchDevice } from "../utils/isTouchDevice"
 
 const tempColor = new Color()
 
@@ -54,7 +55,11 @@ export function Register() {
 
   useEffect(() => {
     if (me.isValid) {
-      setCurrentPopup("intro")
+      if (!isTouchDevice()) {
+        setCurrentPopup("intro")
+      } else {
+        setCurrentPopup(null)
+      }
     }
   }, [me, setCurrentPopup])
 

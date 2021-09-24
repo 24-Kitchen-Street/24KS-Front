@@ -15,10 +15,9 @@ import { useStore } from "../store"
 import { bounds } from "./Arena"
 import { isTouchDevice } from "../utils/isTouchDevice"
 import { Euler } from "three"
+import { useKeyboardControls } from "../utils/useKeyboardControls"
 
 const SPEED = 2
-const keys = { KeyW: "forward", KeyS: "backward", KeyA: "left", KeyD: "right" }
-const moveFieldByKey = (key) => keys[key]
 const direction = new Vector3()
 const frontVector = new Vector3()
 const sideVector = new Vector3()
@@ -30,30 +29,8 @@ const PI_2 = Math.PI / 2
 const minPolarAngle = 0
 const maxPolarAngle = Math.PI
 
-const usePlayerControls = () => {
-  const [movement, setMovement] = useState({
-    forward: false,
-    backward: false,
-    left: false,
-    right: false,
-  })
-  useEffect(() => {
-    const handleKeyDown = (e) =>
-      setMovement((m) => ({ ...m, [moveFieldByKey(e.code)]: true }))
-    const handleKeyUp = (e) =>
-      setMovement((m) => ({ ...m, [moveFieldByKey(e.code)]: false }))
-    document.addEventListener("keydown", handleKeyDown)
-    document.addEventListener("keyup", handleKeyUp)
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown)
-      document.removeEventListener("keyup", handleKeyUp)
-    }
-  }, [])
-  return movement
-}
-
 export const Player = (props) => {
-  const { forward, backward, left, right } = usePlayerControls()
+  const { forward, backward, left, right } = useKeyboardControls()
   const [currBound, setCurrBound] = useState("corridor")
   const { camera } = useThree()
   const ref = useRef(new Object3D())

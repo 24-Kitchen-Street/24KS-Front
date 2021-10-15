@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import { useStore } from "../store"
 
 const Container = styled.div`
   position: absolute;

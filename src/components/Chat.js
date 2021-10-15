@@ -26,14 +26,11 @@ export function Chat() {
   const setCurrentPopup = useStore((state) => state.setCurrentPopup)
 
   const handleSubmit = ({ message }, { resetForm }) => {
-    if (message) {
-      sendChatMessage({
-        message,
-      })
-      resetForm()
-    } else {
-      setCurrentPopup(null)
-    }
+    sendChatMessage({
+      message,
+    })
+    resetForm()
+    setCurrentPopup(null)
   }
 
   return (
@@ -41,7 +38,6 @@ export function Chat() {
       <Formik onSubmit={handleSubmit} initialValues={{ message: "" }}>
         <Form>
           <TextField name="message" autoFocus />
-          <button>Go</button>
         </Form>
       </Formik>
       {chatMessageResponse && (

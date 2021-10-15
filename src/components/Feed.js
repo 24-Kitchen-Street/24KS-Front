@@ -1,17 +1,19 @@
 import styled from "styled-components"
 import { useStore } from "../store"
+import { isTouchDevice } from "../utils/isTouchDevice"
 
 const Container = styled.div`
   position: absolute;
-  padding: 1rem;
-  width: 15rem;
+  padding: ${isTouchDevice() ? "0.5rem" : "1rem"};
+  width: ${isTouchDevice() ? "10rem" : "15rem"};
   flex-direction: column;
-  bottom: 0;
+  bottom: ${isTouchDevice() ? "default" : "0"};
+  top: ${isTouchDevice() ? "0" : "default"};
   right: 0;
 
   background: rgba(0, 0, 0, 0.5);
   color: white;
-  font-size: 1rem;
+  font-size: ${isTouchDevice() ? "0.5rem" : "1rem"};
   z-index: 999999999;
 
   h4 {
@@ -20,12 +22,12 @@ const Container = styled.div`
 `
 
 const Inner = styled.div`
-  max-height: 10rem;
+  height: ${isTouchDevice() ? "5rem" : "10rem"};
   overflow: scroll;
 `
 
 const Row = styled.div`
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.5em;
 `
 
 const Item = ({ title, message }) => (

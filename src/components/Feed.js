@@ -15,6 +15,7 @@ const Container = styled.div`
   color: white;
   font-size: ${isTouchDevice() ? "0.5rem" : "1rem"};
   z-index: 999999999;
+  user-select: none;
 
   h4 {
     margin: 0;

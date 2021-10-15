@@ -5,6 +5,7 @@ const Container = styled.div`
   position: absolute;
   right: 5px;
   top: 4.5rem;
+  user-select: none;
 
   button {
     font-size: 0.8rem;

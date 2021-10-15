@@ -13,6 +13,7 @@ const JoysticksContainer = styled.div`
   right: 0;
   opacity: 2;
   z-index: 9999999999999;
+  user-select: none;
 `
 
 // https://github.com/yoannmoinet/nipplejs/issues/54

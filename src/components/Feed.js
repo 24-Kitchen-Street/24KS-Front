@@ -4,7 +4,7 @@ import { isTouchDevice } from "../utils/isTouchDevice"
 
 const Container = styled.div`
   position: absolute;
-  padding: 1rem;
+  padding: ${isTouchDevice() ? "0.5rem" : "1rem"};
   width: ${isTouchDevice() ? "10rem" : "15rem"};
   flex-direction: column;
   bottom: ${isTouchDevice() ? "default" : "0"};

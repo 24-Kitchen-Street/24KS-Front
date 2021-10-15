@@ -7,8 +7,6 @@ if (window.innerWidth < 1200) {
   x = (window.innerWidth / 4) * 0.01
 }
 
-console.log(x)
-
 export const useStore = create((set) => ({
   players: [],
   skinPlayer: {

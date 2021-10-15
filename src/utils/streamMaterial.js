@@ -17,6 +17,7 @@ hls.on(Hls.Events.MANIFEST_PARSED, function () {
 })
 
 export const playVideo = () => {
+  console.log("play")
   if (canPlay) {
     video.play()
   } else {

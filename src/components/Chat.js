@@ -26,14 +26,11 @@ export function Chat() {
   const setCurrentPopup = useStore((state) => state.setCurrentPopup)
 
   const handleSubmit = ({ message }, { resetForm }) => {
-    if (message) {
-      sendChatMessage({
-        message,
-      })
-      resetForm()
-    } else {
-      setCurrentPopup(null)
-    }
+    sendChatMessage({
+      message,
+    })
+    resetForm()
+    setCurrentPopup(null)
   }
 
   return (

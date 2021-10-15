@@ -4,10 +4,10 @@ import { useStore } from "../store"
 const Container = styled.div`
   position: absolute;
   right: 5px;
-  top: 8rem;
+  top: 4.5rem;
 
   button {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 `
 

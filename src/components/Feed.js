@@ -5,7 +5,7 @@ import { isTouchDevice } from "../utils/isTouchDevice"
 const Container = styled.div`
   position: absolute;
   padding: ${isTouchDevice() ? "0.5rem" : "1rem"};
-  width: ${isTouchDevice() ? "10rem" : "15rem"};
+  width: ${isTouchDevice() ? "8rem" : "15rem"};
   flex-direction: column;
   bottom: ${isTouchDevice() ? "default" : "0"};
   top: ${isTouchDevice() ? "0" : "default"};
@@ -22,7 +22,7 @@ const Container = styled.div`
 `
 
 const Inner = styled.div`
-  height: ${isTouchDevice() ? "5rem" : "10rem"};
+  height: ${isTouchDevice() ? "3rem" : "10rem"};
   overflow: scroll;
 `
 

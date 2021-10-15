@@ -38,7 +38,6 @@ export function Chat() {
       <Formik onSubmit={handleSubmit} initialValues={{ message: "" }}>
         <Form>
           <TextField name="message" autoFocus />
-          <button>Go</button>
         </Form>
       </Formik>
       {chatMessageResponse && (

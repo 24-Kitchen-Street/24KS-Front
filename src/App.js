@@ -17,6 +17,7 @@ import { SHOW_DEBUG } from "./config"
 import { FollowingUI } from "./components/FollowingUI"
 import { JoySticks } from "./components/JoySticks"
 import { isTouchDevice } from "./utils/isTouchDevice"
+import { ChatButton } from "./components/ChatButton"
 
 function App() {
   const me = useStore((state) => state.me)
@@ -67,6 +68,7 @@ function App() {
       {SHOW_DEBUG && <DebugInfo />}
       {me.isAdmin && <AdminUI />}
       {me.isValid && isTouchDevice() && <JoySticks />}
+      {me.isValid && isTouchDevice() && <ChatButton />}
     </>
   )
 }

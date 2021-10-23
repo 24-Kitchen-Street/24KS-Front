@@ -13,6 +13,7 @@ import { isTouchDevice } from "../utils/isTouchDevice"
 const tempColor = new Color()
 
 const Overlay = styled.div`
+  font-family: 'HkGrotesk Light';
   background: linear-gradient(
     90deg,
     rgba(2, 0, 36, 1) 0%,
@@ -36,10 +37,15 @@ const Overlay = styled.div`
 `
 
 const FieldGroup = styled.div`
+  font-family: 'HkGrotesk Light';
   margin-top: 1rem;
   label {
     display: block;
   }
+`
+
+const Button = styled.button`
+  font-family: 'HkGrotesk Light';
 `
 
 export function Register() {
@@ -129,7 +135,7 @@ export function Register() {
             />
           </FieldGroup>
 
-          <button type="submit">Enter the Club</button>
+          <Button type="submit">Enter the Club</Button>
         </Form>
       </Formik>
       {registerError && <ErrorMessage>{registerError}</ErrorMessage>}

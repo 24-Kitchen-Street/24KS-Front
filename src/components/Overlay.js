@@ -1,6 +1,7 @@
 import styled from "styled-components"
 
 export const Overlay = styled.div`
+  font-family: 'HkGrotesk Light';
   position: absolute;
   display: flex;
   align-items: center;

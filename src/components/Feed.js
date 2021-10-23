@@ -3,6 +3,7 @@ import { useStore } from "../store"
 import { isTouchDevice } from "../utils/isTouchDevice"
 
 const Container = styled.div`
+  font-family: 'HkGrotesk Light';
   position: absolute;
   padding: ${isTouchDevice() ? "0.5rem" : "1rem"};
   width: ${isTouchDevice() ? "8rem" : "15rem"};

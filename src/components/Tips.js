@@ -1,6 +1,7 @@
 import styled from "styled-components"
 
 const Container = styled.div`
+  font-family: 'HkGrotesk Light';
   position: absolute;
   right: 0;
   top: 0;

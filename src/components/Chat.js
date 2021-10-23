@@ -6,6 +6,7 @@ import { TextField } from "./form/TextField"
 import { ErrorMessage } from "./form/ErrorMessage"
 
 const Overlay = styled.div`
+  font-family: 'HkGrotesk Light';
   position: absolute;
   display: flex;
   align-items: center;

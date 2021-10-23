@@ -17,17 +17,19 @@ import { SHOW_DEBUG } from "./config"
 import { FollowingUI } from "./components/FollowingUI"
 import { JoySticks } from "./components/JoySticks"
 import { isTouchDevice } from "./utils/isTouchDevice"
-import { ChatButton } from "./components/ChatButton"
 import { Tips } from "./components/Tips"
+import { MobileButtons } from "./components/MobileButtons"
 
 function App() {
   const me = useStore((state) => state.me)
   const isClubModeEnabled = useStore((state) => state.clubMode.isEnabled)
   const setCurrentPopup = useStore((state) => state.setCurrentPopup)
   const currentPopup = useStore((state) => state.currentPopup)
+  const setShowChat = useStore((state) => state.setShowChat)
   const isShowingAdminControls = useStore(
     (state) => state.isShowingAdminControls
   )
+
 
   useEffect(() => {
     document.body.classList.toggle("cursorHidden", isClubModeEnabled)
@@ -35,7 +37,9 @@ function App() {
 
   useKeypress("Enter", () => {
     if (me.isValid && currentPopup !== "chat" && !isShowingAdminControls) {
+      setShowChat(true)
       setCurrentPopup("chat")
+      
     }
   })
 
@@ -64,13 +68,15 @@ function App() {
           error: <ErrorScreen />,
         }[currentPopup]
       }
+      {/* if me.isValid && isClubModeEnabled && !isTouchDevice() <Feed />, set showFeed to true*/}
+      {/* else if me.isValid && isTouchDevice, set feed to false */}
       {me.isValid && !isClubModeEnabled && <Feed />}
       {isClubModeEnabled && <FollowingUI />}
       {SHOW_DEBUG && <DebugInfo />}
       {me.isAdmin && <AdminUI />}
       {me.isValid && !isTouchDevice() && <Tips />}
       {me.isValid && isTouchDevice() && <JoySticks />}
-      {me.isValid && isTouchDevice() && <ChatButton />}
+      {me.isValid && isTouchDevice() && <MobileButtons />}
     </>
   )
 }

@@ -12,16 +12,16 @@ const Container = styled.div`
   }
 `
 
-export function ChatButton() {
-  const setCurrentPopup = useStore((state) => state.setCurrentPopup)
+export function FeedButton() {
+  const showChat = useStore((state) => state.showChat)
   const setShowChat = useStore((state) => state.setShowChat)
-  const onClick = () => {
-    setCurrentPopup("chat")
-    setTimeout(() => setShowChat(true))
-  }
+
   return (
-    // <Container>
-      <button onClick={onClick}>Send message</button>
-    // </Container>
+    <>
+      {showChat ? <button onClick={() => setShowChat(false)}>Close Chat</button>
+    :
+    <button onClick={() => setShowChat(true)}>Show Chat</button>
+    }
+    </>
   )
 }

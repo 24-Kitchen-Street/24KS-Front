@@ -37,6 +37,7 @@ export const useStore = create((set) => ({
   feed: [],
   currentPopup: "register",
   isShowingAdminControls: false,
+  showChat: false,
   updateJoystick: (side, x, y) =>
     set((state) => ({ joysticks: { ...state.joysticks, [side]: [x, y] } })),
   addFeedMessages: (messages) =>
@@ -64,6 +65,7 @@ export const useStore = create((set) => ({
   updateChatMessageResponse: (chatMessageResponse) =>
     set(() => ({ chatMessageResponse })),
   setCurrentPopup: (currentPopup) => set(() => ({ currentPopup })),
+  setShowChat:  (showChat) => set(() => ({ showChat })),
   setIsShowingAdminControls: (isShowingAdminControls) =>
     set(() => ({ isShowingAdminControls })),
 }))
